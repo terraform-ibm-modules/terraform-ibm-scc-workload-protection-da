@@ -1,0 +1,100 @@
+{
+    "products": [
+      {
+        "name": "deploy-arch-ibm-scc-workload-protection",
+        "label": "Security and Compliance Center Workload Protection",
+        "product_kind": "solution",
+        "tags": [
+          "ibm_created",
+          "target_terraform",
+          "terraform",
+          "reference_architecture",
+          "solution"
+        ],
+        "keywords": [
+          "base layer",
+          "IaC",
+          "infrastructure as code",
+          "terraform",
+          "solution",
+          "account",
+          "iam"
+        ],
+        "short_description": "Creates and configures IBM Cloud Security and Compliance Center Workload Protection",
+        "long_description": "This architecture supports creating and configuring IBM Cloud Security and Compliance Center Workload Protection instance and agents in a given cluster.",
+        "offering_docs_url": "https://github.com/terraform-ibm-modules/terraform-ibm-scc-workload-protection/blob/main/README.md",
+        "offering_icon_url": "",
+        "provider_name": "IBM",
+        "features": [
+          {
+            "title": "Creates IBM Cloud Security and Compliance Center Workload Protection instance",
+            "description": "Creates Workload Protection instance"
+          },
+          {
+            "title": "Integrates IBM Cloud Security and Compliance Center Workload Protection components with ROKS",
+            "description": "Installs and configure the Workload Protection components to secure ROKS clusters"
+          }
+        ],
+        "flavors": [
+          {
+            "label": "Standard",
+            "name": "standard",
+            "install_type": "fullstack",
+            "working_directory": "solutions/terraform-ibm-scc-workload-protection-instance-da",
+            "compliance": {
+              "authority": "scc-v3",
+              "profiles": [
+                {
+                  "profile_name": "IBM Cloud Framework for Financial Services",
+                  "profile_version": "1.5.0"
+                }
+              ]
+            },
+            "iam_permissions": [
+              {
+                "role_crns": [
+                  "crn:v1:bluemix:public:iam::::serviceRole:Writer",
+                  "crn:v1:bluemix:public:iam::::role:Administrator"
+                ],
+                "service_name": "sysdig-secure"
+              }
+            ],
+            "architecture": {}
+          },
+          {
+            "label": "Standard",
+            "name": "standard",
+            "install_type": "extension",
+            "working_directory": "solutions/terraform-ibm-scc-workload-protection-agents-da",
+            "dependencies": {
+                "flavors": [
+                    "standard"
+                  ],
+                  "id": "xxxxxx",
+                  "name": "deploy-arch-ibm-scc-workload-protection",
+                  "version": ">=1.0.0"
+            },
+            "compliance": {
+              "authority": "scc-v3",
+              "profiles": [
+                {
+                  "profile_name": "IBM Cloud Framework for Financial Services",
+                  "profile_version": "1.5.0"
+                }
+              ]
+            },
+            "iam_permissions": [
+              {
+                "role_crns": [
+                  "crn:v1:bluemix:public:iam::::serviceRole:Writer",
+                  "crn:v1:bluemix:public:iam::::role:Administrator"
+                ],
+                "service_name": "sysdig-secure"
+              }
+            ],
+            "architecture": {}
+          }
+        ]
+      }
+    ]
+  }

@@ -1,9 +1,8 @@
 ########################################################################################################################
-# Input Variables
+# Provider config
 ########################################################################################################################
 
-#variable "my_variable" {
-#  type        = string
-#  description = "A description of my variable"
-#  default     = "default_value"
-#}
+provider "ibm" {
+  ibmcloud_api_key = var.ibmcloud_api_key
+  region           = var.region
+}

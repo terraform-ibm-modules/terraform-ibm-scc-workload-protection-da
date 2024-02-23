@@ -1,8 +1,8 @@
 ########################################################################################################################
-# Provider config
+# Outputs
 ########################################################################################################################
 
-provider "ibm" {
-  ibmcloud_api_key = var.ibmcloud_api_key
-  region           = var.region
+output "name" {
+  description = "Helm chart release name."
+  value       = resource.helm_release.scc_wp_agent.name
 }

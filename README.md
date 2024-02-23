@@ -1,5 +1,4 @@
-<!-- Update the title -->
-# Terraform Modules Template Project
+# IBM Cloud Security and Compliance Center Workload Protection
 
 <!--
 Update status and "latest release" badges:
