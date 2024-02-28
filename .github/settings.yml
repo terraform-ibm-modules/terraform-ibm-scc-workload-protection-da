@@ -22,7 +22,7 @@ repository:
 
   # Uncomment this description property
   # and update the description to the current repo description.
-  description: ""
+  description: "A deployable architecture solution to deploy IBM Security and Compliance related resources"
 
   # Use a comma-separated list of topics to set on the repo (ensure not to use any caps in the topic string).
-  topics: terraform, ibm-cloud, terraform-module, core-team, deployable-architecture, supported
+  topics: terraform, ibm-cloud, core-team, deployable-architecture, supported
