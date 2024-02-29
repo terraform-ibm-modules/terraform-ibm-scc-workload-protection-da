@@ -19,4 +19,4 @@ export IBMCLOUD_SCC_API_ENDPOINT=https://REGION.compliance.cloud.ibm.com
 ```
 where `REGION` is the value you have set for the modules `region` input variable.
 
-<<-- TODO: Add Diagram -->>
+![scc](https://github.com/terraform-ibm-modules/terraform-ibm-scc-da/blob/main/reference-architecture/scc.svg)
