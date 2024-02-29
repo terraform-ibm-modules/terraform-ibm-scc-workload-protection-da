@@ -69,6 +69,7 @@ func TestInstancesInSchematics(t *testing.T) {
 		{Name: "kms_region", Value: "us-south", DataType: "string"}, // KMS instance is in us-south
 		{Name: "scc_region", Value: region, DataType: "string"},
 		{Name: "cos_region", Value: region, DataType: "string"},
+		{Name: "scc_cos_bucket_name", Value: options.Prefix, DataType: "string"},
 		{Name: "cos_instance_tags", Value: options.Tags, DataType: "list(string)"},
 		{Name: "scc_instance_tags", Value: options.Tags, DataType: "list(string)"},
 		{Name: "scc_wp_instance_tags", Value: options.Tags, DataType: "list(string)"},

@@ -2,6 +2,8 @@
 # Validation
 #######################################################################################################################
 
+# TODO: Add some variable validation - https://github.com/terraform-ibm-modules/terraform-ibm-scc-da/issues/6
+
 #######################################################################################################################
 # Resource Group
 #######################################################################################################################
@@ -110,7 +112,7 @@ module "cos" {
 
 module "scc" {
   source                            = "terraform-ibm-modules/scc/ibm"
-  version                           = "1.1.1"
+  version                           = "1.1.2"
   resource_group_id                 = module.resource_group.resource_group_id
   region                            = var.scc_region
   instance_name                     = var.scc_instance_name
