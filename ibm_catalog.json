@@ -1,0 +1,111 @@
+{
+    "products": [
+        {
+            "name": "deploy-arch-ibm-scc",
+            "label": "Security and Compliance Center",
+            "product_kind": "solution",
+            "tags": [
+                "ibm_created",
+                "target_terraform",
+                "terraform",
+                "solution",
+                "security"
+            ],
+            "keywords": [
+                "SCC",
+                "security",
+                "compliance",
+                "workload-protection",
+                "IaC",
+                "infrastructure as code",
+                "terraform",
+                "solution"
+            ],
+            "short_description": "Creates and configures IBM Security and Compliance Center resources",
+            "long_description": "This architecture supports creating and configuring IBM Security and Compliance Center resources.",
+            "offering_docs_url": "https://github.com/terraform-ibm-modules/terraform-ibm-scc-da/blob/main/solutions/instances/README.md",
+            "offering_icon_url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-scc-da/main/images/scc-icon.svg",
+            "provider_name": "IBM",
+            "features": [
+                {
+                    "title": "Creates a Security and Compliance Center instance.",
+                    "description": "Creates and configures a Security and Compliance Center instance."
+                },
+                {
+                    "title": "Creates the COS bucket required for the Security and Compliance Center instance",
+                    "description": "Creates and configures a KMS encrypted COS bucket required for the Security and Compliance Center instance."
+                },
+                {
+                    "title": "Creates a Security and Compliance Center Workload Protection instance.",
+                    "description": "Creates and configures a Security and Compliance Center Workload Protection instance."
+                }
+            ],
+            "flavors": [
+                {
+                    "label": "Instances",
+                    "name": "instances",
+                    "install_type": "fullstack",
+                    "working_directory": "solutions/instances",
+                    "compliance": {
+                        "authority": "scc-v3",
+                        "profiles": [
+                            {
+                                "profile_name": "IBM Cloud Framework for Financial Services",
+                                "profile_version": "1.5.0"
+                            }
+                        ]
+                    },
+                    "iam_permissions": [
+                        {
+                            "service_name": "compliance",
+                            "role_crns": [
+                                "crn:v1:bluemix:public:iam::::serviceRole:Manager",
+                                "crn:v1:bluemix:public:iam::::role:Editor"
+                            ]
+                        },
+                        {
+                            "service_name": "cloud-object-storage",
+                            "role_crns": [
+                                "crn:v1:bluemix:public:iam::::serviceRole:Manager"
+                            ]
+                        },
+                        {
+                            "role_crns": [
+                              "crn:v1:bluemix:public:iam::::serviceRole:Manager",
+                              "crn:v1:bluemix:public:iam::::role:Editor"
+                            ],
+                            "service_name": "kms"
+                        }
+                    ],
+                    "architecture": {
+                        "descriptions": "This architecture supports creating and configuring an Key Protect instance.",
+                        "features": [
+                            {
+                                "title": "Creates a Security and Compliance Center instance.",
+                                "description": "Creates and configures a Security and Compliance Center instance."
+                            },
+                            {
+                                "title": "Creates the COS bucket required for the Security and Compliance Center instance",
+                                "description": "Creates and configures a KMS encrypted COS bucket required for the Security and Compliance Center instance."
+                            },
+                            {
+                                "title": "Creates a Security and Compliance Center Workload Protection instance.",
+                                "description": "Creates and configures a Security and Compliance Center Workload Protection instance."
+                            }
+                        ],
+                        "diagrams": [
+                            {
+                                "diagram": {
+                                    "caption": "Security and Compliance Center",
+                                    "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-scc-da/main/reference-architecture/scc.svg",
+                                    "type": "image/svg+xml"
+                                },
+                                "description": "This architecture supports creating and configuring IBM Security and Compliance Center resources"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}
