@@ -92,6 +92,12 @@ variable "cos_instance_tags" {
   default     = []
 }
 
+variable "cos_instance_access_tags" {
+  type        = list(string)
+  description = "A list of access tags to apply to the Cloud Object Storage instance. Only used if not supplying an existing instance."
+  default     = []
+}
+
 variable "scc_cos_bucket_name" {
   type        = string
   default     = "base-security-services-bucket"

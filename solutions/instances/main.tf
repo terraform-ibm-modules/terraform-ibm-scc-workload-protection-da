@@ -84,6 +84,7 @@ module "cos" {
   cos_instance_name        = var.cos_instance_name
   cos_tags                 = var.cos_instance_tags
   existing_cos_instance_id = var.existing_cos_instance_crn
+  access_tags              = var.cos_instance_access_tags
   cos_plan                 = "standard"
   bucket_configs = [{
     access_tags                   = var.scc_cos_bucket_access_tags
