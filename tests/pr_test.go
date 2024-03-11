@@ -94,7 +94,6 @@ func TestRunUpgradeInstances(t *testing.T) {
 		"kms_endpoint_type":                   "public",
 		"kms_region":                          "us-south",
 		"management_endpoint_type_for_bucket": "public",
-		"scc_cos_bucket_name":                 options.Prefix,
 	}
 
 	output, err := options.RunTestUpgrade()
