@@ -59,9 +59,6 @@ func TestInstancesInSchematics(t *testing.T) {
 		WaitJobCompleteMinutes: 60,
 	})
 
-	// Workaround for https://github.com/IBM-Cloud/terraform-provider-ibm/issues/5131
-	options.AddWorkspaceEnvVar("IBMCLOUD_SCC_API_ENDPOINT", "https://private."+region+".compliance.cloud.ibm.com", false, false)
-
 	options.TerraformVars = []testschematic.TestSchematicTerraformVar{
 		{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
 		{Name: "resource_group_name", Value: options.Prefix, DataType: "string"},
