@@ -59,9 +59,6 @@ func TestInstancesInSchematics(t *testing.T) {
 		WaitJobCompleteMinutes: 60,
 	})
 
-	// Workaround for https://github.com/IBM-Cloud/terraform-provider-ibm/issues/5131
-	options.AddWorkspaceEnvVar("IBMCLOUD_SCC_API_ENDPOINT", "https://private."+region+".compliance.cloud.ibm.com", false, false)
-
 	options.TerraformVars = []testschematic.TestSchematicTerraformVar{
 		{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
 		{Name: "resource_group_name", Value: options.Prefix, DataType: "string"},
@@ -69,7 +66,6 @@ func TestInstancesInSchematics(t *testing.T) {
 		{Name: "kms_region", Value: "us-south", DataType: "string"}, // KMS instance is in us-south
 		{Name: "scc_region", Value: region, DataType: "string"},
 		{Name: "cos_region", Value: region, DataType: "string"},
-		{Name: "scc_cos_bucket_name", Value: options.Prefix, DataType: "string"},
 		{Name: "cos_instance_tags", Value: options.Tags, DataType: "list(string)"},
 		{Name: "scc_instance_tags", Value: options.Tags, DataType: "list(string)"},
 		{Name: "scc_wp_instance_tags", Value: options.Tags, DataType: "list(string)"},

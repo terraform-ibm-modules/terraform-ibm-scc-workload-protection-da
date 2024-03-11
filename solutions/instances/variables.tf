@@ -101,7 +101,13 @@ variable "cos_instance_access_tags" {
 variable "scc_cos_bucket_name" {
   type        = string
   default     = "base-security-services-bucket"
-  description = "The name to use when creating the SCC Cloud Object Storage bucket (NOTE: bucket names are globally unique)."
+  description = "The name to use when creating the SCC Cloud Object Storage bucket (NOTE: bucket names are globally unique). If 'add_bucket_name_suffix' is set to true, a random 4 characters will be added to this name to help ensure bucket name is globally unique."
+}
+
+variable "add_bucket_name_suffix" {
+  type        = bool
+  description = "Add random generated suffix (4 characters long) to the newly provisioned SCC COS bucket name. Only used if not passing existing bucket. set to false if you want full control over bucket naming using the 'scc_cos_bucket_name' variable."
+  default     = true
 }
 
 variable "scc_cos_bucket_access_tags" {
