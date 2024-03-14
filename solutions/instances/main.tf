@@ -111,6 +111,8 @@ module "cos" {
 #######################################################################################################################
 
 module "scc" {
+  # Explicit depends_on required since COS bucket name is not a computed value
+  depends_on                        = [module.cos]
   source                            = "terraform-ibm-modules/scc/ibm"
   version                           = "1.1.3"
   resource_group_id                 = module.resource_group.resource_group_id
