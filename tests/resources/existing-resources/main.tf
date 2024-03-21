@@ -31,13 +31,13 @@ module "cos" {
 ##############################################################################
 
 module "cloud_monitoring" {
-  source  = "terraform-ibm-modules/observability-instances/ibm//modules/cloud_monitoring"
-  version = "2.12.0"
-  resource_group_id = module.resource_group.resource_group_id
-  region = var.region
-  instance_name = "${var.prefix}-mon"
+  source                  = "terraform-ibm-modules/observability-instances/ibm//modules/cloud_monitoring"
+  version                 = "2.12.0"
+  resource_group_id       = module.resource_group.resource_group_id
+  region                  = var.region
+  instance_name           = "${var.prefix}-mon"
   enable_platform_metrics = false
-  tags              = var.resource_tags
+  tags                    = var.resource_tags
 }
 
 ##############################################################################
