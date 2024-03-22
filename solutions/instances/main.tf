@@ -2,7 +2,14 @@
 # Validation
 #######################################################################################################################
 
-# TODO: Add some variable validation - https://github.com/terraform-ibm-modules/terraform-ibm-scc-da/issues/6
+locals {
+  # tflint-ignore: terraform_unused_declarations
+  validate_inputs = var.existing_scc_cos_bucket_name == null && var.existing_scc_cos_kms_key_crn == null && var.existing_kms_guid == null ? tobool("A value must be passed for 'existing_kms_guid' if not supplying any value for 'existing_scc_cos_kms_key_crn' or 'existing_scc_cos_bucket_name'.") : true
+  # tflint-ignore: terraform_unused_declarations
+  validate_cos_inputs = var.existing_scc_cos_bucket_name != null && var.existing_scc_cos_kms_key_crn != null ? tobool("A value should not be passed for 'existing_scc_cos_kms_key_crn' when passing a value for 'existing_scc_cos_bucket_name'. A key is only needed when creating a new COS bucket.") : true
+  # tflint-ignore: terraform_unused_declarations
+  validate_auth_inputs = !var.skip_scc_cos_auth_policy && var.existing_cos_instance_crn == null && var.existing_scc_cos_bucket_name != null ? tobool("A value must be passed for 'existing_cos_instance_crn' in order to create auth policy.") : true
+}
 
 #######################################################################################################################
 # Resource Group
@@ -78,7 +85,7 @@ module "cos" {
   }
   count                    = var.existing_scc_cos_bucket_name == null ? 1 : 0 # no need to call COS module if consumer is passing existing COS bucket
   source                   = "terraform-ibm-modules/cos/ibm//modules/fscloud"
-  version                  = "7.5.1"
+  version                  = "7.5.3"
   resource_group_id        = module.resource_group.resource_group_id
   create_cos_instance      = var.existing_cos_instance_crn == null ? true : false # don't create instance if existing one passed in
   create_resource_key      = false
