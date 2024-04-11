@@ -8,7 +8,7 @@ variable "ibmcloud_api_key" {
   sensitive   = true
 }
 
-variable "existing_resource_group" {
+variable "use_existing_resource_group" {
   type        = bool
   description = "Whether to use an existing resource group."
   default     = false
@@ -30,22 +30,16 @@ variable "existing_monitoring_crn" {
 # KMS variables
 ########################################################################################################################
 
-variable "kms_region" {
-  type        = string
-  default     = "us-south"
-  description = "The region in which KMS instance exists."
-}
-
-variable "existing_kms_guid" {
+variable "existing_kms_instance_crn" {
   type        = string
   default     = null
-  description = "The GUID of of the KMS instance used for the SCC COS bucket root Key. Only required if not supplying an existing KMS root key and if 'skip_cos_kms_auth_policy' is true."
+  description = "The CRN of the existed Hyper Protect Crypto Services or Key Protect instance. Only required if not supplying an existing KMS root key and if 'skip_cos_kms_auth_policy' is true."
 }
 
 variable "existing_scc_cos_kms_key_crn" {
   type        = string
   default     = null
-  description = "The CRN of an existing KMS key to be used to encrypt the SCC COS bucket. If not supplied, a new key ring and key will be created in the provided KMS instance."
+  description = "The CRN of an existing KMS key to be used to encrypt the SCC COS bucket. If no value is passed, a value must be passed for either 'var.existing_kms_instance_crn' if you want to create a new key ring and key, or 'var.existing_scc_cos_bucket_name' if you want to use an existing bucket."
 }
 
 variable "kms_endpoint_type" {
