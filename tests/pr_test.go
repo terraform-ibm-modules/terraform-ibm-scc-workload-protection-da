@@ -70,7 +70,6 @@ func TestInstancesInSchematics(t *testing.T) {
 		{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
 		{Name: "resource_group_name", Value: options.Prefix, DataType: "string"},
 		{Name: "existing_kms_instance_crn", Value: permanentResources["hpcs_south_crn"], DataType: "string"},
-		{Name: "kms_region", Value: "us-south", DataType: "string"}, // KMS instance is in us-south
 		{Name: "scc_region", Value: region, DataType: "string"},
 		{Name: "cos_region", Value: region, DataType: "string"},
 		{Name: "cos_instance_tags", Value: options.Tags, DataType: "list(string)"},
@@ -99,7 +98,6 @@ func TestRunUpgradeInstances(t *testing.T) {
 		"resource_group_name":                 options.Prefix,
 		"existing_kms_instance_crn":           permanentResources["hpcs_south_crn"],
 		"kms_endpoint_type":                   "public",
-		"kms_region":                          "us-south",
 		"management_endpoint_type_for_bucket": "public",
 	}
 
@@ -163,7 +161,7 @@ func TestRunExistingResourcesInstances(t *testing.T) {
 				"cos_region":                          region,
 				"scc_region":                          region,
 				"resource_group_name":                 terraform.Output(t, existingTerraformOptions, "resource_group_name"),
-				"existing_resource_group":             true,
+				"use_existing_resource_group":         true,
 				"existing_monitoring_crn":             terraform.Output(t, existingTerraformOptions, "monitoring_crn"),
 				"existing_scc_cos_bucket_name":        terraform.Output(t, existingTerraformOptions, "bucket_name"),
 				"existing_cos_instance_crn":           terraform.Output(t, existingTerraformOptions, "cos_crn"),
@@ -189,10 +187,9 @@ func TestRunExistingResourcesInstances(t *testing.T) {
 				"cos_region":                          region,
 				"scc_region":                          region,
 				"resource_group_name":                 terraform.Output(t, existingTerraformOptions, "resource_group_name"),
-				"existing_resource_group":             true,
+				"use_existing_resource_group":         true,
 				"existing_monitoring_crn":             terraform.Output(t, existingTerraformOptions, "monitoring_crn"),
 				"existing_kms_instance_crn":           permanentResources["hpcs_south_crn"],
-				"kms_region":                          "us-south",
 				"kms_endpoint_type":                   "public",
 				"existing_cos_instance_crn":           terraform.Output(t, existingTerraformOptions, "cos_crn"),
 				"management_endpoint_type_for_bucket": "public",
