@@ -136,7 +136,7 @@ module "scc" {
   skip_cos_iam_authorization_policy = var.skip_scc_cos_auth_policy
   resource_tags                     = var.scc_instance_tags
   attach_wp_to_scc_instance         = var.attach_wp_to_scc_instance
-  wp_instance_crn                   = module.scc_wp.crn
+  wp_instance_crn                   = var.provision_scc_workload_protection ? module.scc_wp[0].crn : null
   skip_scc_wp_auth_policy           = var.skip_scc_wp_auth_policy
 }
 
