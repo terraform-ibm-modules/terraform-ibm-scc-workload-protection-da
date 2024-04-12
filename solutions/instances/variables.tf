@@ -202,6 +202,18 @@ variable "scc_instance_tags" {
   default     = []
 }
 
+variable "attach_wp_to_scc_instance" {
+  type        = string
+  description = "When set to true, a value must be passed for the `wp_instance_crn` inout variable."
+  default     = false
+}
+
+variable "skip_scc_wp_auth_policy" {
+  type        = bool
+  default     = false
+  description = "Set to true to skip the creation of an IAM authorization policy that permits the SCC instance created by this solution read access to the workload protection instance. Only used if `attach_wp_to_scc_instance` is set to true."
+}
+
 ########################################################################################################################
 # SCC Workload Protection variables
 ########################################################################################################################

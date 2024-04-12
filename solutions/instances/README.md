@@ -18,7 +18,7 @@ Currently this solution does not support attaching the Workload Protection insta
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.0, <1.7.0 |
-| <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | 1.64.0 |
+| <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | 1.64.1 |
 
 ### Modules
 
@@ -27,7 +27,7 @@ Currently this solution does not support attaching the Workload Protection insta
 | <a name="module_cos"></a> [cos](#module\_cos) | terraform-ibm-modules/cos/ibm//modules/fscloud | 7.5.3 |
 | <a name="module_kms"></a> [kms](#module\_kms) | terraform-ibm-modules/kms-all-inclusive/ibm | 4.8.5 |
 | <a name="module_resource_group"></a> [resource\_group](#module\_resource\_group) | terraform-ibm-modules/resource-group/ibm | 1.1.5 |
-| <a name="module_scc"></a> [scc](#module\_scc) | terraform-ibm-modules/scc/ibm | 1.2.0 |
+| <a name="module_scc"></a> [scc](#module\_scc) | terraform-ibm-modules/scc/ibm | 1.4.0 |
 | <a name="module_scc_wp"></a> [scc\_wp](#module\_scc\_wp) | terraform-ibm-modules/scc-workload-protection/ibm | 1.3.0 |
 
 ### Resources
@@ -39,6 +39,7 @@ No resources.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_add_bucket_name_suffix"></a> [add\_bucket\_name\_suffix](#input\_add\_bucket\_name\_suffix) | Add random generated suffix (4 characters long) to the newly provisioned SCC COS bucket name. Only used if not passing existing bucket. set to false if you want full control over bucket naming using the 'scc\_cos\_bucket\_name' variable. | `bool` | `true` | no |
+| <a name="input_attach_wp_to_scc_instance"></a> [attach\_wp\_to\_scc\_instance](#input\_attach\_wp\_to\_scc\_instance) | When set to true, a value must be passed for the `wp_instance_crn` inout variable. | `string` | `false` | no |
 | <a name="input_cos_instance_access_tags"></a> [cos\_instance\_access\_tags](#input\_cos\_instance\_access\_tags) | A list of access tags to apply to the Cloud Object Storage instance. Only used if not supplying an existing instance. | `list(string)` | `[]` | no |
 | <a name="input_cos_instance_name"></a> [cos\_instance\_name](#input\_cos\_instance\_name) | The name to use when creating the Cloud Object Storage instance. | `string` | `"base-security-services-cos"` | no |
 | <a name="input_cos_instance_tags"></a> [cos\_instance\_tags](#input\_cos\_instance\_tags) | Optional list of tags to be added to Cloud Object Storage instance. Only used if not supplying an existing instance. | `list(string)` | `[]` | no |
@@ -72,6 +73,7 @@ No resources.
 | <a name="input_scc_wp_service_plan"></a> [scc\_wp\_service\_plan](#input\_scc\_wp\_service\_plan) | SCC Workload Protection instance service pricing plan. Allowed values are: `free-trial` or `graduated-tier`. | `string` | `"graduated-tier"` | no |
 | <a name="input_skip_cos_kms_auth_policy"></a> [skip\_cos\_kms\_auth\_policy](#input\_skip\_cos\_kms\_auth\_policy) | Set to true to skip the creation of an IAM authorization policy that permits the COS instance created to read the encryption key from the KMS instance. WARNING: An authorization policy must exist before an encrypted bucket can be created | `bool` | `false` | no |
 | <a name="input_skip_scc_cos_auth_policy"></a> [skip\_scc\_cos\_auth\_policy](#input\_skip\_scc\_cos\_auth\_policy) | Set to true to skip the creation of an IAM authorization policy that permits the SCC instance created by this solution write access to the COS instance. Only used if `provision_scc_instance` is set to true. | `bool` | `false` | no |
+| <a name="input_skip_scc_wp_auth_policy"></a> [skip\_scc\_wp\_auth\_policy](#input\_skip\_scc\_wp\_auth\_policy) | Set to true to skip the creation of an IAM authorization policy that permits the SCC instance created by this solution read access to the workload protection instance. Only used if `attach_wp_to_scc_instance` is set to true. | `bool` | `false` | no |
 | <a name="input_use_existing_resource_group"></a> [use\_existing\_resource\_group](#input\_use\_existing\_resource\_group) | Whether to use an existing resource group. | `bool` | `false` | no |
 
 ### Outputs
