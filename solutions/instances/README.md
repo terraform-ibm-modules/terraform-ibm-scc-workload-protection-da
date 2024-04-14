@@ -36,7 +36,6 @@ No resources.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_add_bucket_name_suffix"></a> [add\_bucket\_name\_suffix](#input\_add\_bucket\_name\_suffix) | Add random generated suffix (4 characters long) to the newly provisioned SCC COS bucket name. Only used if not passing existing bucket. set to false if you want full control over bucket naming using the 'scc\_cos\_bucket\_name' variable. | `bool` | `true` | no |
-| <a name="input_attach_wp_to_scc_instance"></a> [attach\_wp\_to\_scc\_instance](#input\_attach\_wp\_to\_scc\_instance) | When set to true, a value must be passed for the `wp_instance_crn` inout variable. | `string` | `false` | no |
 | <a name="input_cos_instance_access_tags"></a> [cos\_instance\_access\_tags](#input\_cos\_instance\_access\_tags) | A list of access tags to apply to the Cloud Object Storage instance. Only used if not supplying an existing instance. | `list(string)` | `[]` | no |
 | <a name="input_cos_instance_name"></a> [cos\_instance\_name](#input\_cos\_instance\_name) | The name to use when creating the Cloud Object Storage instance. | `string` | `"base-security-services-cos"` | no |
 | <a name="input_cos_instance_tags"></a> [cos\_instance\_tags](#input\_cos\_instance\_tags) | Optional list of tags to be added to Cloud Object Storage instance. Only used if not supplying an existing instance. | `list(string)` | `[]` | no |

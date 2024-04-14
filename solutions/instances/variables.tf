@@ -202,12 +202,6 @@ variable "scc_instance_tags" {
   default     = []
 }
 
-variable "attach_wp_to_scc_instance" {
-  type        = string
-  description = "When set to true, a value must be passed for the `wp_instance_crn` inout variable."
-  default     = false
-}
-
 variable "skip_scc_wp_auth_policy" {
   type        = bool
   default     = false
