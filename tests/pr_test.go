@@ -79,8 +79,6 @@ func TestInstancesInSchematics(t *testing.T) {
 		{Name: "scc_cos_bucket_access_tags", Value: permanentResources["accessTags"], DataType: "list(string)"},
 		{Name: "scc_wp_access_tags", Value: permanentResources["accessTags"], DataType: "list(string)"},
 		{Name: "cos_instance_access_tags", Value: permanentResources["accessTags"], DataType: "list(string)"},
-		{Name: "provision_scc_workload_protection", Value: true, DataType: "bool"},
-		{Name: "skip_scc_wp_auth_policy", Value: false, DataType: "bool"},
 	}
 
 	err := options.RunSchematicTest()
