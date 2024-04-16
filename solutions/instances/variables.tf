@@ -202,6 +202,12 @@ variable "scc_instance_tags" {
   default     = []
 }
 
+variable "skip_scc_wp_auth_policy" {
+  type        = bool
+  default     = false
+  description = "Set to true to skip the creation of an IAM authorization policy that permits the SCC instance created by this solution read access to the workload protection instance. Only used if `provision_scc_workload_protection` is set to true."
+}
+
 ########################################################################################################################
 # SCC Workload Protection variables
 ########################################################################################################################

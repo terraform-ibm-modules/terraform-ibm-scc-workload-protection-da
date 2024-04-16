@@ -8,9 +8,6 @@ This solution supports the following:
 
 **NB:** This solution is not intended to be called by one or more other modules since it contains a provider configurations, meaning it is not compatible with the `for_each`, `count`, and `depends_on` arguments. For more information see [Providers Within Modules](https://developer.hashicorp.com/terraform/language/modules/develop/providers)
 
-### Current limitation
-Currently this solution does not support attaching the Workload Protection instance to the SCC instance. That enhancement is being tracked in https://github.com/terraform-ibm-modules/terraform-ibm-scc-da/issues/23
-
 <!-- Below content is automatically populated via pre-commit hook -->
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ### Requirements
@@ -27,7 +24,7 @@ Currently this solution does not support attaching the Workload Protection insta
 | <a name="module_cos"></a> [cos](#module\_cos) | terraform-ibm-modules/cos/ibm//modules/fscloud | 7.5.3 |
 | <a name="module_kms"></a> [kms](#module\_kms) | terraform-ibm-modules/kms-all-inclusive/ibm | 4.8.5 |
 | <a name="module_resource_group"></a> [resource\_group](#module\_resource\_group) | terraform-ibm-modules/resource-group/ibm | 1.1.5 |
-| <a name="module_scc"></a> [scc](#module\_scc) | terraform-ibm-modules/scc/ibm | 1.4.0 |
+| <a name="module_scc"></a> [scc](#module\_scc) | terraform-ibm-modules/scc/ibm | 1.4.1 |
 | <a name="module_scc_wp"></a> [scc\_wp](#module\_scc\_wp) | terraform-ibm-modules/scc-workload-protection/ibm | 1.3.0 |
 
 ### Resources
@@ -72,6 +69,7 @@ No resources.
 | <a name="input_scc_wp_service_plan"></a> [scc\_wp\_service\_plan](#input\_scc\_wp\_service\_plan) | SCC Workload Protection instance service pricing plan. Allowed values are: `free-trial` or `graduated-tier`. | `string` | `"graduated-tier"` | no |
 | <a name="input_skip_cos_kms_auth_policy"></a> [skip\_cos\_kms\_auth\_policy](#input\_skip\_cos\_kms\_auth\_policy) | Set to true to skip the creation of an IAM authorization policy that permits the COS instance created to read the encryption key from the KMS instance. WARNING: An authorization policy must exist before an encrypted bucket can be created | `bool` | `false` | no |
 | <a name="input_skip_scc_cos_auth_policy"></a> [skip\_scc\_cos\_auth\_policy](#input\_skip\_scc\_cos\_auth\_policy) | Set to true to skip the creation of an IAM authorization policy that permits the SCC instance created by this solution write access to the COS instance. Only used if `provision_scc_instance` is set to true. | `bool` | `false` | no |
+| <a name="input_skip_scc_wp_auth_policy"></a> [skip\_scc\_wp\_auth\_policy](#input\_skip\_scc\_wp\_auth\_policy) | Set to true to skip the creation of an IAM authorization policy that permits the SCC instance created by this solution read access to the workload protection instance. Only used if `provision_scc_workload_protection` is set to true. | `bool` | `false` | no |
 | <a name="input_use_existing_resource_group"></a> [use\_existing\_resource\_group](#input\_use\_existing\_resource\_group) | Whether to use an existing resource group. | `bool` | `false` | no |
 
 ### Outputs
