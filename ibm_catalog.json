@@ -57,8 +57,7 @@
 					},
 					"configuration": [
 						{
-							"key": "ibmcloud_api_key",
-							"required": true
+							"key": "ibmcloud_api_key"
 						},
 						{
 							"key": "use_existing_resource_group",
@@ -74,8 +73,7 @@
 							]
 						},
 						{
-							"key": "resource_group_name",
-							"required": true
+							"key": "resource_group_name"
 						},
 						{
 							"key": "existing_monitoring_crn"
@@ -108,7 +106,6 @@
 						},
 						{
               "key": "cos_region",
-              "required": true,
               "options": [
                 {
                   "displayname": "Dallas (us-south)",
