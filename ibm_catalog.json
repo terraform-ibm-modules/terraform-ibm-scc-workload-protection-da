@@ -55,12 +55,240 @@
                             }
                         ]
                     },
-                    "configuration" : [
+                    "configuration": [
+                        {
+                          "key": "ibmcloud_api_key"
+                        },
+                        {
+                          "key": "use_existing_resource_group"
+                        },
+                        {
+                          "key": "resource_group_name"
+                        },
+                        {
+                          "key": "existing_monitoring_crn"
+                        },
+                        {
+                          "key": "existing_kms_instance_crn"
+                        },
                         {
                           "key": "existing_scc_cos_kms_key_crn",
                           "required": true
+                        },
+                        {
+                          "key": "kms_endpoint_type",
+                          "options": [
+                            {
+                              "displayname": "Public",
+                              "value": "public"
+                            },
+                            {
+                              "displayname": "Private",
+                              "value": "private"
+                            }
+                          ]
+                        },
+                        {
+                          "key": "scc_cos_key_ring_name"
+                        },
+                        {
+                          "key": "scc_cos_key_name"
+                        },
+                        {
+                          "key": "cos_region",
+                          "options": [
+                            {
+                              "displayname": "Dallas (us-south)",
+                              "value": "us-south"
+                            },
+                            {
+                              "displayname": "Frankfurt (eu-de)",
+                              "value": "eu-de"
+                            },
+                            {
+                              "displayname": "London (eu-gb)",
+                              "value": "eu-gb"
+                            },
+                            {
+                              "displayname": "Madrid (eu-es)",
+                              "value": "eu-es"
+                            },
+                            {
+                              "displayname": "Osaka (jp-osa)",
+                              "value": "jp-osa"
+                            },
+                            {
+                              "displayname": "Sao Paulo (br-sao)",
+                              "value": "br-sao"
+                            },
+                            {
+                              "displayname": "Sydney (au-syd)",
+                              "value": "au-syd"
+                            },
+                            {
+                              "displayname": "Tokyo (jp-tok)",
+                              "value": "jp-tok"
+                            },
+                            {
+                              "displayname": "Toronto (ca-tor)",
+                              "value": "ca-tor"
+                            },
+                            {
+                              "displayname": "Washington (us-east)",
+                              "value": "us-east"
+                            }
+                          ]
+                        },
+                        {
+                          "key": "cos_instance_name"
+                        },
+                        {
+                          "key": "cos_instance_tags"
+                        },
+                        {
+                          "key": "cos_instance_access_tags"
+                        },
+                        {
+                          "key": "scc_cos_bucket_name"
+                        },
+                        {
+                          "key": "add_bucket_name_suffix"
+                        },
+                        {
+                          "key": "scc_cos_bucket_access_tags"
+                        },
+                        {
+                          "key": "scc_cos_bucket_class",
+                          "options": [
+                            {
+                              "displayname": "Cold",
+                              "value": "cold"
+                            },
+                            {
+                              "displayname": "Onerate active",
+                              "value": "onerate_active"
+                            },
+                            {
+                              "displayname": "Smart",
+                              "value": "smart"
+                            },
+                            {
+                              "displayname": "Standard",
+                              "value": "standard"
+                            },
+                            {
+                              "displayname": "Vault",
+                              "value": "vault"
+                            }
+                          ]
+                        },
+                        {
+                          "key": "existing_cos_instance_crn"
+                        },
+                        {
+                          "key": "existing_scc_cos_bucket_name"
+                        },
+                        {
+                          "key": "skip_cos_kms_auth_policy"
+                        },
+                        {
+                          "key": "management_endpoint_type_for_bucket",
+                          "options": [
+                            {
+                              "displayname": "Direct",
+                              "value": "direct"
+                            },
+                            {
+                              "displayname": "Private",
+                              "value": "private"
+                            },
+                            {
+                              "displayname": "Public",
+                              "value": "public"
+                            }
+                          ]
+                        },
+                        {
+                          "key": "scc_instance_name"
+                        },
+                        {
+                          "key": "scc_region",
+                          "options": [
+                            {
+                              "displayname": "Dallas (us-south)",
+                              "value": "us-south"
+                            },
+                            {
+                              "displayname": "Frankfurt (eu-de)",
+                              "value": "eu-de"
+                            },
+                            {
+                              "displayname": "Madrid (eu-es)",
+                              "value": "eu-es"
+                            },
+                            {
+                              "displayname": "Toronto (ca-tor)",
+                              "value": "ca-tor"
+                            }
+                          ]
+                        },
+                        {
+                          "key": "skip_scc_cos_auth_policy"
+                        },
+                        {
+                          "key": "scc_service_plan",
+                          "options": [
+                            {
+                              "displayname": "Standard",
+                              "value": "security-compliance-center-standard-plan"
+                            },
+                            {
+                              "displayname": "Trial",
+                              "value": "security-compliance-center-trial-plan"
+                            }
+                          ]
+                        },
+                        {
+                          "key": "existing_en_crn"
+                        },
+                        {
+                          "key": "scc_instance_tags"
+                        },
+                        {
+                          "key": "skip_scc_workload_protection_auth_policy"
+                        },
+                        {
+                          "key": "provision_scc_workload_protection"
+                        },
+                        {
+                          "key": "scc_workload_protection_instance_name"
+                        },
+                        {
+                          "key": "scc_workload_protection_service_plan",
+                          "options": [
+                            {
+                              "displayname": "Free trial",
+                              "value": "free-trial"
+                            },
+                            {
+                              "displayname": "Graduated tier",
+                              "value": "graduated-tier"
+                            }
+                          ]
+                        },
+                        {
+                          "key": "scc_workload_protection_instance_tags"
+                        },
+                        {
+                          "key": "scc_workload_protection_resource_key_name"
+                        },
+                        {
+                          "key": "scc_workload_protection_resource_key_tags"
+                        },
+                        {
+                          "key": "scc_workload_protection_access_tags"
                         }
-                    ],
+                      ],
                     "iam_permissions": [
                         {
                             "service_name": "compliance",
