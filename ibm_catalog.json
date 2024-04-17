@@ -1,117 +1,408 @@
 {
-    "products": [
-        {
-            "name": "deploy-arch-ibm-scc",
-            "label": "Security and Compliance Center",
-            "product_kind": "solution",
-            "tags": [
-                "ibm_created",
-                "target_terraform",
-                "terraform",
-                "solution",
-                "security"
-            ],
-            "keywords": [
-                "SCC",
-                "security",
-                "compliance",
-                "workload-protection",
-                "IaC",
-                "infrastructure as code",
-                "terraform",
-                "solution"
-            ],
-            "short_description": "Creates and configures IBM Security and Compliance Center resources",
-            "long_description": "This architecture supports creating and configuring IBM Security and Compliance Center resources.",
-            "offering_docs_url": "https://github.com/terraform-ibm-modules/terraform-ibm-scc-da/blob/main/solutions/instances/README.md",
-            "offering_icon_url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-scc-da/main/images/scc-icon.svg",
-            "provider_name": "IBM",
-            "features": [
+	"products": [
+		{
+			"name": "deploy-arch-ibm-scc",
+			"label": "Security and Compliance Center",
+			"product_kind": "solution",
+			"tags": [
+				"ibm_created",
+				"target_terraform",
+				"terraform",
+				"solution",
+				"security"
+			],
+			"keywords": [
+				"SCC",
+				"security",
+				"compliance",
+				"workload-protection",
+				"IaC",
+				"infrastructure as code",
+				"terraform",
+				"solution"
+			],
+			"short_description": "Creates and configures IBM Security and Compliance Center resources",
+			"long_description": "This architecture supports creating and configuring IBM Security and Compliance Center resources.",
+			"offering_docs_url": "https://github.com/terraform-ibm-modules/terraform-ibm-scc-da/blob/main/solutions/instances/README.md",
+			"offering_icon_url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-scc-da/main/images/scc-icon.svg",
+			"provider_name": "IBM",
+			"features": [
+				{
+					"title": "Creates a Security and Compliance Center instance.",
+					"description": "Creates and configures a Security and Compliance Center instance."
+				},
+				{
+					"title": "Creates the COS bucket required for the Security and Compliance Center instance",
+					"description": "Creates and configures a KMS encrypted COS bucket required for the Security and Compliance Center instance."
+				},
+				{
+					"title": "Creates a Security and Compliance Center Workload Protection instance.",
+					"description": "Creates and configures a Security and Compliance Center Workload Protection instance."
+				}
+			],
+			"flavors": [
+				{
+					"label": "Instances",
+					"name": "instances",
+					"install_type": "fullstack",
+					"working_directory": "solutions/instances",
+					"compliance": {
+						"authority": "scc-v3",
+						"profiles": [
+							{
+								"profile_name": "IBM Cloud Framework for Financial Services",
+								"profile_version": "1.6.0"
+							}
+						]
+					},
+					"configuration": [
+						{
+							"key": "ibmcloud_api_key",
+							"required": true
+						},
+						{
+							"key": "use_existing_resource_group",
+							"options": [
+								{
+									"displayname": "True",
+									"value": true
+								},
+								{
+									"displayname": "False",
+									"value": false
+								}
+							]
+						},
+						{
+							"key": "resource_group_name",
+							"required": true
+						},
+						{
+							"key": "existing_monitoring_crn"
+						},
+						{
+							"key": "existing_kms_instance_crn"
+						},
+						{
+							"key": "existing_scc_cos_kms_key_crn",
+							"required": true
+						},
+						{
+              "key": "kms_endpoint_type",
+              "options": [
                 {
-                    "title": "Creates a Security and Compliance Center instance.",
-                    "description": "Creates and configures a Security and Compliance Center instance."
+                  "displayname": "Public",
+                  "value": "public"
                 },
                 {
-                    "title": "Creates the COS bucket required for the Security and Compliance Center instance",
-                    "description": "Creates and configures a KMS encrypted COS bucket required for the Security and Compliance Center instance."
+                  "displayname": "Private",
+                  "value": "private"
+                }
+              ]
+            },
+						{
+							"key": "scc_cos_key_ring_name"
+						},
+						{
+							"key": "scc_cos_key_name"
+						},
+						{
+              "key": "cos_region",
+              "required": true,
+              "options": [
+                {
+                  "displayname": "Dallas (us-south)",
+                  "value": "us-south"
                 },
                 {
-                    "title": "Creates a Security and Compliance Center Workload Protection instance.",
-                    "description": "Creates and configures a Security and Compliance Center Workload Protection instance."
-                }
-            ],
-            "flavors": [
+                  "displayname": "Frankfurt (eu-de)",
+                  "value": "eu-de"
+                },
                 {
-                    "label": "Instances",
-                    "name": "instances",
-                    "install_type": "fullstack",
-                    "working_directory": "solutions/instances",
-                    "compliance": {
-                        "authority": "scc-v3",
-                        "profiles": [
-                            {
-                                "profile_name": "IBM Cloud Framework for Financial Services",
-                                "profile_version": "1.6.0"
-                            }
-                        ]
-                    },
-                    "configuration" : [
-                        {
-                          "key": "existing_scc_cos_kms_key_crn",
-                          "required": true
-                        }
-                    ],
-                    "iam_permissions": [
-                        {
-                            "service_name": "compliance",
-                            "role_crns": [
-                                "crn:v1:bluemix:public:iam::::serviceRole:Manager",
-                                "crn:v1:bluemix:public:iam::::role:Editor"
-                            ]
-                        },
-                        {
-                            "service_name": "cloud-object-storage",
-                            "role_crns": [
-                                "crn:v1:bluemix:public:iam::::serviceRole:Manager"
-                            ]
-                        },
-                        {
-                            "role_crns": [
-                              "crn:v1:bluemix:public:iam::::serviceRole:Manager",
-                              "crn:v1:bluemix:public:iam::::role:Editor"
-                            ],
-                            "service_name": "kms"
-                        }
-                    ],
-                    "architecture": {
-                        "descriptions": "This architecture supports creating and configuring an Key Protect instance.",
-                        "features": [
-                            {
-                                "title": "Creates a Security and Compliance Center instance.",
-                                "description": "Creates and configures a Security and Compliance Center instance."
-                            },
-                            {
-                                "title": "Creates the COS bucket required for the Security and Compliance Center instance",
-                                "description": "Creates and configures a KMS encrypted COS bucket required for the Security and Compliance Center instance."
-                            },
-                            {
-                                "title": "Creates a Security and Compliance Center Workload Protection instance.",
-                                "description": "Creates and configures a Security and Compliance Center Workload Protection instance."
-                            }
-                        ],
-                        "diagrams": [
-                            {
-                                "diagram": {
-                                    "caption": "Security and Compliance Center",
-                                    "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-scc-da/main/reference-architecture/scc.svg",
-                                    "type": "image/svg+xml"
-                                },
-                                "description": "This architecture supports creating and configuring IBM Security and Compliance Center resources"
-                            }
-                        ]
-                    }
+                  "displayname": "London (eu-gb)",
+                  "value": "eu-gb"
+                },
+                {
+                  "displayname": "Madrid (eu-es)",
+                  "value": "eu-es"
+                },
+                {
+                  "displayname": "Osaka (jp-osa)",
+                  "value": "jp-osa"
+                },
+                {
+                  "displayname": "Sao Paulo (br-sao)",
+                  "value": "br-sao"
+                },
+                {
+                  "displayname": "Sydney (au-syd)",
+                  "value": "au-syd"
+                },
+                {
+                  "displayname": "Tokyo (jp-tok)",
+                  "value": "jp-tok"
+                },
+                {
+                  "displayname": "Toronto (ca-tor)",
+                  "value": "ca-tor"
+                },
+                {
+                  "displayname": "Washington (us-east)",
+                  "value": "us-east"
                 }
-            ]
-        }
-    ]
+              ]
+            },
+						{
+							"key": "cos_instance_name"
+						},
+						{
+							"key": "cos_instance_tags"
+						},
+						{
+							"key": "cos_instance_access_tags"
+						},
+						{
+							"key": "scc_cos_bucket_name"
+						},
+						{
+							"key": "add_bucket_name_suffix",
+							"options": [
+                {
+                  "displayname": "True",
+                  "value": true
+                },
+                {
+                  "displayname": "False",
+                  "value": false
+                }
+              ]
+						},
+						{
+							"key": "scc_cos_bucket_access_tags"
+						},
+						{
+							"key": "scc_cos_bucket_class",
+							"options": [
+                {
+                  "displayname": "Cold",
+                  "value": "cold"
+                },
+                {
+                  "displayname": "Onerate active",
+                  "value": "onerate_active"
+                },
+                {
+                  "displayname": "Smart",
+                  "value": "smart"
+                },
+								{
+                  "displayname": "Standard",
+                  "value": "standard"
+                },
+								{
+                  "displayname": "Vault",
+                  "value": "vault"
+                }
+              ]
+						},
+						{
+							"key": "existing_cos_instance_crn"
+						},
+						{
+							"key": "existing_scc_cos_bucket_name"
+						},
+						{
+							"key": "skip_cos_kms_auth_policy",
+							"options": [
+                {
+                  "displayname": "True",
+                  "value": true
+                },
+                {
+                  "displayname": "False",
+                  "value": false
+                }
+              ]
+						},
+						{
+							"key": "management_endpoint_type_for_bucket",
+							"options": [
+                {
+                  "displayname": "Direct",
+                  "value": "direct"
+                },
+                {
+                  "displayname": "Private",
+                  "value": "private"
+                },
+                {
+                  "displayname": "Public",
+                  "value": "public"
+                }
+              ]
+						},
+						{
+							"key": "scc_instance_name"
+						},
+						{
+							"key": "scc_region",
+							"options": [
+                {
+                  "displayname": "Dallas (us-south)",
+                  "value": "us-south"
+                },
+                {
+                  "displayname": "Frankfurt (eu-de)",
+                  "value": "eu-de"
+                },
+                {
+                  "displayname": "Madrid (eu-es)",
+                  "value": "eu-es"
+                },
+                {
+                  "displayname": "Toronto (ca-tor)",
+                  "value": "ca-tor"
+                }
+              ]
+						},
+						{
+							"key": "skip_scc_cos_auth_policy",
+							"options": [
+                {
+                  "displayname": "True",
+                  "value": true
+                },
+                {
+                  "displayname": "False",
+                  "value": false
+                }
+              ]
+						},
+						{
+							"key": "scc_service_plan",
+							"options": [
+                {
+                  "displayname": "Standard",
+                  "value": "security-compliance-center-standard-plan"
+                },
+                {
+                  "displayname": "Trial",
+                  "value": "security-compliance-center-trial-plan"
+                }
+              ]
+						},
+						{
+							"key": "existing_en_crn"
+						},
+						{
+							"key": "scc_instance_tags"
+						},
+						{
+							"key": "skip_scc_workload_protection_auth_policy",
+							"options": [
+                {
+                  "displayname": "True",
+                  "value": true
+                },
+                {
+                  "displayname": "False",
+                  "value": false
+                }
+              ]
+						},
+						{
+							"key": "provision_scc_workload_protection",
+							"options": [
+                {
+                  "displayname": "True",
+                  "value": true
+                },
+                {
+                  "displayname": "False",
+                  "value": false
+                }
+              ]
+						},
+						{
+							"key": "scc_workload_protection_instance_name"
+						},
+						{
+							"key": "scc_workload_protection_service_plan",
+							"options": [
+                {
+                  "displayname": "Free trial",
+                  "value": "free-trial"
+                },
+                {
+                  "displayname": "Graduated tier",
+                  "value": "graduated-tier"
+                }
+              ]
+						},
+						{
+							"key": "scc_workload_protection_instance_tags"
+						},
+						{
+							"key": "scc_workload_protection_resource_key_name"
+						},
+						{
+							"key": "scc_workload_protection_resource_key_tags"
+						},
+						{
+							"key": "scc_workload_protection_access_tags"
+						}
+					],
+					"iam_permissions": [
+						{
+							"service_name": "compliance",
+							"role_crns": [
+								"crn:v1:bluemix:public:iam::::serviceRole:Manager",
+								"crn:v1:bluemix:public:iam::::role:Editor"
+							]
+						},
+						{
+							"service_name": "cloud-object-storage",
+							"role_crns": [
+								"crn:v1:bluemix:public:iam::::serviceRole:Manager"
+							]
+						},
+						{
+							"role_crns": [
+								"crn:v1:bluemix:public:iam::::serviceRole:Manager",
+								"crn:v1:bluemix:public:iam::::role:Editor"
+							],
+							"service_name": "kms"
+						}
+					],
+					"architecture": {
+						"descriptions": "This architecture supports creating and configuring an Key Protect instance.",
+						"features": [
+							{
+								"title": "Creates a Security and Compliance Center instance.",
+								"description": "Creates and configures a Security and Compliance Center instance."
+							},
+							{
+								"title": "Creates the COS bucket required for the Security and Compliance Center instance",
+								"description": "Creates and configures a KMS encrypted COS bucket required for the Security and Compliance Center instance."
+							},
+							{
+								"title": "Creates a Security and Compliance Center Workload Protection instance.",
+								"description": "Creates and configures a Security and Compliance Center Workload Protection instance."
+							}
+						],
+						"diagrams": [
+							{
+								"diagram": {
+									"caption": "Security and Compliance Center",
+									"url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-scc-da/main/reference-architecture/scc.svg",
+									"type": "image/svg+xml"
+								},
+								"description": "This architecture supports creating and configuring IBM Security and Compliance Center resources"
+							}
+						]
+					}
+				}
+			]
+		}
+	]
 }
