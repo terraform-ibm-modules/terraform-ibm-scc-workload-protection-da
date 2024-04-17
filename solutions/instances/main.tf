@@ -137,7 +137,7 @@ module "scc" {
   resource_tags                     = var.scc_instance_tags
   attach_wp_to_scc_instance         = var.provision_scc_workload_protection
   wp_instance_crn                   = var.provision_scc_workload_protection ? module.scc_wp[0].crn : null
-  skip_scc_wp_auth_policy           = var.skip_scc_wp_auth_policy
+  skip_scc_wp_auth_policy           = var.skip_scc_workload_protection_auth_policy
 }
 
 #######################################################################################################################
@@ -148,13 +148,13 @@ module "scc_wp" {
   count                         = var.provision_scc_workload_protection ? 1 : 0
   source                        = "terraform-ibm-modules/scc-workload-protection/ibm"
   version                       = "1.3.0"
-  name                          = var.scc_wp_instance_name
+  name                          = var.scc_workload_protection_instance_name
   region                        = var.scc_region
   resource_group_id             = module.resource_group.resource_group_id
-  resource_tags                 = var.scc_wp_instance_tags
-  resource_key_name             = var.scc_wp_resource_key_name
-  resource_key_tags             = var.scc_wp_resource_key_tags
+  resource_tags                 = var.scc_workload_protection_instance_tags
+  resource_key_name             = var.scc_workload_protection_resource_key_name
+  resource_key_tags             = var.scc_workload_protection_resource_key_tags
   cloud_monitoring_instance_crn = var.existing_monitoring_crn
-  access_tags                   = var.scc_wp_access_tags
-  scc_wp_service_plan           = var.scc_wp_service_plan
+  access_tags                   = var.scc_workload_protection_access_tags
+  scc_wp_service_plan           = var.scc_workload_protection_service_plan
 }
