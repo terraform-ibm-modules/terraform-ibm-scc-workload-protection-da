@@ -95,49 +95,17 @@
                           "key": "scc_cos_key_name"
                         },
                         {
-                          "key": "cos_region",
-                          "options": [
-                            {
-                              "displayname": "Dallas (us-south)",
-                              "value": "us-south"
+                            "custom_config": {
+                                "config_constraints": {
+                                    "generationType": "2"
+                                },
+                                "grouping": "deployment",
+                                "original_grouping": "deployment",
+                                "type": "region"
                             },
-                            {
-                              "displayname": "Frankfurt (eu-de)",
-                              "value": "eu-de"
-                            },
-                            {
-                              "displayname": "London (eu-gb)",
-                              "value": "eu-gb"
-                            },
-                            {
-                              "displayname": "Madrid (eu-es)",
-                              "value": "eu-es"
-                            },
-                            {
-                              "displayname": "Osaka (jp-osa)",
-                              "value": "jp-osa"
-                            },
-                            {
-                              "displayname": "Sao Paulo (br-sao)",
-                              "value": "br-sao"
-                            },
-                            {
-                              "displayname": "Sydney (au-syd)",
-                              "value": "au-syd"
-                            },
-                            {
-                              "displayname": "Tokyo (jp-tok)",
-                              "value": "jp-tok"
-                            },
-                            {
-                              "displayname": "Toronto (ca-tor)",
-                              "value": "ca-tor"
-                            },
-                            {
-                              "displayname": "Washington (us-east)",
-                              "value": "us-east"
-                            }
-                          ]
+                            "key": "cos_region",
+                            "required": true,
+                            "type": "string"
                         },
                         {
                           "key": "cos_instance_name"
