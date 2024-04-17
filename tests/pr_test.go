@@ -74,10 +74,10 @@ func TestInstancesInSchematics(t *testing.T) {
 		{Name: "cos_region", Value: region, DataType: "string"},
 		{Name: "cos_instance_tags", Value: options.Tags, DataType: "list(string)"},
 		{Name: "scc_instance_tags", Value: options.Tags, DataType: "list(string)"},
-		{Name: "scc_wp_instance_tags", Value: options.Tags, DataType: "list(string)"},
-		{Name: "scc_wp_resource_key_tags", Value: options.Tags, DataType: "list(string)"},
+		{Name: "scc_workload_protection_instance_tags", Value: options.Tags, DataType: "list(string)"},
+		{Name: "scc_workload_protection_resource_key_tags", Value: options.Tags, DataType: "list(string)"},
 		{Name: "scc_cos_bucket_access_tags", Value: permanentResources["accessTags"], DataType: "list(string)"},
-		{Name: "scc_wp_access_tags", Value: permanentResources["accessTags"], DataType: "list(string)"},
+		{Name: "scc_workload_protection_access_tags", Value: permanentResources["accessTags"], DataType: "list(string)"},
 		{Name: "cos_instance_access_tags", Value: permanentResources["accessTags"], DataType: "list(string)"},
 	}
 

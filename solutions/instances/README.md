@@ -61,15 +61,15 @@ No resources.
 | <a name="input_scc_instance_tags"></a> [scc\_instance\_tags](#input\_scc\_instance\_tags) | Optional list of tags to be added to SCC instance. | `list(string)` | `[]` | no |
 | <a name="input_scc_region"></a> [scc\_region](#input\_scc\_region) | The region in which to provision SCC resources. | `string` | `"us-south"` | no |
 | <a name="input_scc_service_plan"></a> [scc\_service\_plan](#input\_scc\_service\_plan) | The service/pricing plan to use when provisioning a new Security Compliance Center instance. Allowed values are: 'security-compliance-center-standard-plan' (default value) and 'security-compliance-center-trial-plan'. Only used if `provision_scc_instance` is set to true. | `string` | `"security-compliance-center-standard-plan"` | no |
-| <a name="input_scc_wp_access_tags"></a> [scc\_wp\_access\_tags](#input\_scc\_wp\_access\_tags) | A list of access tags to apply to the SCC WP instance. | `list(string)` | `[]` | no |
-| <a name="input_scc_wp_instance_name"></a> [scc\_wp\_instance\_name](#input\_scc\_wp\_instance\_name) | The name to give the SCC Workload Protection instance that will be provisioned by this solution. Must begine with a letter. Only used i 'provision\_scc\_workload\_protection' to true. | `string` | `"base-security-services-scc-wp"` | no |
-| <a name="input_scc_wp_instance_tags"></a> [scc\_wp\_instance\_tags](#input\_scc\_wp\_instance\_tags) | Optional list of tags to be added to SCC Workload Protection instance. | `list(string)` | `[]` | no |
-| <a name="input_scc_wp_resource_key_name"></a> [scc\_wp\_resource\_key\_name](#input\_scc\_wp\_resource\_key\_name) | The name to give the IBM Cloud SCC Workload Protection manager resource key. | `string` | `"SCCWPManagerKey"` | no |
-| <a name="input_scc_wp_resource_key_tags"></a> [scc\_wp\_resource\_key\_tags](#input\_scc\_wp\_resource\_key\_tags) | Tags associated with the IBM Cloud SCC WP resource key. | `list(string)` | `[]` | no |
-| <a name="input_scc_wp_service_plan"></a> [scc\_wp\_service\_plan](#input\_scc\_wp\_service\_plan) | SCC Workload Protection instance service pricing plan. Allowed values are: `free-trial` or `graduated-tier`. | `string` | `"graduated-tier"` | no |
+| <a name="input_scc_workload_protection_access_tags"></a> [scc\_workload\_protection\_access\_tags](#input\_scc\_workload\_protection\_access\_tags) | A list of access tags to apply to the SCC WP instance. | `list(string)` | `[]` | no |
+| <a name="input_scc_workload_protection_instance_name"></a> [scc\_workload\_protection\_instance\_name](#input\_scc\_workload\_protection\_instance\_name) | The name to give the SCC Workload Protection instance that will be provisioned by this solution. Must begine with a letter. Only used i 'provision\_scc\_workload\_protection' to true. | `string` | `"base-security-services-scc-wp"` | no |
+| <a name="input_scc_workload_protection_instance_tags"></a> [scc\_workload\_protection\_instance\_tags](#input\_scc\_workload\_protection\_instance\_tags) | Optional list of tags to be added to SCC Workload Protection instance. | `list(string)` | `[]` | no |
+| <a name="input_scc_workload_protection_resource_key_name"></a> [scc\_workload\_protection\_resource\_key\_name](#input\_scc\_workload\_protection\_resource\_key\_name) | The name to give the IBM Cloud SCC Workload Protection manager resource key. | `string` | `"SCCWPManagerKey"` | no |
+| <a name="input_scc_workload_protection_resource_key_tags"></a> [scc\_workload\_protection\_resource\_key\_tags](#input\_scc\_workload\_protection\_resource\_key\_tags) | Tags associated with the IBM Cloud SCC WP resource key. | `list(string)` | `[]` | no |
+| <a name="input_scc_workload_protection_service_plan"></a> [scc\_workload\_protection\_service\_plan](#input\_scc\_workload\_protection\_service\_plan) | SCC Workload Protection instance service pricing plan. Allowed values are: `free-trial` or `graduated-tier`. | `string` | `"graduated-tier"` | no |
 | <a name="input_skip_cos_kms_auth_policy"></a> [skip\_cos\_kms\_auth\_policy](#input\_skip\_cos\_kms\_auth\_policy) | Set to true to skip the creation of an IAM authorization policy that permits the COS instance created to read the encryption key from the KMS instance. WARNING: An authorization policy must exist before an encrypted bucket can be created | `bool` | `false` | no |
 | <a name="input_skip_scc_cos_auth_policy"></a> [skip\_scc\_cos\_auth\_policy](#input\_skip\_scc\_cos\_auth\_policy) | Set to true to skip the creation of an IAM authorization policy that permits the SCC instance created by this solution write access to the COS instance. Only used if `provision_scc_instance` is set to true. | `bool` | `false` | no |
-| <a name="input_skip_scc_wp_auth_policy"></a> [skip\_scc\_wp\_auth\_policy](#input\_skip\_scc\_wp\_auth\_policy) | Set to true to skip the creation of an IAM authorization policy that permits the SCC instance created by this solution read access to the workload protection instance. Only used if `provision_scc_workload_protection` is set to true. | `bool` | `false` | no |
+| <a name="input_skip_scc_workload_protection_auth_policy"></a> [skip\_scc\_workload\_protection\_auth\_policy](#input\_skip\_scc\_workload\_protection\_auth\_policy) | Set to true to skip the creation of an IAM authorization policy that permits the SCC instance created by this solution read access to the workload protection instance. Only used if `provision_scc_workload_protection` is set to true. | `bool` | `false` | no |
 | <a name="input_use_existing_resource_group"></a> [use\_existing\_resource\_group](#input\_use\_existing\_resource\_group) | Whether to use an existing resource group. | `bool` | `false` | no |
 
 ### Outputs
@@ -84,10 +84,10 @@ No resources.
 | <a name="output_scc_guid"></a> [scc\_guid](#output\_scc\_guid) | SCC instance guid |
 | <a name="output_scc_id"></a> [scc\_id](#output\_scc\_id) | SCC instance ID |
 | <a name="output_scc_name"></a> [scc\_name](#output\_scc\_name) | SCC instance name |
-| <a name="output_scc_wp_access_key"></a> [scc\_wp\_access\_key](#output\_scc\_wp\_access\_key) | SCC Workload Protection access key |
-| <a name="output_scc_wp_api_endpoint"></a> [scc\_wp\_api\_endpoint](#output\_scc\_wp\_api\_endpoint) | SCC Workload Protection API endpoint |
-| <a name="output_scc_wp_crn"></a> [scc\_wp\_crn](#output\_scc\_wp\_crn) | SCC Workload Protection instance CRN |
-| <a name="output_scc_wp_id"></a> [scc\_wp\_id](#output\_scc\_wp\_id) | SCC Workload Protection instance ID |
-| <a name="output_scc_wp_ingestion_endpoint"></a> [scc\_wp\_ingestion\_endpoint](#output\_scc\_wp\_ingestion\_endpoint) | SCC Workload Protection instance ingestion endpoint |
-| <a name="output_scc_wp_name"></a> [scc\_wp\_name](#output\_scc\_wp\_name) | SCC Workload Protection instance name |
+| <a name="output_scc_workload_protection_access_key"></a> [scc\_workload\_protection\_access\_key](#output\_scc\_workload\_protection\_access\_key) | SCC Workload Protection access key |
+| <a name="output_scc_workload_protection_api_endpoint"></a> [scc\_workload\_protection\_api\_endpoint](#output\_scc\_workload\_protection\_api\_endpoint) | SCC Workload Protection API endpoint |
+| <a name="output_scc_workload_protection_crn"></a> [scc\_workload\_protection\_crn](#output\_scc\_workload\_protection\_crn) | SCC Workload Protection instance CRN |
+| <a name="output_scc_workload_protection_id"></a> [scc\_workload\_protection\_id](#output\_scc\_workload\_protection\_id) | SCC Workload Protection instance ID |
+| <a name="output_scc_workload_protection_ingestion_endpoint"></a> [scc\_workload\_protection\_ingestion\_endpoint](#output\_scc\_workload\_protection\_ingestion\_endpoint) | SCC Workload Protection instance ingestion endpoint |
+| <a name="output_scc_workload_protection_name"></a> [scc\_workload\_protection\_name](#output\_scc\_workload\_protection\_name) | SCC Workload Protection instance name |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

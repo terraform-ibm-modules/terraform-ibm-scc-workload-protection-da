@@ -202,7 +202,7 @@ variable "scc_instance_tags" {
   default     = []
 }
 
-variable "skip_scc_wp_auth_policy" {
+variable "skip_scc_workload_protection_auth_policy" {
   type        = bool
   default     = false
   description = "Set to true to skip the creation of an IAM authorization policy that permits the SCC instance created by this solution read access to the workload protection instance. Only used if `provision_scc_workload_protection` is set to true."
@@ -218,13 +218,13 @@ variable "provision_scc_workload_protection" {
   default     = true
 }
 
-variable "scc_wp_instance_name" {
+variable "scc_workload_protection_instance_name" {
   description = "The name to give the SCC Workload Protection instance that will be provisioned by this solution. Must begine with a letter. Only used i 'provision_scc_workload_protection' to true."
   type        = string
   default     = "base-security-services-scc-wp"
 }
 
-variable "scc_wp_service_plan" {
+variable "scc_workload_protection_service_plan" {
   description = "SCC Workload Protection instance service pricing plan. Allowed values are: `free-trial` or `graduated-tier`."
   type        = string
   default     = "graduated-tier"
@@ -232,37 +232,37 @@ variable "scc_wp_service_plan" {
     error_message = "Plan for SCC Workload Protection instances can only be `free-trial` or `graduated-tier`."
     condition = contains(
       ["free-trial", "graduated-tier"],
-      var.scc_wp_service_plan
+      var.scc_workload_protection_service_plan
     )
   }
 }
 
-variable "scc_wp_instance_tags" {
+variable "scc_workload_protection_instance_tags" {
   type        = list(string)
   description = "Optional list of tags to be added to SCC Workload Protection instance."
   default     = []
 }
 
-variable "scc_wp_resource_key_name" {
+variable "scc_workload_protection_resource_key_name" {
   type        = string
   description = "The name to give the IBM Cloud SCC Workload Protection manager resource key."
   default     = "SCCWPManagerKey"
 }
 
-variable "scc_wp_resource_key_tags" {
+variable "scc_workload_protection_resource_key_tags" {
   type        = list(string)
   description = "Tags associated with the IBM Cloud SCC WP resource key."
   default     = []
 }
 
-variable "scc_wp_access_tags" {
+variable "scc_workload_protection_access_tags" {
   type        = list(string)
   description = "A list of access tags to apply to the SCC WP instance."
   default     = []
 
   validation {
     condition = alltrue([
-      for tag in var.scc_wp_access_tags : can(regex("[\\w\\-_\\.]+:[\\w\\-_\\.]+", tag)) && length(tag) <= 128
+      for tag in var.scc_workload_protection_access_tags : can(regex("[\\w\\-_\\.]+:[\\w\\-_\\.]+", tag)) && length(tag) <= 128
     ])
     error_message = "Tags must match the regular expression \"[\\w\\-_\\.]+:[\\w\\-_\\.]+\", see https://cloud.ibm.com/docs/account?topic=account-tag&interface=ui#limits for more details"
   }
