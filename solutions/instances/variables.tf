@@ -16,7 +16,7 @@ variable "use_existing_resource_group" {
 
 variable "resource_group_name" {
   type        = string
-  description = "The name of a new or an existing resource group in which to provision resources to."
+  description = "The name of a new or an existing resource group in which to provision resources to. If prefix input variable is passed then it will get prefixed infront of the value in the format of '<prefix>-value'."
 }
 
 variable "existing_monitoring_crn" {
@@ -24,6 +24,12 @@ variable "existing_monitoring_crn" {
   nullable    = true
   default     = null
   description = "(Optional) The CRN of an existing IBM Cloud Monitoring instance. Used to send all COS bucket request and usage metrics to, as well as SCC workload protection data. Ignored if using existing COS bucket and not provisioning SCC workload protection."
+}
+
+variable "prefix" {
+  type        = string
+  description = "(Optional) Prefix to append to all resources created by this solution."
+  default     = null
 }
 
 ########################################################################################################################
@@ -55,13 +61,13 @@ variable "kms_endpoint_type" {
 variable "scc_cos_key_ring_name" {
   type        = string
   default     = "scc-cos-key-ring"
-  description = "The name to give the Key Ring which will be created for the SCC COS bucket Key. Not used if supplying an existing Key."
+  description = "The name to give the Key Ring which will be created for the SCC COS bucket Key. Not used if supplying an existing Key. If prefix input variable is passed then it will get prefixed infront of the value in the format of '<prefix>-value'."
 }
 
 variable "scc_cos_key_name" {
   type        = string
   default     = "scc-cos-key"
-  description = "The name to give the Key which will be created for the SCC COS bucket. Not used if supplying an existing Key."
+  description = "The name to give the Key which will be created for the SCC COS bucket. Not used if supplying an existing Key. If prefix input variable is passed then it will get prefixed infront of the value in the format of '<prefix>-value'."
 }
 
 ########################################################################################################################
@@ -77,7 +83,7 @@ variable "cos_region" {
 variable "cos_instance_name" {
   type        = string
   default     = "base-security-services-cos"
-  description = "The name to use when creating the Cloud Object Storage instance."
+  description = "The name to use when creating the Cloud Object Storage instance. If prefix input variable is passed then it will get prefixed infront of the value in the format of '<prefix>-value'."
 }
 
 variable "cos_instance_tags" {
@@ -95,7 +101,7 @@ variable "cos_instance_access_tags" {
 variable "scc_cos_bucket_name" {
   type        = string
   default     = "base-security-services-bucket"
-  description = "The name to use when creating the SCC Cloud Object Storage bucket (NOTE: bucket names are globally unique). If 'add_bucket_name_suffix' is set to true, a random 4 characters will be added to this name to help ensure bucket name is globally unique."
+  description = "The name to use when creating the SCC Cloud Object Storage bucket (NOTE: bucket names are globally unique). If 'add_bucket_name_suffix' is set to true, a random 4 characters will be added to this name to help ensure bucket name is globally unique. If prefix input variable is passed then it will get prefixed infront of the value in the format of '<prefix>-value'."
 }
 
 variable "add_bucket_name_suffix" {
@@ -164,7 +170,7 @@ variable "existing_activity_tracker_crn" {
 variable "scc_instance_name" {
   type        = string
   default     = "base-security-services-scc"
-  description = "The name to give the SCC instance that will be provisioned by this solution."
+  description = "The name to give the SCC instance that will be provisioned by this solution. If prefix input variable is passed then it will get prefixed infront of the value in the format of '<prefix>-value'."
 }
 
 variable "scc_region" {
@@ -219,7 +225,7 @@ variable "provision_scc_workload_protection" {
 }
 
 variable "scc_workload_protection_instance_name" {
-  description = "The name to give the SCC Workload Protection instance that will be provisioned by this solution. Must begine with a letter. Only used i 'provision_scc_workload_protection' to true."
+  description = "The name to give the SCC Workload Protection instance that will be provisioned by this solution. Must begine with a letter. Only used i 'provision_scc_workload_protection' to true. If prefix input variable is passed then it will get prefixed infront of the value in the format of '<prefix>-value'."
   type        = string
   default     = "base-security-services-scc-wp"
 }
@@ -245,7 +251,7 @@ variable "scc_workload_protection_instance_tags" {
 
 variable "scc_workload_protection_resource_key_name" {
   type        = string
-  description = "The name to give the IBM Cloud SCC Workload Protection manager resource key."
+  description = "The name to give the IBM Cloud SCC Workload Protection manager resource key. If prefix input variable is passed then it will get prefixed infront of the value in the format of '<prefix>-value'."
   default     = "SCCWPManagerKey"
 }
 
