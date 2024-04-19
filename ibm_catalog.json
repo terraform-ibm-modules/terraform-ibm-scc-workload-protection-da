@@ -66,6 +66,9 @@
                           "key": "resource_group_name"
                         },
                         {
+                          "key": "prefix"
+                        },
+                        {
                           "key": "existing_monitoring_crn"
                         },
                         {
