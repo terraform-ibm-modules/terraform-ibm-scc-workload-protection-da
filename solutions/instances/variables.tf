@@ -39,7 +39,7 @@ variable "existing_kms_instance_crn" {
 variable "existing_scc_cos_kms_key_crn" {
   type        = string
   default     = null
-  description = "(OPTIONAL) The CRN of an existing KMS key to be used to encrypt the SCC COS bucket. If no value is passed, a value must be passed for either the existing_kms_instance_crn input variable if you want to create a new key ring and key, or the existing_scc_cos_bucket_name input variable if you want to use an existing bucket."
+  description = "(OPTIONAL) The CRN of an existing KMS key to be used to encrypt the SCC COS bucket. If no value is passed, a value must be passed for either the `existing_kms_instance_crn` input variable if you want to create a new key ring and key, or the `existing_scc_cos_bucket_name` input variable if you want to use an existing bucket."
 }
 
 variable "kms_endpoint_type" {
