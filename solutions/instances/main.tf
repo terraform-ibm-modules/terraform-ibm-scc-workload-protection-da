@@ -18,7 +18,7 @@ locals {
 module "resource_group" {
   source                       = "terraform-ibm-modules/resource-group/ibm"
   version                      = "1.1.5"
-  resource_group_name          = var.use_existing_resource_group == false ? var.resource_group_name : null
+  resource_group_name          = var.use_existing_resource_group == false ? (var.prefix != null ? "${var.prefix}-${var.resource_group_name}" : var.resource_group_name) : null
   existing_resource_group_name = var.use_existing_resource_group == true ? var.resource_group_name : null
 }
 
@@ -30,6 +30,14 @@ locals {
   parsed_existing_kms_instance_crn = var.existing_kms_instance_crn != null ? split(":", var.existing_kms_instance_crn) : []
   kms_region                       = length(local.parsed_existing_kms_instance_crn) > 0 ? local.parsed_existing_kms_instance_crn[5] : null
   existing_kms_guid                = length(local.parsed_existing_kms_instance_crn) > 0 ? local.parsed_existing_kms_instance_crn[7] : null
+
+  scc_cos_key_ring_name                     = var.prefix != null ? "${var.prefix}-${var.scc_cos_key_ring_name}" : var.scc_cos_key_ring_name
+  scc_cos_key_name                          = var.prefix != null ? "${var.prefix}-${var.scc_cos_key_name}" : var.scc_cos_key_name
+  cos_instance_name                         = var.prefix != null ? "${var.prefix}-${var.cos_instance_name}" : var.cos_instance_name
+  scc_instance_name                         = var.prefix != null ? "${var.prefix}-${var.scc_instance_name}" : var.scc_instance_name
+  scc_workload_protection_instance_name     = var.prefix != null ? "${var.prefix}-${var.scc_workload_protection_instance_name}" : var.scc_workload_protection_instance_name
+  scc_workload_protection_resource_key_name = var.prefix != null ? "${var.prefix}-${var.scc_workload_protection_resource_key_name}" : var.scc_workload_protection_resource_key_name
+  scc_cos_bucket_name                       = var.prefix != null ? "${var.prefix}-${var.scc_cos_bucket_name}" : var.scc_cos_bucket_name
 }
 
 # KMS root key for SCC COS bucket
@@ -39,7 +47,7 @@ module "kms" {
   }
   count                       = var.existing_scc_cos_kms_key_crn != null || var.existing_scc_cos_bucket_name != null ? 0 : 1 # no need to create any KMS resources if passing an existing key, or bucket
   source                      = "terraform-ibm-modules/kms-all-inclusive/ibm"
-  version                     = "4.8.5"
+  version                     = "4.9.1"
   create_key_protect_instance = false
   region                      = local.kms_region
   existing_kms_instance_guid  = local.existing_kms_guid
@@ -47,12 +55,12 @@ module "kms" {
   key_endpoint_type           = var.kms_endpoint_type
   keys = [
     {
-      key_ring_name         = var.scc_cos_key_ring_name
+      key_ring_name         = local.scc_cos_key_ring_name
       existing_key_ring     = false
       force_delete_key_ring = true
       keys = [
         {
-          key_name                 = var.scc_cos_key_name
+          key_name                 = local.scc_cos_key_name
           standard_key             = false
           rotation_interval_month  = 3
           dual_auth_delete_enabled = false
@@ -68,9 +76,9 @@ module "kms" {
 #######################################################################################################################
 
 locals {
-  scc_cos_kms_key_crn = var.existing_scc_cos_bucket_name != null ? null : var.existing_scc_cos_kms_key_crn != null ? var.existing_scc_cos_kms_key_crn : module.kms[0].keys[format("%s.%s", var.scc_cos_key_ring_name, var.scc_cos_key_name)].crn
+  scc_cos_kms_key_crn = var.existing_scc_cos_bucket_name != null ? null : var.existing_scc_cos_kms_key_crn != null ? var.existing_scc_cos_kms_key_crn : module.kms[0].keys[format("%s.%s", local.scc_cos_key_ring_name, local.scc_cos_key_name)].crn
   cos_instance_crn    = var.existing_cos_instance_crn != null ? var.existing_cos_instance_crn : module.cos[0].cos_instance_crn
-  cos_bucket_name     = var.existing_scc_cos_bucket_name != null ? var.existing_scc_cos_bucket_name : module.cos[0].buckets[var.scc_cos_bucket_name].bucket_name
+  cos_bucket_name     = var.existing_scc_cos_bucket_name != null ? var.existing_scc_cos_bucket_name : module.cos[0].buckets[local.scc_cos_bucket_name].bucket_name
 
   activity_tracking = var.existing_activity_tracker_crn != null ? {
     read_data_events     = true
@@ -95,7 +103,7 @@ module "cos" {
   resource_group_id        = module.resource_group.resource_group_id
   create_cos_instance      = var.existing_cos_instance_crn == null ? true : false # don't create instance if existing one passed in
   create_resource_key      = false
-  cos_instance_name        = var.cos_instance_name
+  cos_instance_name        = local.cos_instance_name
   cos_tags                 = var.cos_instance_tags
   existing_cos_instance_id = var.existing_cos_instance_crn
   access_tags              = var.cos_instance_access_tags
@@ -103,7 +111,7 @@ module "cos" {
   bucket_configs = [{
     access_tags                   = var.scc_cos_bucket_access_tags
     add_bucket_name_suffix        = var.add_bucket_name_suffix
-    bucket_name                   = var.scc_cos_bucket_name
+    bucket_name                   = local.scc_cos_bucket_name
     kms_encryption_enabled        = true
     kms_guid                      = local.existing_kms_guid
     kms_key_crn                   = local.scc_cos_kms_key_crn
@@ -128,7 +136,7 @@ module "scc" {
   version                           = "1.4.1"
   resource_group_id                 = module.resource_group.resource_group_id
   region                            = var.scc_region
-  instance_name                     = var.scc_instance_name
+  instance_name                     = local.scc_instance_name
   plan                              = var.scc_service_plan
   cos_bucket                        = local.cos_bucket_name
   cos_instance_crn                  = local.cos_instance_crn
@@ -148,11 +156,11 @@ module "scc_wp" {
   count                         = var.provision_scc_workload_protection ? 1 : 0
   source                        = "terraform-ibm-modules/scc-workload-protection/ibm"
   version                       = "1.3.0"
-  name                          = var.scc_workload_protection_instance_name
+  name                          = local.scc_workload_protection_instance_name
   region                        = var.scc_region
   resource_group_id             = module.resource_group.resource_group_id
   resource_tags                 = var.scc_workload_protection_instance_tags
-  resource_key_name             = var.scc_workload_protection_resource_key_name
+  resource_key_name             = local.scc_workload_protection_resource_key_name
   resource_key_tags             = var.scc_workload_protection_resource_key_tags
   cloud_monitoring_instance_crn = var.existing_monitoring_crn
   access_tags                   = var.scc_workload_protection_access_tags
