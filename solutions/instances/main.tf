@@ -157,8 +157,7 @@ module "create_profile_attachment" {
   attachment_name        = var.attachment_name
   attachment_description = var.attachment_description
   attachment_schedule    = var.attachment_schedule
-  # scope the attachment to a specific account
-  scope = var.scope
+  scope                  = var.scope
 }
 
 #######################################################################################################################
