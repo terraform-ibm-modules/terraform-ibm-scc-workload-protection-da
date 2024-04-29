@@ -229,6 +229,42 @@
                           "key": "skip_scc_workload_protection_auth_policy"
                         },
                         {
+                          "key": "attachment_profile_name"
+                        },
+                        {
+                          "key": "attatchment_profile_version"
+                        },
+                        {
+                          "key": "attachment_name"
+                        },
+                        {
+                          "key": "attachment_description"
+                        },
+                        {
+                          "key": "attachment_schedule",
+                          "options": [
+                            {
+                              "displayname": "Daily",
+                              "value": "daily"
+                            },
+                            {
+                              "displayname": "Every 7 days",
+                              "value": "every_7_days"
+                            },
+                            {
+                              "displayname": "Every 30 days",
+                              "value": "every_30_days"
+                            },
+                            {
+                              "displayname": "None",
+                              "value": "none"
+                            }
+                          ]
+                        },
+                        {
+                          "key": "scope"
+                        },
+                        {
                           "key": "provision_scc_workload_protection"
                         },
                         {
