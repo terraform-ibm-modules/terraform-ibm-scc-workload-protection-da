@@ -66,6 +66,22 @@ func TestInstancesInSchematics(t *testing.T) {
 		WaitJobCompleteMinutes: 60,
 	})
 
+	scope := []map[string]interface{}{
+		{
+			"environment": "ibm-cloud",
+			"properties": []map[string]interface{}{
+				{
+					"name":  "scope_type",
+					"value": "account",
+				},
+				{
+					"name":  "scope_id",
+					"value": permanentResources["ge_dev_account_id"],
+				},
+			},
+		},
+	}
+
 	options.TerraformVars = []testschematic.TestSchematicTerraformVar{
 		{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
 		{Name: "resource_group_name", Value: options.Prefix, DataType: "string"},
@@ -80,6 +96,9 @@ func TestInstancesInSchematics(t *testing.T) {
 		{Name: "scc_workload_protection_access_tags", Value: permanentResources["accessTags"], DataType: "list(string)"},
 		{Name: "cos_instance_access_tags", Value: permanentResources["accessTags"], DataType: "list(string)"},
 		{Name: "prefix", Value: options.Prefix, DataType: "string"},
+		{Name: "attachment_profile_name", Value: "SOC 2", DataType: "string"},
+		{Name: "attatchment_profile_version", Value: "1.0.0", DataType: "string"},
+		{Name: "scope", Value: scope, DataType: "list(object)"},
 	}
 
 	err := options.RunSchematicTest()

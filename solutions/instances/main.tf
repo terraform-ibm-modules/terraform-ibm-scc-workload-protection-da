@@ -148,6 +148,19 @@ module "scc" {
   skip_scc_wp_auth_policy           = var.skip_scc_workload_protection_auth_policy
 }
 
+module "create_profile_attachment" {
+  source                 = "terraform-ibm-modules/scc/ibm//modules/attachment"
+  version                = "1.4.2"
+  profile_name           = var.attachment_profile_name
+  profile_version        = var.attatchment_profile_version
+  scc_instance_id        = module.scc.guid
+  attachment_name        = var.attachment_name
+  attachment_description = var.attachment_description
+  attachment_schedule    = var.attachment_schedule
+  # scope the attachment to a specific resource group
+  scope = var.scope
+}
+
 #######################################################################################################################
 # SCC WP
 #######################################################################################################################
