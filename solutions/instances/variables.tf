@@ -17,7 +17,6 @@ variable "use_existing_resource_group" {
 variable "resource_group_name" {
   type        = string
   description = "The name of a new or an existing resource group in which to provision resources to. If prefix input variable is passed then it will get prefixed infront of the value in the format of '<prefix>-value'."
-  default     = "scc-rg"
 }
 
 variable "existing_monitoring_crn" {
@@ -30,7 +29,7 @@ variable "existing_monitoring_crn" {
 variable "prefix" {
   type        = string
   description = "(Optional) Prefix to append to all resources created by this solution."
-  default     = "scc"
+  default     = null
 }
 
 ########################################################################################################################
@@ -39,7 +38,7 @@ variable "prefix" {
 
 variable "existing_kms_instance_crn" {
   type        = string
-  default     = "crn:v1:bluemix:public:hs-crypto:us-south:a/abac0df06b644a9cabc6e44f55b3880e:e6dce284-e80f-46e1-a3c1-830f7adff7a9::"
+  default     = null
   description = "The CRN of the existed Hyper Protect Crypto Services or Key Protect instance. Only required if not supplying an existing KMS root key and if 'skip_cos_kms_auth_policy' is true."
 }
 
@@ -52,7 +51,7 @@ variable "existing_scc_cos_kms_key_crn" {
 variable "kms_endpoint_type" {
   type        = string
   description = "The type of endpoint to be used for commincating with the KMS instance. Allowed values are: 'public' or 'private' (default)"
-  default     = "public"
+  default     = "private"
   validation {
     condition     = can(regex("public|private", var.kms_endpoint_type))
     error_message = "The kms_endpoint_type value must be 'public' or 'private'."
@@ -150,7 +149,7 @@ variable "skip_cos_kms_auth_policy" {
 variable "management_endpoint_type_for_bucket" {
   description = "The type of endpoint for the IBM terraform provider to use to manage COS buckets. (`public`, `private` or `direct`). Ensure to enable virtual routing and forwarding (VRF) in your account if using `private`, and that the terraform runtime has access to the the IBM Cloud private network."
   type        = string
-  default     = "public"
+  default     = "private"
   validation {
     condition     = contains(["public", "private", "direct"], var.management_endpoint_type_for_bucket)
     error_message = "The specified management_endpoint_type_for_bucket is not a valid selection!"
