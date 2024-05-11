@@ -46,7 +46,7 @@ module "cloud_monitoring" {
 
 module "event_notifications" {
   source            = "terraform-ibm-modules/event-notifications/ibm"
-  version           = "1.3.2"
+  version           = "1.3.4"
   resource_group_id = module.resource_group.resource_group_id
   name              = "${var.prefix}-en"
   tags              = var.resource_tags
