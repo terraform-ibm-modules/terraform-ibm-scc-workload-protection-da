@@ -15,7 +15,7 @@ This solution supports the following:
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.0, <1.7.0 |
-| <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | 1.64.2 |
+| <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | 1.65.0 |
 
 ### Modules
 
