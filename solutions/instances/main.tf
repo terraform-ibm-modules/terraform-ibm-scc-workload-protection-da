@@ -36,7 +36,7 @@ locals {
   cos_instance_name                         = var.prefix != null ? "${var.prefix}-${var.cos_instance_name}" : var.cos_instance_name
   scc_instance_name                         = var.prefix != null ? "${var.prefix}-${var.scc_instance_name}" : var.scc_instance_name
   scc_workload_protection_instance_name     = var.prefix != null ? "${var.prefix}-${var.scc_workload_protection_instance_name}" : var.scc_workload_protection_instance_name
-  scc_workload_protection_resource_key_name = var.prefix != null ? "${var.prefix}-${var.scc_workload_protection_resource_key_name}" : var.scc_workload_protection_resource_key_name
+  scc_workload_protection_resource_key_name = var.prefix != null ? "${var.prefix}-${var.scc_workload_protection_instance_name}-key" : "${var.scc_workload_protection_instance_name}-key"
   scc_cos_bucket_name                       = var.prefix != null ? "${var.prefix}-${var.scc_cos_bucket_name}" : var.scc_cos_bucket_name
 }
 
