@@ -249,12 +249,6 @@ variable "scc_workload_protection_instance_tags" {
   default     = []
 }
 
-variable "scc_workload_protection_resource_key_name" {
-  type        = string
-  description = "The name to give the IBM Cloud SCC Workload Protection manager resource key. If prefix input variable is passed then it will get prefixed infront of the value in the format of '<prefix>-value'."
-  default     = "SCCWPManagerKey"
-}
-
 variable "scc_workload_protection_resource_key_tags" {
   type        = list(string)
   description = "Tags associated with the IBM Cloud SCC WP resource key."
