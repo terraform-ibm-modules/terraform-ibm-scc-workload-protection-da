@@ -45,7 +45,7 @@ variable "existing_kms_instance_crn" {
 variable "existing_scc_cos_kms_key_crn" {
   type        = string
   default     = null
-  description = "The CRN of an existing KMS key to be used to encrypt the SCC COS bucket. If no value is passed, a value must be passed for either 'var.existing_kms_instance_crn' if you want to create a new key ring and key, or 'var.existing_scc_cos_bucket_name' if you want to use an existing bucket."
+  description = "(OPTIONAL) The CRN of an existing KMS key to be used to encrypt the SCC COS bucket. If no value is passed, a value must be passed for either the `existing_kms_instance_crn` input variable if you want to create a new key ring and key, or the `existing_scc_cos_bucket_name` input variable if you want to use an existing bucket."
 }
 
 variable "kms_endpoint_type" {
@@ -266,12 +266,6 @@ variable "scc_workload_protection_instance_tags" {
   type        = list(string)
   description = "Optional list of tags to be added to SCC Workload Protection instance."
   default     = []
-}
-
-variable "scc_workload_protection_resource_key_name" {
-  type        = string
-  description = "The name to give the IBM Cloud SCC Workload Protection manager resource key. If prefix input variable is passed then it will get prefixed infront of the value in the format of '<prefix>-value'."
-  default     = "SCCWPManagerKey"
 }
 
 variable "scc_workload_protection_resource_key_tags" {

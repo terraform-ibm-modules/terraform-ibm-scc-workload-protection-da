@@ -15,7 +15,7 @@ This solution supports the following:
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.0, <1.7.0 |
-| <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | 1.64.2 |
+| <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | 1.65.1 |
 
 ### Modules
 
@@ -23,7 +23,7 @@ This solution supports the following:
 |------|--------|---------|
 | <a name="module_cos"></a> [cos](#module\_cos) | terraform-ibm-modules/cos/ibm//modules/fscloud | 7.5.3 |
 | <a name="module_create_profile_attachment"></a> [create\_profile\_attachment](#module\_create\_profile\_attachment) | terraform-ibm-modules/scc/ibm//modules/attachment | 1.4.2 |
-| <a name="module_kms"></a> [kms](#module\_kms) | terraform-ibm-modules/kms-all-inclusive/ibm | 4.9.1 |
+| <a name="module_kms"></a> [kms](#module\_kms) | terraform-ibm-modules/kms-all-inclusive/ibm | 4.11.2 |
 | <a name="module_resource_group"></a> [resource\_group](#module\_resource\_group) | terraform-ibm-modules/resource-group/ibm | 1.1.5 |
 | <a name="module_scc"></a> [scc](#module\_scc) | terraform-ibm-modules/scc/ibm | 1.4.2 |
 | <a name="module_scc_wp"></a> [scc\_wp](#module\_scc\_wp) | terraform-ibm-modules/scc-workload-protection/ibm | 1.3.0 |
@@ -48,7 +48,7 @@ No resources.
 | <a name="input_existing_kms_instance_crn"></a> [existing\_kms\_instance\_crn](#input\_existing\_kms\_instance\_crn) | The CRN of the existed Hyper Protect Crypto Services or Key Protect instance. Only required if not supplying an existing KMS root key and if 'skip\_cos\_kms\_auth\_policy' is true. | `string` | `null` | no |
 | <a name="input_existing_monitoring_crn"></a> [existing\_monitoring\_crn](#input\_existing\_monitoring\_crn) | (Optional) The CRN of an existing IBM Cloud Monitoring instance. Used to send all COS bucket request and usage metrics to, as well as SCC workload protection data. Ignored if using existing COS bucket and not provisioning SCC workload protection. | `string` | `null` | no |
 | <a name="input_existing_scc_cos_bucket_name"></a> [existing\_scc\_cos\_bucket\_name](#input\_existing\_scc\_cos\_bucket\_name) | The name of an existing bucket inside the existing Cloud Object Storage instance to use for SCC. If not supplied, a new bucket will be created. | `string` | `null` | no |
-| <a name="input_existing_scc_cos_kms_key_crn"></a> [existing\_scc\_cos\_kms\_key\_crn](#input\_existing\_scc\_cos\_kms\_key\_crn) | The CRN of an existing KMS key to be used to encrypt the SCC COS bucket. If no value is passed, a value must be passed for either 'var.existing\_kms\_instance\_crn' if you want to create a new key ring and key, or 'var.existing\_scc\_cos\_bucket\_name' if you want to use an existing bucket. | `string` | `null` | no |
+| <a name="input_existing_scc_cos_kms_key_crn"></a> [existing\_scc\_cos\_kms\_key\_crn](#input\_existing\_scc\_cos\_kms\_key\_crn) | (OPTIONAL) The CRN of an existing KMS key to be used to encrypt the SCC COS bucket. If no value is passed, a value must be passed for either the `existing_kms_instance_crn` input variable if you want to create a new key ring and key, or the `existing_scc_cos_bucket_name` input variable if you want to use an existing bucket. | `string` | `null` | no |
 | <a name="input_ibmcloud_api_key"></a> [ibmcloud\_api\_key](#input\_ibmcloud\_api\_key) | The API Key to use for IBM Cloud. | `string` | n/a | yes |
 | <a name="input_kms_endpoint_type"></a> [kms\_endpoint\_type](#input\_kms\_endpoint\_type) | The type of endpoint to be used for commincating with the KMS instance. Allowed values are: 'public' or 'private' (default) | `string` | `"private"` | no |
 | <a name="input_management_endpoint_type_for_bucket"></a> [management\_endpoint\_type\_for\_bucket](#input\_management\_endpoint\_type\_for\_bucket) | The type of endpoint for the IBM terraform provider to use to manage COS buckets. (`public`, `private` or `direct`). Ensure to enable virtual routing and forwarding (VRF) in your account if using `private`, and that the terraform runtime has access to the the IBM Cloud private network. | `string` | `"private"` | no |
@@ -67,7 +67,6 @@ No resources.
 | <a name="input_scc_workload_protection_access_tags"></a> [scc\_workload\_protection\_access\_tags](#input\_scc\_workload\_protection\_access\_tags) | A list of access tags to apply to the SCC WP instance. | `list(string)` | `[]` | no |
 | <a name="input_scc_workload_protection_instance_name"></a> [scc\_workload\_protection\_instance\_name](#input\_scc\_workload\_protection\_instance\_name) | The name to give the SCC Workload Protection instance that will be provisioned by this solution. Must begine with a letter. Only used i 'provision\_scc\_workload\_protection' to true. If prefix input variable is passed then it will get prefixed infront of the value in the format of '<prefix>-value'. | `string` | `"base-security-services-scc-wp"` | no |
 | <a name="input_scc_workload_protection_instance_tags"></a> [scc\_workload\_protection\_instance\_tags](#input\_scc\_workload\_protection\_instance\_tags) | Optional list of tags to be added to SCC Workload Protection instance. | `list(string)` | `[]` | no |
-| <a name="input_scc_workload_protection_resource_key_name"></a> [scc\_workload\_protection\_resource\_key\_name](#input\_scc\_workload\_protection\_resource\_key\_name) | The name to give the IBM Cloud SCC Workload Protection manager resource key. If prefix input variable is passed then it will get prefixed infront of the value in the format of '<prefix>-value'. | `string` | `"SCCWPManagerKey"` | no |
 | <a name="input_scc_workload_protection_resource_key_tags"></a> [scc\_workload\_protection\_resource\_key\_tags](#input\_scc\_workload\_protection\_resource\_key\_tags) | Tags associated with the IBM Cloud SCC WP resource key. | `list(string)` | `[]` | no |
 | <a name="input_scc_workload_protection_service_plan"></a> [scc\_workload\_protection\_service\_plan](#input\_scc\_workload\_protection\_service\_plan) | SCC Workload Protection instance service pricing plan. Allowed values are: `free-trial` or `graduated-tier`. | `string` | `"graduated-tier"` | no |
 | <a name="input_skip_cos_kms_auth_policy"></a> [skip\_cos\_kms\_auth\_policy](#input\_skip\_cos\_kms\_auth\_policy) | Set to true to skip the creation of an IAM authorization policy that permits the COS instance created to read the encryption key from the KMS instance. WARNING: An authorization policy must exist before an encrypted bucket can be created | `bool` | `false` | no |

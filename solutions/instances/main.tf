@@ -36,7 +36,7 @@ locals {
   cos_instance_name                         = var.prefix != null ? "${var.prefix}-${var.cos_instance_name}" : var.cos_instance_name
   scc_instance_name                         = var.prefix != null ? "${var.prefix}-${var.scc_instance_name}" : var.scc_instance_name
   scc_workload_protection_instance_name     = var.prefix != null ? "${var.prefix}-${var.scc_workload_protection_instance_name}" : var.scc_workload_protection_instance_name
-  scc_workload_protection_resource_key_name = var.prefix != null ? "${var.prefix}-${var.scc_workload_protection_resource_key_name}" : var.scc_workload_protection_resource_key_name
+  scc_workload_protection_resource_key_name = var.prefix != null ? "${var.prefix}-${var.scc_workload_protection_instance_name}-key" : "${var.scc_workload_protection_instance_name}-key"
   scc_cos_bucket_name                       = var.prefix != null ? "${var.prefix}-${var.scc_cos_bucket_name}" : var.scc_cos_bucket_name
 }
 
@@ -47,7 +47,7 @@ module "kms" {
   }
   count                       = var.existing_scc_cos_kms_key_crn != null || var.existing_scc_cos_bucket_name != null ? 0 : 1 # no need to create any KMS resources if passing an existing key, or bucket
   source                      = "terraform-ibm-modules/kms-all-inclusive/ibm"
-  version                     = "4.9.1"
+  version                     = "4.11.2"
   create_key_protect_instance = false
   region                      = local.kms_region
   existing_kms_instance_guid  = local.existing_kms_guid

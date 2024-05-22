@@ -254,9 +254,6 @@
                           "key": "scc_workload_protection_instance_tags"
                         },
                         {
-                          "key": "scc_workload_protection_resource_key_name"
-                        },
-                        {
                           "key": "scc_workload_protection_resource_key_tags"
                         },
                         {
