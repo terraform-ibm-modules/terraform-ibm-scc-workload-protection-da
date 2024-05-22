@@ -221,13 +221,15 @@ variable "attachments" {
     profile_version = string
     description     = string
     schedule        = string
-    scope = list(object({
-      environment = optional(string, "ibm-cloud")
-      properties = list(object({
-        name  = string
-        value = string
-      }))
-    }))
+    scope = optional(list(
+      object({
+        environment = optional(string, "ibm-cloud")
+        properties = list(object({
+          name  = string
+          value = string
+        }))
+      })
+    ))
   }))
   description = "scc attachments"
   default     = []

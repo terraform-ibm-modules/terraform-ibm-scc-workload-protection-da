@@ -30,14 +30,16 @@ This solution supports the following:
 
 ### Resources
 
-No resources.
+| Name | Type |
+|------|------|
+| [ibm_iam_account_settings.iam_account_settings](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.65.1/docs/data-sources/iam_account_settings) | data source |
 
 ### Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_add_bucket_name_suffix"></a> [add\_bucket\_name\_suffix](#input\_add\_bucket\_name\_suffix) | Add random generated suffix (4 characters long) to the newly provisioned SCC COS bucket name. Only used if not passing existing bucket. set to false if you want full control over bucket naming using the 'scc\_cos\_bucket\_name' variable. | `bool` | `true` | no |
-| <a name="input_attachments"></a> [attachments](#input\_attachments) | scc attachments | <pre>list(object({<br>    name            = string<br>    profile_name    = string<br>    profile_version = string<br>    description     = string<br>    schedule        = string<br>    scope = list(object({<br>      environment = optional(string, "ibm-cloud")<br>      properties = list(object({<br>        name  = string<br>        value = string<br>      }))<br>    }))<br>  }))</pre> | `[]` | no |
+| <a name="input_attachments"></a> [attachments](#input\_attachments) | scc attachments | <pre>list(object({<br>    name            = string<br>    profile_name    = string<br>    profile_version = string<br>    description     = string<br>    schedule        = string<br>    scope = optional(list(<br>      object({<br>        environment = optional(string, "ibm-cloud")<br>        properties = list(object({<br>          name  = string<br>          value = string<br>        }))<br>      })<br>    ))<br>  }))</pre> | `[]` | no |
 | <a name="input_cos_instance_access_tags"></a> [cos\_instance\_access\_tags](#input\_cos\_instance\_access\_tags) | A list of access tags to apply to the Cloud Object Storage instance. Only used if not supplying an existing instance. | `list(string)` | `[]` | no |
 | <a name="input_cos_instance_name"></a> [cos\_instance\_name](#input\_cos\_instance\_name) | The name to use when creating the Cloud Object Storage instance. If prefix input variable is passed then it will get prefixed infront of the value in the format of '<prefix>-value'. | `string` | `"base-security-services-cos"` | no |
 | <a name="input_cos_instance_tags"></a> [cos\_instance\_tags](#input\_cos\_instance\_tags) | Optional list of tags to be added to Cloud Object Storage instance. Only used if not supplying an existing instance. | `list(string)` | `[]` | no |
