@@ -220,7 +220,7 @@ variable "attachments" {
     profile_name    = string
     profile_version = string
     description     = string
-    schedule        = string
+    schedule        = optional(string, "daily")
     scope = optional(list(
       object({
         environment = optional(string, "ibm-cloud")
