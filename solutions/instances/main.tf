@@ -128,7 +128,7 @@ module "cos" {
 }
 
 #######################################################################################################################
-# SCC
+# SCC Instance
 #######################################################################################################################
 
 module "scc" {
@@ -148,6 +148,10 @@ module "scc" {
   skip_scc_wp_auth_policy           = var.skip_scc_workload_protection_auth_policy
 }
 
+#######################################################################################################################
+# SCC Attachment
+#######################################################################################################################
+
 # Data source to account settings
 data "ibm_iam_account_settings" "iam_account_settings" {}
 
@@ -164,23 +168,25 @@ module "create_profile_attachment" {
   attachment_name        = each.value.name
   attachment_description = each.value.description
   attachment_schedule    = each.value.schedule
-  scope = each.value.scope == null ? {
-    environment = "ibm-cloud"
-    properties = [
-      {
-        name  = "scope_type"
-        value = "account"
-      },
-      {
-        name  = "scope_id"
-        value = data.ibm_iam_account_settings.iam_account_settings.account_id
-      },
-    ]
-  } : each.value.scope
+  scope = each.value.scope == null ? [
+    {
+      environment = "ibm-cloud"
+      properties = [
+        {
+          name  = "scope_type"
+          value = "account"
+        },
+        {
+          name  = "scope_id"
+          value = data.ibm_iam_account_settings.iam_account_settings.account_id
+        },
+      ]
+    }
+  ] : each.value.scope
 }
 
 #######################################################################################################################
-# SCC WP
+# SCC Workload Protection
 #######################################################################################################################
 
 module "scc_wp" {
