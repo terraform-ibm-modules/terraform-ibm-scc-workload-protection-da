@@ -51,7 +51,6 @@ func TestMain(m *testing.M) {
 
 func TestAgentsInSchematics(t *testing.T) {
 	t.Parallel()
-	// t.Skip()
 
 	var region = validRegions[rand.Intn(len(validRegions))]
 
@@ -131,7 +130,7 @@ func TestAgentsInSchematics(t *testing.T) {
 
 func TestInstancesInSchematics(t *testing.T) {
 	t.Parallel()
-	t.Skip()
+
 	var region = validRegions[rand.Intn(len(validRegions))]
 
 	options := testschematic.TestSchematicOptionsDefault(&testschematic.TestSchematicOptions{
@@ -170,7 +169,7 @@ func TestInstancesInSchematics(t *testing.T) {
 
 func TestRunUpgradeInstances(t *testing.T) {
 	t.Parallel()
-	t.Skip()
+
 	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
 		Testing:      t,
 		TerraformDir: instanceFlavorDir,
@@ -194,7 +193,7 @@ func TestRunUpgradeInstances(t *testing.T) {
 // A test to pass existing resources to the SCC instances DA
 func TestRunExistingResourcesInstances(t *testing.T) {
 	t.Parallel()
-	t.Skip()
+
 	// ------------------------------------------------------------------------------------
 	// Provision COS, Sysdig and EN first
 	// ------------------------------------------------------------------------------------
