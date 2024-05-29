@@ -214,25 +214,10 @@ variable "skip_scc_workload_protection_auth_policy" {
   description = "Set to true to skip the creation of an IAM authorization policy that permits the SCC instance created by this solution read access to the workload protection instance. Only used if `provision_scc_workload_protection` is set to true."
 }
 
-variable "attachments" {
-  type = list(object({
-    name            = string
-    profile_name    = string
-    profile_version = string
-    description     = string
-    schedule        = optional(string, "daily")
-    scope = optional(list(
-      object({
-        environment = optional(string, "ibm-cloud")
-        properties = list(object({
-          name  = string
-          value = string
-        }))
-      })
-    ))
-  }))
-  description = "scc attachments"
-  default     = []
+variable "profile_attachments" {
+  type        = list(string)
+  description = "SCC profile attachments."
+  default     = ["IBM Cloud Framework for Financial Services"]
 }
 
 ########################################################################################################################

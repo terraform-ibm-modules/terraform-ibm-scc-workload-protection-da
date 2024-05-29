@@ -156,19 +156,16 @@ module "scc" {
 data "ibm_iam_account_settings" "iam_account_settings" {}
 
 module "create_profile_attachment" {
-  source  = "terraform-ibm-modules/scc/ibm//modules/attachment"
-  version = "1.4.2"
-  for_each = {
-    for index, attachment in var.attachments :
-    attachment.name => attachment
-  }
-  profile_name           = each.value.profile_name
-  profile_version        = each.value.profile_version
+  source                 = "terraform-ibm-modules/scc/ibm//modules/attachment"
+  version                = "1.4.2"
+  for_each               = toset(var.profile_attachments)
+  profile_name           = each.key
+  profile_version        = "latest"
   scc_instance_id        = module.scc.guid
-  attachment_name        = each.value.name
-  attachment_description = each.value.description
-  attachment_schedule    = each.value.schedule
-  scope = each.value.scope == null ? [
+  attachment_name        = "${var.prefix}-scc-attachment-${each.value + 1}"
+  attachment_description = "${var.prefix}-scc-attachment-${each.value + 1} description"
+  attachment_schedule    = "daily"
+  scope = [
     {
       environment = "ibm-cloud"
       properties = [
@@ -182,7 +179,7 @@ module "create_profile_attachment" {
         },
       ]
     }
-  ] : each.value.scope
+  ]
 }
 
 #######################################################################################################################
