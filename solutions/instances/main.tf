@@ -156,9 +156,12 @@ module "scc" {
 data "ibm_iam_account_settings" "iam_account_settings" {}
 
 module "create_profile_attachment" {
-  source                 = "terraform-ibm-modules/scc/ibm//modules/attachment"
-  version                = "1.5.0"
-  for_each               = toset(var.profile_attachments)
+  source  = "terraform-ibm-modules/scc/ibm//modules/attachment"
+  version = "1.5.0"
+  for_each = {
+    for idx, profile_attachment in var.profile_attachments :
+    profile_attachment => idx
+  }
   profile_name           = each.key
   profile_version        = "latest"
   scc_instance_id        = module.scc.guid
