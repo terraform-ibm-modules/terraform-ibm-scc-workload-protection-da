@@ -104,11 +104,11 @@ func TestAgentsInSchematics(t *testing.T) {
 
 		options.TerraformVars = []testschematic.TestSchematicTerraformVar{
 			{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
-			{Name: "scc_workload_protection_agent_access_key", Value: terraform.Output(t, existingTerraformOptions, "access_key"), DataType: "string"},
-			{Name: "scc_workload_protection_agent_cluster_name", Value: terraform.Output(t, existingTerraformOptions, "workload_cluster_name"), DataType: "string"},
-			{Name: "scc_workload_protection_instance_region", Value: region, DataType: "string"},
-			{Name: "scc_workload_protection_agent_endpoint_type", Value: "private", DataType: "string"},
-			{Name: "scc_workload_protection_agent_agent_name", Value: options.Prefix, DataType: "string"},
+			{Name: "access_key", Value: terraform.Output(t, existingTerraformOptions, "access_key"), DataType: "string"},
+			{Name: "cluster_name", Value: terraform.Output(t, existingTerraformOptions, "workload_cluster_name"), DataType: "string"},
+			{Name: "region", Value: region, DataType: "string"},
+			{Name: "endpoint_type", Value: "private", DataType: "string"},
+			{Name: "name", Value: options.Prefix, DataType: "string"},
 		}
 
 		err := options.RunSchematicTest()

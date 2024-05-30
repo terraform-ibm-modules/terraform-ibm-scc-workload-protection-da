@@ -316,15 +316,7 @@
                   "name": "agents",
                   "install_type": "fullstack",
                   "working_directory": "solutions/agents",
-                  "compliance": {
-                      "authority": "scc-v3",
-                      "profiles": [
-                          {
-                              "profile_name": "IBM Cloud Framework for Financial Services",
-                              "profile_version": "1.6.0"
-                          }
-                      ]
-                  },
+                  "compliance": {},
                   "configuration": [
                       {
                         "key": "ibmcloud_api_key"
@@ -378,11 +370,11 @@
                       "diagrams": [
                           {
                               "diagram": {
-                                  "caption": "Security and Compliance Center",
+                                  "caption": "Security and Compliance Center Workload Protection Agent",
                                   "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-scc-da/main/reference-architecture/scc-wp-agent.svg",
                                   "type": "image/svg+xml"
                               },
-                              "description": "This architecture supports creating and configuring IBM Security and Compliance Center resources"
+                              "description": "This architecture supports creating and configuring Security and Compliance Center Workload Protection agent resources."
                           }
                       ]
                   }

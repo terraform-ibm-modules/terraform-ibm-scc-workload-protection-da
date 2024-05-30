@@ -4,7 +4,7 @@
 
 provider "ibm" {
   ibmcloud_api_key = var.ibmcloud_api_key
-  region           = var.scc_workload_protection_instance_region
+  region           = var.region
 }
 
 provider "kubernetes" {
@@ -20,7 +20,7 @@ provider "helm" {
 }
 
 data "ibm_container_cluster_config" "cluster_config" {
-  cluster_name_id = var.scc_workload_protection_agent_cluster_name
+  cluster_name_id = var.cluster_name
   config_dir      = "${path.module}/kubeconfig"
-  endpoint_type   = "private"
+  endpoint_type   = var.cluster_endpoint_type
 }

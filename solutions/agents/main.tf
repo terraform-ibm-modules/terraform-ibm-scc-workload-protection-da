@@ -3,12 +3,18 @@
 #######################################################################################################################
 
 module "scc_wp_agent" {
-  source        = "terraform-ibm-modules/scc-workload-protection-agent/ibm"
-  version       = "1.1.3"
-  access_key    = var.scc_workload_protection_agent_access_key
-  cluster_name  = var.scc_workload_protection_agent_cluster_name
-  region        = var.scc_workload_protection_instance_region
-  endpoint_type = var.scc_workload_protection_agent_endpoint_type
-  name          = var.scc_workload_protection_agent_agent_name
-  namespace     = var.scc_workload_protection_agent_agent_namespace
+  source                 = "terraform-ibm-modules/scc-workload-protection-agent/ibm"
+  version                = "1.2.3"
+  access_key             = var.access_key
+  cluster_name           = var.cluster_name
+  region                 = var.region
+  endpoint_type          = var.endpoint_type
+  name                   = var.name
+  namespace              = var.namespace
+  deployment_tag         = var.deployment_tag
+  kspm_deploy            = var.kspm_deploy
+  node_analyzer_deploy   = var.node_analyzer_deploy
+  host_scanner_deploy    = var.host_scanner_deploy
+  cluster_scanner_deploy = var.cluster_scanner_deploy
+
 }

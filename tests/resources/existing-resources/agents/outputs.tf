@@ -4,19 +4,8 @@ output "access_key" {
   sensitive   = true
 }
 
-# output "cluster_name" {
-#       description = "Workload Protection instance access key."
-#   value       = module.landing_zone.cluster_names[0]
-# }
-
-
 output "cluster_data" {
   value       = module.landing_zone.cluster_data
-  description = "Details of OCP cluster."
-}
-
-output "cluster_name" {
-  value       = module.landing_zone.cluster_names[0]
   description = "Details of OCP cluster."
 }
 

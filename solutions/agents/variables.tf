@@ -12,39 +12,81 @@ variable "ibmcloud_api_key" {
 # SCC Workload Protection Agent variables
 ########################################################################################################################
 
-variable "scc_workload_protection_agent_agent_name" {
+variable "name" {
   type        = string
   description = "Helm release name."
+  default     = "ibm-scc-wp-agent"
 }
 
-variable "scc_workload_protection_agent_agent_namespace" {
+variable "namespace" {
   type        = string
   description = "Namespace of the Security and Compliance Workload Protection agent."
   default     = "ibm-scc-wp"
 }
 
-variable "scc_workload_protection_agent_cluster_name" {
+variable "cluster_name" {
   type        = string
   description = "Cluster name to add Security and Compliance Workload Protection agent to."
 }
 
-variable "scc_workload_protection_agent_access_key" {
+variable "access_key" {
   type        = string
   description = "Security and Compliance Workload Protection instance access key."
   sensitive   = true
 }
 
-variable "scc_workload_protection_instance_region" {
+variable "region" {
   type        = string
-  description = "Region where Security and Compliance Workload Protection instance is created."
+  description = "Region where Security and Compliance Workload Protection agent is created."
 }
 
-variable "scc_workload_protection_agent_endpoint_type" {
+variable "endpoint_type" {
   type        = string
-  description = "Specify the endpoint (public or private) for the IBM Cloud Security and Compliance Center Workload Protection service."
+  description = "Specify the endpoint (public or private) for the Security and Compliance Center Workload Protection service."
   default     = "private"
   validation {
     error_message = "The specified endpoint_type can be private or public only."
-    condition     = contains(["private", "public"], var.scc_workload_protection_agent_endpoint_type)
+    condition     = contains(["private", "public"], var.endpoint_type)
+  }
+}
+
+variable "deployment_tag" {
+  type        = string
+  description = "Sets a global tag that will be included in the components. It represents the mechanism from where the components have been installed (terraform, local...)."
+  default     = "terraform"
+}
+
+variable "kspm_deploy" {
+  type        = bool
+  description = "Deploy Security and Compliance Workload Protection KSPM component."
+  default     = true
+}
+
+variable "node_analyzer_deploy" {
+  type        = bool
+  description = "Deploy Security and Compliance Workload Protection node analyzer component."
+  default     = true
+}
+
+variable "host_scanner_deploy" {
+  type        = bool
+  description = "Deploy Security and Compliance Workload Protection host scanner component. If node_analyzer_deploy false, this component will not be deployed."
+  default     = true
+}
+
+variable "cluster_scanner_deploy" {
+  type        = bool
+  description = "Deploy Security and Compliance Workload Protection cluster scanner component."
+  default     = true
+}
+
+
+variable "cluster_endpoint_type" {
+  type        = string
+  description = "Specify the endpoint (public or private) for the cluster."
+  default     = "private"
+  validation {
+    error_message = "The specified cluster_endpoint_type can be private or public only."
+    condition     = contains(["private", "public"], var.cluster_endpoint_type)
   }
 }
