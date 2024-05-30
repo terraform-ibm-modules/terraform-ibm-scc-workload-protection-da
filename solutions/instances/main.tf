@@ -23,6 +23,12 @@ module "resource_group" {
 }
 
 #######################################################################################################################
+# IAM Users
+#######################################################################################################################
+
+data "ibm_iam_users" "users_profiles" {}
+
+#######################################################################################################################
 # KMS Key
 #######################################################################################################################
 
@@ -165,4 +171,44 @@ module "scc_wp" {
   cloud_monitoring_instance_crn = var.existing_monitoring_crn
   access_tags                   = var.scc_workload_protection_access_tags
   scc_wp_service_plan           = var.scc_workload_protection_service_plan
+}
+
+#######################################################################################################################
+# SCC Event Notifications Configuration
+#######################################################################################################################
+
+
+data "ibm_en_destinations" "en_destinations" {
+  count         = local.existing_kms_guid != null ? 1 : 0
+  instance_guid = local.existing_kms_guid
+}
+
+resource "ibm_en_topic" "en_topic" {
+  count         = local.existing_kms_guid != null ? 1 : 0
+  instance_guid = local.existing_kms_guid
+  name          = "SCC Topic"
+  description   = "Topic for SCC events routing"
+  sources {
+    id = "crn:v1:bluemix:public:compliance:us-south:a/37cb83958369439db2ef3d6156f82b9d:50c2e4b1-4c7c-4b13-bed8-8a01c26bfd63::"
+    rules {
+      enabled           = true
+      event_type_filter = "$.*"
+    }
+  }
+}
+
+resource "ibm_en_subscription_email" "email_subscription" {
+  count          = local.existing_kms_guid != null ? 1 : 0
+  instance_guid  = local.existing_kms_guid
+  name           = "Email for Security and Compliance Center Subscription"
+  description    = "Subscription for Security and Compliance Center Events"
+  destination_id = [for s in toset(data.ibm_en_destinations.en_destinations.destinations) : s.id if s.type == "smtp_ibm"].0
+  topic_id       = ibm_en_topic.en_topic.topic_id
+  attributes {
+    add_notification_payload = true
+    reply_to_mail            = "compliancealert@ibm.com"
+    reply_to_name            = "SCC Event Notifications Bot"
+    from_name                = "scc_en_notifications@ibm.com"
+    invited                  = tolist([for i, u in data.ibm_iam_users.users_profiles.users : u.email])
+  }
 }
