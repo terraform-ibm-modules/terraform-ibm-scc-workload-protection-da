@@ -216,7 +216,7 @@ variable "skip_scc_workload_protection_auth_policy" {
 
 variable "profile_attachments" {
   type        = list(string)
-  description = "Optional list of SCC profile attachments to create that will be scoped to your specific IBM Cloud account with a `daily` attachment schedule."
+  description = "Optional list of SCC profile attachments to create that will be scoped to your specific IBM Cloud account with a `daily` attachment schedule and defaults to the latest version of the specified profile attachments."
   default     = ["IBM Cloud Framework for Financial Services"]
 }
 
