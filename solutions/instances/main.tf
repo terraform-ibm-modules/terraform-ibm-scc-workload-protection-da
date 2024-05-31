@@ -128,12 +128,12 @@ module "cos" {
 }
 
 #######################################################################################################################
-# SCC
+# SCC Instance
 #######################################################################################################################
 
 module "scc" {
   source                            = "terraform-ibm-modules/scc/ibm"
-  version                           = "1.4.2"
+  version                           = "1.5.0"
   resource_group_id                 = module.resource_group.resource_group_id
   region                            = var.scc_region
   instance_name                     = local.scc_instance_name
@@ -149,7 +149,44 @@ module "scc" {
 }
 
 #######################################################################################################################
-# SCC WP
+# SCC Attachment
+#######################################################################################################################
+
+# Data source to account settings
+data "ibm_iam_account_settings" "iam_account_settings" {}
+
+module "create_profile_attachment" {
+  source  = "terraform-ibm-modules/scc/ibm//modules/attachment"
+  version = "1.5.0"
+  for_each = {
+    for idx, profile_attachment in var.profile_attachments :
+    profile_attachment => idx
+  }
+  profile_name           = each.key
+  profile_version        = "latest"
+  scc_instance_id        = module.scc.guid
+  attachment_name        = "${each.value + 1} daily full account attachment"
+  attachment_description = "SCC profile attachment scoped to your specific IBM Cloud account id ${data.ibm_iam_account_settings.iam_account_settings.account_id} with a daily attachment schedule."
+  attachment_schedule    = "daily"
+  scope = [
+    {
+      environment = "ibm-cloud"
+      properties = [
+        {
+          name  = "scope_type"
+          value = "account"
+        },
+        {
+          name  = "scope_id"
+          value = data.ibm_iam_account_settings.iam_account_settings.account_id
+        },
+      ]
+    }
+  ]
+}
+
+#######################################################################################################################
+# SCC Workload Protection
 #######################################################################################################################
 
 module "scc_wp" {

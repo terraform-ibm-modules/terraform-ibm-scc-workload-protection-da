@@ -230,6 +230,9 @@
                           "key": "skip_scc_workload_protection_auth_policy"
                         },
                         {
+                          "key": "profile_attachments"
+                        },
+                        {
                           "key": "provision_scc_workload_protection"
                         },
                         {

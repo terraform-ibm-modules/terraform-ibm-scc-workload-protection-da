@@ -214,6 +214,12 @@ variable "skip_scc_workload_protection_auth_policy" {
   description = "Set to true to skip the creation of an IAM authorization policy that permits the SCC instance created by this solution read access to the workload protection instance. Only used if `provision_scc_workload_protection` is set to true."
 }
 
+variable "profile_attachments" {
+  type        = list(string)
+  description = "Optional list of SCC profile attachments to create that will be scoped to your specific IBM Cloud account with a `daily` attachment schedule and defaults to the latest version of the specified profile attachments."
+  default     = ["IBM Cloud Framework for Financial Services"]
+}
+
 ########################################################################################################################
 # SCC Workload Protection variables
 ########################################################################################################################
