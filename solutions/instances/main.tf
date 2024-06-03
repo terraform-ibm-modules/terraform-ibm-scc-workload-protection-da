@@ -47,7 +47,7 @@ module "kms" {
   }
   count                       = var.existing_scc_cos_kms_key_crn != null || var.existing_scc_cos_bucket_name != null ? 0 : 1 # no need to create any KMS resources if passing an existing key, or bucket
   source                      = "terraform-ibm-modules/kms-all-inclusive/ibm"
-  version                     = "4.11.8"
+  version                     = "4.13.0"
   create_key_protect_instance = false
   region                      = local.kms_region
   existing_kms_instance_guid  = local.existing_kms_guid
@@ -128,12 +128,12 @@ module "cos" {
 }
 
 #######################################################################################################################
-# SCC
+# SCC Instance
 #######################################################################################################################
 
 module "scc" {
   source                            = "terraform-ibm-modules/scc/ibm"
-  version                           = "1.4.2"
+  version                           = "1.5.0"
   resource_group_id                 = module.resource_group.resource_group_id
   region                            = var.scc_region
   instance_name                     = local.scc_instance_name
@@ -149,7 +149,44 @@ module "scc" {
 }
 
 #######################################################################################################################
-# SCC WP
+# SCC Attachment
+#######################################################################################################################
+
+# Data source to account settings
+data "ibm_iam_account_settings" "iam_account_settings" {}
+
+module "create_profile_attachment" {
+  source  = "terraform-ibm-modules/scc/ibm//modules/attachment"
+  version = "1.5.0"
+  for_each = {
+    for idx, profile_attachment in var.profile_attachments :
+    profile_attachment => idx
+  }
+  profile_name           = each.key
+  profile_version        = "latest"
+  scc_instance_id        = module.scc.guid
+  attachment_name        = "${each.value + 1} daily full account attachment"
+  attachment_description = "SCC profile attachment scoped to your specific IBM Cloud account id ${data.ibm_iam_account_settings.iam_account_settings.account_id} with a daily attachment schedule."
+  attachment_schedule    = "daily"
+  scope = [
+    {
+      environment = "ibm-cloud"
+      properties = [
+        {
+          name  = "scope_type"
+          value = "account"
+        },
+        {
+          name  = "scope_id"
+          value = data.ibm_iam_account_settings.iam_account_settings.account_id
+        },
+      ]
+    }
+  ]
+}
+
+#######################################################################################################################
+# SCC Workload Protection
 #######################################################################################################################
 
 module "scc_wp" {

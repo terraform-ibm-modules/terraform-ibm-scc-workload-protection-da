@@ -7,7 +7,7 @@ offerings:
     offering_id: 9423f9bc-1290-4c71-a9ac-01898bfa7ccc
     variations:
       - name: instances
-        mark_ready: false
+        mark_ready: true
         install_type: fullstack
         scc:
           instance_id: 1c7d5f78-9262-44c3-b779-b28fe4d88c37
