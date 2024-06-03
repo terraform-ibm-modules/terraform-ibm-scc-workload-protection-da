@@ -177,19 +177,18 @@ module "scc_wp" {
 # SCC Event Notifications Configuration
 #######################################################################################################################
 
-
 data "ibm_en_destinations" "en_destinations" {
-  count         = local.existing_kms_guid != null ? 1 : 0
-  instance_guid = local.existing_kms_guid
+  count         = var.existing_en_crn != null ? 1 : 0
+  instance_guid = var.existing_en_crn
 }
 
 resource "ibm_en_topic" "en_topic" {
-  count         = local.existing_kms_guid != null ? 1 : 0
-  instance_guid = local.existing_kms_guid
+  count         = var.existing_en_crn != null ? 1 : 0
+  instance_guid = var.existing_en_crn
   name          = "SCC Topic"
   description   = "Topic for SCC events routing"
   sources {
-    id = "crn:v1:bluemix:public:compliance:us-south:a/37cb83958369439db2ef3d6156f82b9d:50c2e4b1-4c7c-4b13-bed8-8a01c26bfd63::"
+    id = local.scc_crn
     rules {
       enabled           = true
       event_type_filter = "$.*"
@@ -198,11 +197,11 @@ resource "ibm_en_topic" "en_topic" {
 }
 
 resource "ibm_en_subscription_email" "email_subscription" {
-  count          = local.existing_kms_guid != null ? 1 : 0
-  instance_guid  = local.existing_kms_guid
+  count          = var.existing_en_crn != null ? 1 : 0
+  instance_guid  = var.existing_en_crn
   name           = "Email for Security and Compliance Center Subscription"
   description    = "Subscription for Security and Compliance Center Events"
-  destination_id = [for s in toset(data.ibm_en_destinations.en_destinations.destinations) : s.id if s.type == "smtp_ibm"].0
+  destination_id = [for s in toset(data.ibm_en_destinations.en_destinations[count.index].destinations) : s.id if s.type == "smtp_ibm"].0
   topic_id       = ibm_en_topic.en_topic.topic_id
   attributes {
     add_notification_payload = true
