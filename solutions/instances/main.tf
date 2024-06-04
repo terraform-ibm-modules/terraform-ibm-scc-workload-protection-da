@@ -99,10 +99,9 @@ module "cos" {
   }
   count                    = var.existing_scc_cos_bucket_name == null ? 1 : 0 # no need to call COS module if consumer is passing existing COS bucket
   source                   = "terraform-ibm-modules/cos/ibm//modules/fscloud"
-  version                  = "7.5.3"
+  version                  = "8.3.0"
   resource_group_id        = module.resource_group.resource_group_id
   create_cos_instance      = var.existing_cos_instance_crn == null ? true : false # don't create instance if existing one passed in
-  create_resource_key      = false
   cos_instance_name        = local.cos_instance_name
   cos_tags                 = var.cos_instance_tags
   existing_cos_instance_id = var.existing_cos_instance_crn
