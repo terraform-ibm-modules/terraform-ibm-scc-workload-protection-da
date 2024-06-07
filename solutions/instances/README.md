@@ -5,6 +5,7 @@ This solution supports the following:
 - Provisioning and configuring of a Security and Compliance Center instance.
 - Provisioning of a COS instance and KMS encrypted bucket which is required to store Security and Compliance Center data.
 - Provisioning and configuring of a Security and Compliance Center Workload Protection instance.
+- Create SCC profile attachments configured to the SCC instance provisioned in this module.
 
 **NB:** This solution is not intended to be called by one or more other modules since it contains a provider configurations, meaning it is not compatible with the `for_each`, `count`, and `depends_on` arguments. For more information see [Providers Within Modules](https://developer.hashicorp.com/terraform/language/modules/develop/providers)
 
@@ -15,21 +16,24 @@ This solution supports the following:
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.0, <1.7.0 |
-| <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | 1.65.1 |
+| <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | 1.66.0 |
 
 ### Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_cos"></a> [cos](#module\_cos) | terraform-ibm-modules/cos/ibm//modules/fscloud | 7.5.3 |
-| <a name="module_kms"></a> [kms](#module\_kms) | terraform-ibm-modules/kms-all-inclusive/ibm | 4.11.8 |
+| <a name="module_cos"></a> [cos](#module\_cos) | terraform-ibm-modules/cos/ibm//modules/fscloud | 8.3.0 |
+| <a name="module_create_profile_attachment"></a> [create\_profile\_attachment](#module\_create\_profile\_attachment) | terraform-ibm-modules/scc/ibm//modules/attachment | 1.5.0 |
+| <a name="module_kms"></a> [kms](#module\_kms) | terraform-ibm-modules/kms-all-inclusive/ibm | 4.13.1 |
 | <a name="module_resource_group"></a> [resource\_group](#module\_resource\_group) | terraform-ibm-modules/resource-group/ibm | 1.1.5 |
-| <a name="module_scc"></a> [scc](#module\_scc) | terraform-ibm-modules/scc/ibm | 1.4.2 |
+| <a name="module_scc"></a> [scc](#module\_scc) | terraform-ibm-modules/scc/ibm | 1.5.0 |
 | <a name="module_scc_wp"></a> [scc\_wp](#module\_scc\_wp) | terraform-ibm-modules/scc-workload-protection/ibm | 1.3.0 |
 
 ### Resources
 
-No resources.
+| Name | Type |
+|------|------|
+| [ibm_iam_account_settings.iam_account_settings](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.66.0/docs/data-sources/iam_account_settings) | data source |
 
 ### Inputs
 
@@ -51,6 +55,7 @@ No resources.
 | <a name="input_kms_endpoint_type"></a> [kms\_endpoint\_type](#input\_kms\_endpoint\_type) | The type of endpoint to be used for commincating with the KMS instance. Allowed values are: 'public' or 'private' (default) | `string` | `"private"` | no |
 | <a name="input_management_endpoint_type_for_bucket"></a> [management\_endpoint\_type\_for\_bucket](#input\_management\_endpoint\_type\_for\_bucket) | The type of endpoint for the IBM terraform provider to use to manage COS buckets. (`public`, `private` or `direct`). Ensure to enable virtual routing and forwarding (VRF) in your account if using `private`, and that the terraform runtime has access to the the IBM Cloud private network. | `string` | `"private"` | no |
 | <a name="input_prefix"></a> [prefix](#input\_prefix) | (Optional) Prefix to append to all resources created by this solution. | `string` | `null` | no |
+| <a name="input_profile_attachments"></a> [profile\_attachments](#input\_profile\_attachments) | Optional list of SCC profile attachments to create that will be scoped to your specific IBM Cloud account with a `daily` attachment schedule and defaults to the latest version of the specified profile attachments. | `list(string)` | <pre>[<br>  "IBM Cloud Framework for Financial Services"<br>]</pre> | no |
 | <a name="input_provision_scc_workload_protection"></a> [provision\_scc\_workload\_protection](#input\_provision\_scc\_workload\_protection) | Whether to provision an SCC Workload Protection instance. | `bool` | `true` | no |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | The name of a new or an existing resource group in which to provision resources to. If prefix input variable is passed then it will get prefixed infront of the value in the format of '<prefix>-value'. | `string` | n/a | yes |
 | <a name="input_scc_cos_bucket_access_tags"></a> [scc\_cos\_bucket\_access\_tags](#input\_scc\_cos\_bucket\_access\_tags) | Optional list of access tags to be added to the SCC COS bucket. | `list(string)` | `[]` | no |
