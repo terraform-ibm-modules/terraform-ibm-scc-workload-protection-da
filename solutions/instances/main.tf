@@ -177,14 +177,19 @@ module "scc_wp" {
 # SCC Event Notifications Configuration
 #######################################################################################################################
 
+locals {
+  parsed_existing_en_instance_crn = var.existing_en_crn != null ? split(":", var.existing_en_crn) : []
+  existing_en_guid                = length(local.parsed_existing_kms_instance_crn) > 0 ? local.parsed_existing_kms_instance_crn[7] : null
+}
+
 data "ibm_en_destinations" "en_destinations" {
   count         = var.existing_en_crn != null ? 1 : 0
-  instance_guid = var.existing_en_crn
+  instance_guid = var.existing_en_guid
 }
 
 resource "ibm_en_topic" "en_topic" {
   count         = var.existing_en_crn != null ? 1 : 0
-  instance_guid = var.existing_en_crn
+  instance_guid = var.existing_en_guid
   name          = "SCC Topic"
   description   = "Topic for SCC events routing"
   sources {
@@ -198,14 +203,14 @@ resource "ibm_en_topic" "en_topic" {
 
 resource "ibm_en_subscription_email" "email_subscription" {
   count          = var.existing_en_crn != null ? 1 : 0
-  instance_guid  = var.existing_en_crn
+  instance_guid  = var.existing_en_guid
   name           = "Email for Security and Compliance Center Subscription"
   description    = "Subscription for Security and Compliance Center Events"
   destination_id = [for s in toset(data.ibm_en_destinations.en_destinations[count.index].destinations) : s.id if s.type == "smtp_ibm"].0
   topic_id       = ibm_en_topic.en_topic.topic_id
   attributes {
     add_notification_payload = true
-    reply_to_mail            = "compliancealert@ibm.com"
+    reply_to_mail            = var.scc_en_reply_to_email
     reply_to_name            = "SCC Event Notifications Bot"
     from_name                = "scc_en_notifications@ibm.com"
     invited                  = tolist([for i, u in data.ibm_iam_users.users_profiles.users : u.email])
