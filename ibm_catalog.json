@@ -284,7 +284,7 @@
                         }
                     ],
                     "architecture": {
-                        "descriptions": "This architecture supports creating and configuring an Key Protect instance.",
+                        "descriptions": "This architecture supports creating and configuring a Security and Compliance Center Workload Protection instance.",
                         "features": [
                             {
                                 "title": "Creates a Security and Compliance Center instance.",
@@ -310,7 +310,75 @@
                             }
                         ]
                     }
-                }
+                },
+                {
+                  "label": "Agents",
+                  "name": "agents",
+                  "install_type": "fullstack",
+                  "working_directory": "solutions/agents",
+                  "compliance": {},
+                  "configuration": [
+                      {
+                        "key": "ibmcloud_api_key"
+                      },
+                      {
+                        "key": "scc_workload_protection_agent_agent_name"
+                      },
+                      {
+                        "key": "scc_workload_protection_agent_agent_namespace"
+                      },
+                      {
+                        "key": "scc_workload_protection_agent_cluster_name"
+                      },
+                      {
+                        "key": "scc_workload_protection_agent_access_key"
+                      },
+                      {
+                        "key": "scc_workload_protection_instance_region"
+                      },
+                      {
+                        "key": "scc_workload_protection_agent_endpoint_type",
+                        "options": [
+                          {
+                            "displayname": "Public",
+                            "value": "public"
+                          },
+                          {
+                            "displayname": "Private",
+                            "value": "private"
+                          }
+                        ]
+                      }
+                    ],
+                  "iam_permissions": [
+                      {
+                          "service_name": "compliance",
+                          "role_crns": [
+                              "crn:v1:bluemix:public:iam::::serviceRole:Manager",
+                              "crn:v1:bluemix:public:iam::::role:Editor"
+                          ]
+                      }
+                  ],
+                  "architecture": {
+                      "descriptions": "This architecture supports creating and configuring Security and Compliance Center Workload Protection agents.",
+                      "features": [
+                          {
+                              "title": "Creates a Security and Compliance Center Workload Protection agents.",
+                              "description": "Creates and configures a Security and Compliance Center Workload Protection agents."
+                          }
+                      ],
+                      "diagrams": [
+                          {
+                              "diagram": {
+                                  "caption": "Security and Compliance Center Workload Protection Agent",
+                                  "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-scc-da/main/reference-architecture/scc-wp-agent.svg",
+                                  "type": "image/svg+xml"
+                              },
+                              "description": "This architecture supports creating and configuring Security and Compliance Center Workload Protection agent resources."
+                          }
+                      ]
+                  }
+              }
             ]
         }
     ]
