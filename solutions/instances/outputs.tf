@@ -20,7 +20,7 @@ output "scc_cos_kms_key_crn" {
 
 output "scc_cos_bucket_name" {
   description = "SCC COS bucket name"
-  value       = local.cos_bucket_name
+  value       = var.existing_scc_cos_bucket_name != null ? var.existing_scc_cos_bucket_name : module.cos[0].buckets[local.scc_cos_bucket_name].bucket_name
 }
 
 output "scc_id" {
@@ -43,33 +43,33 @@ output "scc_name" {
   value       = module.scc.name
 }
 
-output "scc_wp_id" {
+output "scc_workload_protection_id" {
   description = "SCC Workload Protection instance ID"
   value       = var.provision_scc_workload_protection ? module.scc_wp[0].id : null
 }
 
-output "scc_wp_crn" {
+output "scc_workload_protection_crn" {
   description = "SCC Workload Protection instance CRN"
   value       = var.provision_scc_workload_protection ? module.scc_wp[0].crn : null
 }
 
-output "scc_wp_name" {
+output "scc_workload_protection_name" {
   description = "SCC Workload Protection instance name"
   value       = var.provision_scc_workload_protection ? module.scc_wp[0].name : null
 }
 
-output "scc_wp_ingestion_endpoint" {
+output "scc_workload_protection_ingestion_endpoint" {
   description = "SCC Workload Protection instance ingestion endpoint"
   value       = var.provision_scc_workload_protection ? module.scc_wp[0].name : null
 }
 
-output "scc_wp_api_endpoint" {
+output "scc_workload_protection_api_endpoint" {
   description = "SCC Workload Protection API endpoint"
   value       = var.provision_scc_workload_protection ? module.scc_wp[0].api_endpoint : null
   sensitive   = true
 }
 
-output "scc_wp_access_key" {
+output "scc_workload_protection_access_key" {
   description = "SCC Workload Protection access key"
   value       = var.provision_scc_workload_protection ? module.scc_wp[0].access_key : null
   sensitive   = true

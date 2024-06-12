@@ -8,7 +8,7 @@ variable "ibmcloud_api_key" {
   sensitive   = true
 }
 
-variable "existing_resource_group" {
+variable "use_existing_resource_group" {
   type        = bool
   description = "Whether to use an existing resource group."
   default     = false
@@ -16,7 +16,7 @@ variable "existing_resource_group" {
 
 variable "resource_group_name" {
   type        = string
-  description = "The name of a new or an existing resource group in which to provision resources to."
+  description = "The name of a new or an existing resource group in which to provision resources to. If prefix input variable is passed then it will get prefixed infront of the value in the format of '<prefix>-value'."
 }
 
 variable "existing_monitoring_crn" {
@@ -26,26 +26,26 @@ variable "existing_monitoring_crn" {
   description = "(Optional) The CRN of an existing IBM Cloud Monitoring instance. Used to send all COS bucket request and usage metrics to, as well as SCC workload protection data. Ignored if using existing COS bucket and not provisioning SCC workload protection."
 }
 
+variable "prefix" {
+  type        = string
+  description = "(Optional) Prefix to append to all resources created by this solution."
+  default     = null
+}
+
 ########################################################################################################################
 # KMS variables
 ########################################################################################################################
 
-variable "kms_region" {
-  type        = string
-  default     = "us-south"
-  description = "The region in which KMS instance exists."
-}
-
-variable "existing_kms_guid" {
+variable "existing_kms_instance_crn" {
   type        = string
   default     = null
-  description = "The GUID of of the KMS instance used for the SCC COS bucket root Key. Only required if not supplying an existing KMS root key and if 'skip_cos_kms_auth_policy' is true."
+  description = "The CRN of the existed Hyper Protect Crypto Services or Key Protect instance. Only required if not supplying an existing KMS root key and if 'skip_cos_kms_auth_policy' is true."
 }
 
 variable "existing_scc_cos_kms_key_crn" {
   type        = string
   default     = null
-  description = "The CRN of an existing KMS key to be used to encrypt the SCC COS bucket. If not supplied, a new key ring and key will be created in the provided KMS instance."
+  description = "(OPTIONAL) The CRN of an existing KMS key to be used to encrypt the SCC COS bucket. If no value is passed, a value must be passed for either the `existing_kms_instance_crn` input variable if you want to create a new key ring and key, or the `existing_scc_cos_bucket_name` input variable if you want to use an existing bucket."
 }
 
 variable "kms_endpoint_type" {
@@ -61,13 +61,13 @@ variable "kms_endpoint_type" {
 variable "scc_cos_key_ring_name" {
   type        = string
   default     = "scc-cos-key-ring"
-  description = "The name to give the Key Ring which will be created for the SCC COS bucket Key. Not used if supplying an existing Key."
+  description = "The name to give the Key Ring which will be created for the SCC COS bucket Key. Not used if supplying an existing Key. If prefix input variable is passed then it will get prefixed infront of the value in the format of '<prefix>-value'."
 }
 
 variable "scc_cos_key_name" {
   type        = string
   default     = "scc-cos-key"
-  description = "The name to give the Key which will be created for the SCC COS bucket. Not used if supplying an existing Key."
+  description = "The name to give the Key which will be created for the SCC COS bucket. Not used if supplying an existing Key. If prefix input variable is passed then it will get prefixed infront of the value in the format of '<prefix>-value'."
 }
 
 ########################################################################################################################
@@ -83,7 +83,7 @@ variable "cos_region" {
 variable "cos_instance_name" {
   type        = string
   default     = "base-security-services-cos"
-  description = "The name to use when creating the Cloud Object Storage instance."
+  description = "The name to use when creating the Cloud Object Storage instance. If prefix input variable is passed then it will get prefixed infront of the value in the format of '<prefix>-value'."
 }
 
 variable "cos_instance_tags" {
@@ -101,7 +101,7 @@ variable "cos_instance_access_tags" {
 variable "scc_cos_bucket_name" {
   type        = string
   default     = "base-security-services-bucket"
-  description = "The name to use when creating the SCC Cloud Object Storage bucket (NOTE: bucket names are globally unique). If 'add_bucket_name_suffix' is set to true, a random 4 characters will be added to this name to help ensure bucket name is globally unique."
+  description = "The name to use when creating the SCC Cloud Object Storage bucket (NOTE: bucket names are globally unique). If 'add_bucket_name_suffix' is set to true, a random 4 characters will be added to this name to help ensure bucket name is globally unique. If prefix input variable is passed then it will get prefixed infront of the value in the format of '<prefix>-value'."
 }
 
 variable "add_bucket_name_suffix" {
@@ -170,7 +170,7 @@ variable "existing_activity_tracker_crn" {
 variable "scc_instance_name" {
   type        = string
   default     = "base-security-services-scc"
-  description = "The name to give the SCC instance that will be provisioned by this solution."
+  description = "The name to give the SCC instance that will be provisioned by this solution. If prefix input variable is passed then it will get prefixed infront of the value in the format of '<prefix>-value'."
 }
 
 variable "scc_region" {
@@ -208,6 +208,18 @@ variable "scc_instance_tags" {
   default     = []
 }
 
+variable "skip_scc_workload_protection_auth_policy" {
+  type        = bool
+  default     = false
+  description = "Set to true to skip the creation of an IAM authorization policy that permits the SCC instance created by this solution read access to the workload protection instance. Only used if `provision_scc_workload_protection` is set to true."
+}
+
+variable "profile_attachments" {
+  type        = list(string)
+  description = "Optional list of SCC profile attachments to create that will be scoped to your specific IBM Cloud account with a `daily` attachment schedule and defaults to the latest version of the specified profile attachments."
+  default     = ["IBM Cloud Framework for Financial Services"]
+}
+
 ########################################################################################################################
 # SCC Workload Protection variables
 ########################################################################################################################
@@ -218,13 +230,13 @@ variable "provision_scc_workload_protection" {
   default     = true
 }
 
-variable "scc_wp_instance_name" {
-  description = "The name to give the SCC Workload Protection instance that will be provisioned by this solution. Must begine with a letter. Only used i 'provision_scc_workload_protection' to true."
+variable "scc_workload_protection_instance_name" {
+  description = "The name to give the SCC Workload Protection instance that will be provisioned by this solution. Must begine with a letter. Only used i 'provision_scc_workload_protection' to true. If prefix input variable is passed then it will get prefixed infront of the value in the format of '<prefix>-value'."
   type        = string
   default     = "base-security-services-scc-wp"
 }
 
-variable "scc_wp_service_plan" {
+variable "scc_workload_protection_service_plan" {
   description = "SCC Workload Protection instance service pricing plan. Allowed values are: `free-trial` or `graduated-tier`."
   type        = string
   default     = "graduated-tier"
@@ -232,37 +244,31 @@ variable "scc_wp_service_plan" {
     error_message = "Plan for SCC Workload Protection instances can only be `free-trial` or `graduated-tier`."
     condition = contains(
       ["free-trial", "graduated-tier"],
-      var.scc_wp_service_plan
+      var.scc_workload_protection_service_plan
     )
   }
 }
 
-variable "scc_wp_instance_tags" {
+variable "scc_workload_protection_instance_tags" {
   type        = list(string)
   description = "Optional list of tags to be added to SCC Workload Protection instance."
   default     = []
 }
 
-variable "scc_wp_resource_key_name" {
-  type        = string
-  description = "The name to give the IBM Cloud SCC Workload Protection manager resource key."
-  default     = "SCCWPManagerKey"
-}
-
-variable "scc_wp_resource_key_tags" {
+variable "scc_workload_protection_resource_key_tags" {
   type        = list(string)
   description = "Tags associated with the IBM Cloud SCC WP resource key."
   default     = []
 }
 
-variable "scc_wp_access_tags" {
+variable "scc_workload_protection_access_tags" {
   type        = list(string)
   description = "A list of access tags to apply to the SCC WP instance."
   default     = []
 
   validation {
     condition = alltrue([
-      for tag in var.scc_wp_access_tags : can(regex("[\\w\\-_\\.]+:[\\w\\-_\\.]+", tag)) && length(tag) <= 128
+      for tag in var.scc_workload_protection_access_tags : can(regex("[\\w\\-_\\.]+:[\\w\\-_\\.]+", tag)) && length(tag) <= 128
     ])
     error_message = "Tags must match the regular expression \"[\\w\\-_\\.]+:[\\w\\-_\\.]+\", see https://cloud.ibm.com/docs/account?topic=account-tag&interface=ui#limits for more details"
   }
