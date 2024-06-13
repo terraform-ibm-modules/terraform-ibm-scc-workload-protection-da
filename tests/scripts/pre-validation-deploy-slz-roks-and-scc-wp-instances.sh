@@ -18,7 +18,7 @@ TF_VARS_FILE="terraform.tfvars"
   cd ${TERRAFORM_SOURCE_DIR}
   echo "Provisioning prerequisite SLZ ROKS CLUSTER and SCC workload protection instances .."
   terraform init || exit 1
-  $VALIDATION_APIKEY is available in the catalog runtime
+  # $VALIDATION_APIKEY is available in the catalog runtime
   {
     echo "ibmcloud_api_key=\"${VALIDATION_APIKEY}\""
     echo "region=\"${REGION}\""
@@ -30,7 +30,7 @@ TF_VARS_FILE="terraform.tfvars"
   cluster_name_var_name="cluster_name"
   cluster_name_value=$(terraform output -state=terraform.tfstate -raw workload_cluster_name)
   cluster_resource_group_id_var_name="cluster_resource_group_id"
-  cluster_resource_group_id_value=$(terraform output -state=terraform.tfstate -raw workload_cluster_id)
+  cluster_resource_group_id_value=$(terraform output -state=terraform.tfstate -raw cluster_resource_group_id)
   access_key_var_name="access_key"
   access_key_value=$(terraform output -state=terraform.tfstate -raw access_key)
 
