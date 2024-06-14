@@ -346,15 +346,44 @@
                       },
                       {
                         "key": "region",
-                        "custom_config": {
-                          "config_constraints": {
-                            "generationType": "2"
+                        "options": [
+                          {
+                            "displayname": "Dallas (us-south)",
+                            "value": "us-south"
                           },
-                          "grouping": "deployment",
-                          "original_grouping": "deployment",
-                          "type": "vpc_region"
-                        },
-                        "required": true
+                          {
+                            "displayname": "Frankfurt (eu-de)",
+                            "value": "eu-de"
+                          },
+                          {
+                            "displayname": "London (eu-gb)",
+                            "value": "eu-gb"
+                          },
+                          {
+                            "displayname": "Osaka (jp-osa)",
+                            "value": "jp-osa"
+                          },
+                          {
+                            "displayname": "Sao Paulo (br-sao)",
+                            "value": "br-sao"
+                          },
+                          {
+                            "displayname": "Sydney (au-syd)",
+                            "value": "au-syd"
+                          },
+                          {
+                            "displayname": "Tokyo (jp-tok)",
+                            "value": "jp-tok"
+                          },
+                          {
+                            "displayname": "Toronto (ca-tor)",
+                            "value": "ca-tor"
+                          },
+                          {
+                            "displayname": "Washington (us-east)",
+                            "value": "us-east"
+                          }
+                        ]
                       },
                       {
                         "key": "endpoint_type",
