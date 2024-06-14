@@ -283,3 +283,9 @@ variable "scc_en_reply_to_email" {
   description = "The email address used when receiving an email from the Event Notifications"
   default     = "no-reply@ibm.com"
 }
+
+variable "scc_en_email_list" {
+  type        = list(string)
+  description = "The list of emails to send out."
+  default     = []
+}

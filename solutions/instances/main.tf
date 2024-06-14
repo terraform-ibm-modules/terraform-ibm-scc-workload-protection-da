@@ -23,12 +23,6 @@ module "resource_group" {
 }
 
 #######################################################################################################################
-# IAM Users
-#######################################################################################################################
-
-data "ibm_iam_users" "users_profiles" {}
-
-#######################################################################################################################
 # KMS Key
 #######################################################################################################################
 
@@ -238,7 +232,7 @@ resource "ibm_en_topic" "en_topic" {
 }
 
 resource "ibm_en_subscription_email" "email_subscription" {
-  count          = var.existing_en_crn != null ? 1 : 0
+  count          = var.existing_en_crn != null && length(var.scc_en_email_list) > 0 ? 1 : 0
   instance_guid  = var.existing_en_guid
   name           = "Email for Security and Compliance Center Subscription"
   description    = "Subscription for Security and Compliance Center Events"
@@ -249,6 +243,6 @@ resource "ibm_en_subscription_email" "email_subscription" {
     reply_to_mail            = var.scc_en_reply_to_email
     reply_to_name            = "SCC Event Notifications Bot"
     from_name                = "scc_en_notifications@ibm.com"
-    invited                  = tolist([for i, u in data.ibm_iam_users.users_profiles.users : u.email])
+    invited                  = var.scc_en_email_list
   }
 }
