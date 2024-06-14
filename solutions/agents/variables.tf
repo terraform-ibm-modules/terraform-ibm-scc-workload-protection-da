@@ -37,7 +37,7 @@ variable "access_key" {
 
 variable "region" {
   type        = string
-  description = "Region where Security and Compliance Workload Protection agent is created."
+  description = "Region where Security and Compliance Workload Protection instance is created."
 }
 
 variable "endpoint_type" {

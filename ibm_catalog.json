@@ -333,22 +333,88 @@
                         "key": "ibmcloud_api_key"
                       },
                       {
-                        "key": "scc_workload_protection_agent_agent_name"
+                        "key": "name"
                       },
                       {
-                        "key": "scc_workload_protection_agent_agent_namespace"
+                        "key": "namespace"
                       },
                       {
-                        "key": "scc_workload_protection_agent_cluster_name"
+                        "key": "cluster_name"
                       },
                       {
-                        "key": "scc_workload_protection_agent_access_key"
+                        "key": "access_key"
                       },
                       {
-                        "key": "scc_workload_protection_instance_region"
+                        "key": "region",
+                        "options": [
+                          {
+                            "displayname": "Dallas (us-south)",
+                            "value": "us-south"
+                          },
+                          {
+                            "displayname": "Frankfurt (eu-de)",
+                            "value": "eu-de"
+                          },
+                          {
+                            "displayname": "London (eu-gb)",
+                            "value": "eu-gb"
+                          },
+                          {
+                            "displayname": "Osaka (jp-osa)",
+                            "value": "jp-osa"
+                          },
+                          {
+                            "displayname": "Sao Paulo (br-sao)",
+                            "value": "br-sao"
+                          },
+                          {
+                            "displayname": "Sydney (au-syd)",
+                            "value": "au-syd"
+                          },
+                          {
+                            "displayname": "Tokyo (jp-tok)",
+                            "value": "jp-tok"
+                          },
+                          {
+                            "displayname": "Toronto (ca-tor)",
+                            "value": "ca-tor"
+                          },
+                          {
+                            "displayname": "Washington (us-east)",
+                            "value": "us-east"
+                          }
+                        ]
                       },
                       {
-                        "key": "scc_workload_protection_agent_endpoint_type",
+                        "key": "endpoint_type",
+                        "options": [
+                          {
+                            "displayname": "Public",
+                            "value": "public"
+                          },
+                          {
+                            "displayname": "Private",
+                            "value": "private"
+                          }
+                        ]
+                      },
+                      {
+                        "key": "deployment_tag"
+                      },
+                      {
+                        "key": "kspm_deploy"
+                      },
+                      {
+                        "key": "node_analyzer_deploy"
+                      },
+                      {
+                        "key": "host_scanner_deploy"
+                      },
+                      {
+                        "key": "cluster_scanner_deploy"
+                      },
+                      {
+                        "key": "cluster_endpoint_type",
                         "options": [
                           {
                             "displayname": "Public",
