@@ -17,7 +17,7 @@ locals {
 
 module "resource_group" {
   source                       = "terraform-ibm-modules/resource-group/ibm"
-  version                      = "1.1.5"
+  version                      = "1.1.6"
   resource_group_name          = var.use_existing_resource_group == false ? (var.prefix != null ? "${var.prefix}-${var.resource_group_name}" : var.resource_group_name) : null
   existing_resource_group_name = var.use_existing_resource_group == true ? var.resource_group_name : null
 }
@@ -99,7 +99,7 @@ module "cos" {
   }
   count                    = var.existing_scc_cos_bucket_name == null ? 1 : 0 # no need to call COS module if consumer is passing existing COS bucket
   source                   = "terraform-ibm-modules/cos/ibm//modules/fscloud"
-  version                  = "8.3.2"
+  version                  = "8.4.1"
   resource_group_id        = module.resource_group.resource_group_id
   create_cos_instance      = var.existing_cos_instance_crn == null ? true : false # don't create instance if existing one passed in
   cos_instance_name        = local.cos_instance_name
@@ -132,7 +132,7 @@ module "cos" {
 
 module "scc" {
   source                            = "terraform-ibm-modules/scc/ibm"
-  version                           = "1.6.0"
+  version                           = "1.6.2"
   resource_group_id                 = module.resource_group.resource_group_id
   region                            = var.scc_region
   instance_name                     = local.scc_instance_name
@@ -156,7 +156,7 @@ data "ibm_iam_account_settings" "iam_account_settings" {}
 
 module "create_profile_attachment" {
   source  = "terraform-ibm-modules/scc/ibm//modules/attachment"
-  version = "1.6.0"
+  version = "1.6.2"
   for_each = {
     for idx, profile_attachment in var.profile_attachments :
     profile_attachment => idx
@@ -191,7 +191,7 @@ module "create_profile_attachment" {
 module "scc_wp" {
   count                         = var.provision_scc_workload_protection ? 1 : 0
   source                        = "terraform-ibm-modules/scc-workload-protection/ibm"
-  version                       = "1.3.0"
+  version                       = "1.3.1"
   name                          = local.scc_workload_protection_instance_name
   region                        = var.scc_region
   resource_group_id             = module.resource_group.resource_group_id
