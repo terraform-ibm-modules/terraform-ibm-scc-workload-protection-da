@@ -33,6 +33,9 @@ This solution supports the following:
 
 | Name | Type |
 |------|------|
+| [ibm_en_subscription_email.email_subscription](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.66.0/docs/resources/en_subscription_email) | resource |
+| [ibm_en_topic.en_topic](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.66.0/docs/resources/en_topic) | resource |
+| [ibm_en_destinations.en_destinations](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.66.0/docs/data-sources/en_destinations) | data source |
 | [ibm_iam_account_settings.iam_account_settings](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.66.0/docs/data-sources/iam_account_settings) | data source |
 
 ### Inputs
@@ -63,6 +66,9 @@ This solution supports the following:
 | <a name="input_scc_cos_bucket_name"></a> [scc\_cos\_bucket\_name](#input\_scc\_cos\_bucket\_name) | The name to use when creating the SCC Cloud Object Storage bucket (NOTE: bucket names are globally unique). If 'add\_bucket\_name\_suffix' is set to true, a random 4 characters will be added to this name to help ensure bucket name is globally unique. If prefix input variable is passed then it will get prefixed infront of the value in the format of '<prefix>-value'. | `string` | `"base-security-services-bucket"` | no |
 | <a name="input_scc_cos_key_name"></a> [scc\_cos\_key\_name](#input\_scc\_cos\_key\_name) | The name to give the Key which will be created for the SCC COS bucket. Not used if supplying an existing Key. If prefix input variable is passed then it will get prefixed infront of the value in the format of '<prefix>-value'. | `string` | `"scc-cos-key"` | no |
 | <a name="input_scc_cos_key_ring_name"></a> [scc\_cos\_key\_ring\_name](#input\_scc\_cos\_key\_ring\_name) | The name to give the Key Ring which will be created for the SCC COS bucket Key. Not used if supplying an existing Key. If prefix input variable is passed then it will get prefixed infront of the value in the format of '<prefix>-value'. | `string` | `"scc-cos-key-ring"` | no |
+| <a name="input_scc_en_email_list"></a> [scc\_en\_email\_list](#input\_scc\_en\_email\_list) | The list of emails to send out. | `list(string)` | `[]` | no |
+| <a name="input_scc_en_from_email"></a> [scc\_en\_from\_email](#input\_scc\_en\_from\_email) | The email address in the used in the 'from' of any Security and Compliance Center event coming from Event Notifications | `string` | `"compliancealert@ibm.com"` | no |
+| <a name="input_scc_en_reply_to_email"></a> [scc\_en\_reply\_to\_email](#input\_scc\_en\_reply\_to\_email) | The email address used in the 'reply\_to' of any Security and Compliance Center event coming from Event Notifications | `string` | `"no-reply@ibm.com"` | no |
 | <a name="input_scc_instance_name"></a> [scc\_instance\_name](#input\_scc\_instance\_name) | The name to give the SCC instance that will be provisioned by this solution. If prefix input variable is passed then it will get prefixed infront of the value in the format of '<prefix>-value'. | `string` | `"base-security-services-scc"` | no |
 | <a name="input_scc_instance_tags"></a> [scc\_instance\_tags](#input\_scc\_instance\_tags) | Optional list of tags to be added to SCC instance. | `list(string)` | `[]` | no |
 | <a name="input_scc_region"></a> [scc\_region](#input\_scc\_region) | The region in which to provision SCC resources. | `string` | `"us-south"` | no |
