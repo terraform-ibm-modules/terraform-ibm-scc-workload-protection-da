@@ -292,6 +292,6 @@ variable "scc_en_reply_to_email" {
 
 variable "scc_en_email_list" {
   type        = list(string)
-  description = "The list of emails to send out."
+  description = "The list of email address to target out when Security and Compliance Center triggers an event"
   default     = []
 }
