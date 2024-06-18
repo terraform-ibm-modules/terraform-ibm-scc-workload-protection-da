@@ -273,3 +273,25 @@ variable "scc_workload_protection_access_tags" {
     error_message = "Tags must match the regular expression \"[\\w\\-_\\.]+:[\\w\\-_\\.]+\", see https://cloud.ibm.com/docs/account?topic=account-tag&interface=ui#limits for more details"
   }
 }
+
+########################################################################################################################
+# EN Configuration variables
+########################################################################################################################
+
+variable "scc_en_from_email" {
+  type        = string
+  description = "The email address in the used in the 'from' of any Security and Compliance Center event coming from Event Notifications"
+  default     = "compliancealert@ibm.com"
+}
+
+variable "scc_en_reply_to_email" {
+  type        = string
+  description = "The email address used in the 'reply_to' of any Security and Compliance Center event coming from Event Notifications"
+  default     = "no-reply@ibm.com"
+}
+
+variable "scc_en_email_list" {
+  type        = list(string)
+  description = "The list of email address to target out when Security and Compliance Center triggers an event"
+  default     = []
+}
