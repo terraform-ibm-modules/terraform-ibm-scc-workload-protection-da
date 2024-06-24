@@ -35,6 +35,7 @@ This solution supports the following:
 |------|------|
 | [ibm_en_subscription_email.email_subscription](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.66.0/docs/resources/en_subscription_email) | resource |
 | [ibm_en_topic.en_topic](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.66.0/docs/resources/en_topic) | resource |
+| [ibm_iam_authorization_policy.cos_kms_policy](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.66.0/docs/resources/iam_authorization_policy) | resource |
 | [ibm_en_destinations.en_destinations](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.66.0/docs/data-sources/en_destinations) | data source |
 | [ibm_iam_account_settings.iam_account_settings](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.66.0/docs/data-sources/iam_account_settings) | data source |
 
@@ -55,6 +56,7 @@ This solution supports the following:
 | <a name="input_existing_scc_cos_bucket_name"></a> [existing\_scc\_cos\_bucket\_name](#input\_existing\_scc\_cos\_bucket\_name) | The name of an existing bucket inside the existing Cloud Object Storage instance to use for SCC. If not supplied, a new bucket will be created. | `string` | `null` | no |
 | <a name="input_existing_scc_cos_kms_key_crn"></a> [existing\_scc\_cos\_kms\_key\_crn](#input\_existing\_scc\_cos\_kms\_key\_crn) | (OPTIONAL) The CRN of an existing KMS key to be used to encrypt the SCC COS bucket. If no value is passed, a value must be passed for either the `existing_kms_instance_crn` input variable if you want to create a new key ring and key, or the `existing_scc_cos_bucket_name` input variable if you want to use an existing bucket. | `string` | `null` | no |
 | <a name="input_ibmcloud_api_key"></a> [ibmcloud\_api\_key](#input\_ibmcloud\_api\_key) | The API Key to use for IBM Cloud. | `string` | n/a | yes |
+| <a name="input_ibmcloud_kms_api_key"></a> [ibmcloud\_kms\_api\_key](#input\_ibmcloud\_kms\_api\_key) | The IBM Cloud API key with access to create a root key and key ring in the key management service instance. If the KMS instance is in a different account, specify a key from that account. If not specified, the ibmcloud\_api\_key variable is used. | `string` | `null` | no |
 | <a name="input_kms_endpoint_type"></a> [kms\_endpoint\_type](#input\_kms\_endpoint\_type) | The type of endpoint to be used for commincating with the KMS instance. Allowed values are: 'public' or 'private' (default) | `string` | `"private"` | no |
 | <a name="input_management_endpoint_type_for_bucket"></a> [management\_endpoint\_type\_for\_bucket](#input\_management\_endpoint\_type\_for\_bucket) | The type of endpoint for the IBM terraform provider to use to manage COS buckets. (`public`, `private` or `direct`). Ensure to enable virtual routing and forwarding (VRF) in your account if using `private`, and that the terraform runtime has access to the the IBM Cloud private network. | `string` | `"private"` | no |
 | <a name="input_prefix"></a> [prefix](#input\_prefix) | (Optional) Prefix to append to all resources created by this solution. | `string` | `null` | no |

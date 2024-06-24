@@ -70,6 +70,13 @@ variable "scc_cos_key_name" {
   description = "The name to give the Key which will be created for the SCC COS bucket. Not used if supplying an existing Key. If prefix input variable is passed then it will get prefixed infront of the value in the format of '<prefix>-value'."
 }
 
+variable "ibmcloud_kms_api_key" {
+  type        = string
+  description = "The IBM Cloud API key with access to create a root key and key ring in the key management service instance. If the KMS instance is in a different account, specify a key from that account. If not specified, the ibmcloud_api_key variable is used."
+  sensitive   = true
+  default     = null
+}
+
 ########################################################################################################################
 # COS variables
 ########################################################################################################################
