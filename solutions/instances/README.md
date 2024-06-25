@@ -24,9 +24,9 @@ This solution supports provisioning and configuring the following infrastructure
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_cos"></a> [cos](#module\_cos) | terraform-ibm-modules/cos/ibm//modules/fscloud | 8.4.1 |
+| <a name="module_cos"></a> [cos](#module\_cos) | terraform-ibm-modules/cos/ibm//modules/fscloud | 8.5.1 |
 | <a name="module_create_profile_attachment"></a> [create\_profile\_attachment](#module\_create\_profile\_attachment) | terraform-ibm-modules/scc/ibm//modules/attachment | 1.6.2 |
-| <a name="module_kms"></a> [kms](#module\_kms) | terraform-ibm-modules/kms-all-inclusive/ibm | 4.13.2 |
+| <a name="module_kms"></a> [kms](#module\_kms) | terraform-ibm-modules/kms-all-inclusive/ibm | 4.13.4 |
 | <a name="module_resource_group"></a> [resource\_group](#module\_resource\_group) | terraform-ibm-modules/resource-group/ibm | 1.1.6 |
 | <a name="module_scc"></a> [scc](#module\_scc) | terraform-ibm-modules/scc/ibm | 1.6.2 |
 | <a name="module_scc_wp"></a> [scc\_wp](#module\_scc\_wp) | terraform-ibm-modules/scc-workload-protection/ibm | 1.3.1 |
@@ -91,8 +91,14 @@ This solution supports provisioning and configuring the following infrastructure
 |------|-------------|
 | <a name="output_resource_group_id"></a> [resource\_group\_id](#output\_resource\_group\_id) | Resource group ID |
 | <a name="output_resource_group_name"></a> [resource\_group\_name](#output\_resource\_group\_name) | Resource group name |
+| <a name="output_scc_cos_bucket_config"></a> [scc\_cos\_bucket\_config](#output\_scc\_cos\_bucket\_config) | List of buckets created |
 | <a name="output_scc_cos_bucket_name"></a> [scc\_cos\_bucket\_name](#output\_scc\_cos\_bucket\_name) | SCC COS bucket name |
+| <a name="output_scc_cos_instance_crn"></a> [scc\_cos\_instance\_crn](#output\_scc\_cos\_instance\_crn) | SCC COS instance crn |
+| <a name="output_scc_cos_instance_guid"></a> [scc\_cos\_instance\_guid](#output\_scc\_cos\_instance\_guid) | SCC COS instance guid |
+| <a name="output_scc_cos_instance_id"></a> [scc\_cos\_instance\_id](#output\_scc\_cos\_instance\_id) | SCC COS instance id |
+| <a name="output_scc_cos_instance_name"></a> [scc\_cos\_instance\_name](#output\_scc\_cos\_instance\_name) | SCC COS instance name |
 | <a name="output_scc_cos_kms_key_crn"></a> [scc\_cos\_kms\_key\_crn](#output\_scc\_cos\_kms\_key\_crn) | SCC COS KMS Key CRN |
+| <a name="output_scc_cos_resource_keys"></a> [scc\_cos\_resource\_keys](#output\_scc\_cos\_resource\_keys) | List of resource keys |
 | <a name="output_scc_crn"></a> [scc\_crn](#output\_scc\_crn) | SCC instance CRN |
 | <a name="output_scc_guid"></a> [scc\_guid](#output\_scc\_guid) | SCC instance guid |
 | <a name="output_scc_id"></a> [scc\_id](#output\_scc\_id) | SCC instance ID |
