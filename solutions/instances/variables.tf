@@ -142,7 +142,7 @@ variable "existing_scc_cos_bucket_name" {
 
 variable "skip_cos_kms_auth_policy" {
   type        = bool
-  description = "Set to `true` to skip the creation of an IAM authorization policy that permits the Object Storage instance to read the encryption key from the KMS instance. WARNING: An authorization policy must exist before an encrypted bucket can be created."
+  description = "Set to `true` to skip the creation of an IAM authorization policy that permits the Object Storage instance to read the encryption key from the KMS instance. An authorization policy must exist before an encrypted bucket can be created."
   default     = false
 }
 
