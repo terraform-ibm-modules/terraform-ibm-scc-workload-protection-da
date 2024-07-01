@@ -1,13 +1,15 @@
 # Security and Compliance Center instances solution
 
-This solution supports the following:
-- Creating a new resource group, or taking in an existing one.
-- Provisioning and configuring of a Security and Compliance Center instance.
-- Provisioning of a COS instance and KMS encrypted bucket which is required to store Security and Compliance Center data.
-- Provisioning and configuring of a Security and Compliance Center Workload Protection instance.
-- Create SCC profile attachments configured to the SCC instance provisioned in this module.
+This solution supports provisioning and configuring the following infrastructure:
 
-**NB:** This solution is not intended to be called by one or more other modules since it contains a provider configurations, meaning it is not compatible with the `for_each`, `count`, and `depends_on` arguments. For more information see [Providers Within Modules](https://developer.hashicorp.com/terraform/language/modules/develop/providers)
+- A resource group, if one is not passed in.
+- A Security and Compliance Center instance.
+- A Security and Compliance Center Workload Protection instance.
+- An IBM Cloud Object Storage instance and KMS-encrypted bucket, which is required to store Security and Compliance Center data.
+- Security and Compliance Center profile attachments configured for the instance created by this module.
+
+:exclamation: **Important:** This solution is not intended to be called by other modules because it contains a provider configuration and is not compatible with the `for_each`, `count`, and `depends_on` arguments. For more information, see [Providers Within Modules](https://developer.hashicorp.com/terraform/language/modules/develop/providers).
+
 
 <!-- Below content is automatically populated via pre-commit hook -->
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
@@ -22,11 +24,11 @@ This solution supports the following:
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_cos"></a> [cos](#module\_cos) | terraform-ibm-modules/cos/ibm//modules/fscloud | 8.5.1 |
-| <a name="module_create_profile_attachment"></a> [create\_profile\_attachment](#module\_create\_profile\_attachment) | terraform-ibm-modules/scc/ibm//modules/attachment | 1.6.2 |
+| <a name="module_cos"></a> [cos](#module\_cos) | terraform-ibm-modules/cos/ibm//modules/fscloud | 8.5.3 |
+| <a name="module_create_profile_attachment"></a> [create\_profile\_attachment](#module\_create\_profile\_attachment) | terraform-ibm-modules/scc/ibm//modules/attachment | 1.6.3 |
 | <a name="module_kms"></a> [kms](#module\_kms) | terraform-ibm-modules/kms-all-inclusive/ibm | 4.13.4 |
 | <a name="module_resource_group"></a> [resource\_group](#module\_resource\_group) | terraform-ibm-modules/resource-group/ibm | 1.1.6 |
-| <a name="module_scc"></a> [scc](#module\_scc) | terraform-ibm-modules/scc/ibm | 1.6.2 |
+| <a name="module_scc"></a> [scc](#module\_scc) | terraform-ibm-modules/scc/ibm | 1.6.3 |
 | <a name="module_scc_wp"></a> [scc\_wp](#module\_scc\_wp) | terraform-ibm-modules/scc-workload-protection/ibm | 1.3.1 |
 
 ### Resources
