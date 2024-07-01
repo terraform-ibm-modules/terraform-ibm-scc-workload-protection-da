@@ -141,6 +141,11 @@ locals {
 
 }
 
+moved {
+  from = module.scc
+  to   = module.scc[0]
+}
+
 module "scc" {
   count                             = var.existing_scc_instance_crn == null ? 1 : 0
   source                            = "terraform-ibm-modules/scc/ibm"
