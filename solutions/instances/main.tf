@@ -127,7 +127,7 @@ module "cos" {
   }
   count                    = var.existing_scc_cos_bucket_name == null ? 1 : 0 # no need to call COS module if consumer is passing existing COS bucket
   source                   = "terraform-ibm-modules/cos/ibm//modules/fscloud"
-  version                  = "8.5.1"
+  version                  = "8.5.3"
   resource_group_id        = module.resource_group.resource_group_id
   create_cos_instance      = var.existing_cos_instance_crn == null ? true : false # don't create instance if existing one passed in
   cos_instance_name        = local.cos_instance_name
@@ -160,7 +160,7 @@ module "cos" {
 
 module "scc" {
   source                            = "terraform-ibm-modules/scc/ibm"
-  version                           = "1.6.2"
+  version                           = "1.6.3"
   resource_group_id                 = module.resource_group.resource_group_id
   region                            = var.scc_region
   instance_name                     = local.scc_instance_name
@@ -184,7 +184,7 @@ data "ibm_iam_account_settings" "iam_account_settings" {}
 
 module "create_profile_attachment" {
   source  = "terraform-ibm-modules/scc/ibm//modules/attachment"
-  version = "1.6.2"
+  version = "1.6.3"
   for_each = {
     for idx, profile_attachment in var.profile_attachments :
     profile_attachment => idx
