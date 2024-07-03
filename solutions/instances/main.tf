@@ -47,7 +47,7 @@ locals {
   ) : null
 }
 
-# Create IAM Authorization Policy to allow COS to access KMS for the encryption key
+# Create IAM Authorization Policy to allow COS to access KMS for the encryption key, if cross account KMS is passed in
 resource "ibm_iam_authorization_policy" "cos_kms_policy" {
   count = local.create_cross_account_auth_policy ? 1 : 0
   # Conditionals with providers aren't possible, using ibm.kms as provider incase cross account is enabled
