@@ -217,7 +217,7 @@ variable "skip_scc_workload_protection_auth_policy" {
 variable "profile_attachments" {
   type        = list(string)
   description = "The list of Security and Compliance Center profile attachments to create that are scoped to your IBM Cloud account. The attachment schedule runs daily and defaults to the latest version of the specified profile attachments."
-  default     = ["IBM Cloud Framework for Financial Services"]
+  default     = ["CIS IBM Cloud Foundations Benchmark v1.1.0"]
 }
 
 ########################################################################################################################
