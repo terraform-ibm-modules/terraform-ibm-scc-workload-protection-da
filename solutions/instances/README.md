@@ -19,7 +19,6 @@ This solution supports provisioning and configuring the following infrastructure
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.0 |
 | <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | 1.66.0 |
-| <a name="requirement_time"></a> [time](#requirement\_time) | 0.9.1 |
 
 ### Modules
 
@@ -39,7 +38,6 @@ This solution supports provisioning and configuring the following infrastructure
 | [ibm_en_subscription_email.email_subscription](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.66.0/docs/resources/en_subscription_email) | resource |
 | [ibm_en_topic.en_topic](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.66.0/docs/resources/en_topic) | resource |
 | [ibm_iam_authorization_policy.cos_kms_policy](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.66.0/docs/resources/iam_authorization_policy) | resource |
-| [time_sleep.wait_for_authorization_policy](https://registry.terraform.io/providers/hashicorp/time/0.9.1/docs/resources/sleep) | resource |
 | [ibm_en_destinations.en_destinations](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.66.0/docs/data-sources/en_destinations) | data source |
 | [ibm_iam_account_settings.iam_account_settings](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.66.0/docs/data-sources/iam_account_settings) | data source |
 
@@ -60,7 +58,7 @@ This solution supports provisioning and configuring the following infrastructure
 | <a name="input_existing_scc_cos_bucket_name"></a> [existing\_scc\_cos\_bucket\_name](#input\_existing\_scc\_cos\_bucket\_name) | The name of an existing bucket inside the existing Object Storage instance to use for Security and Compliance Center. If not specified, a bucket is created. | `string` | `null` | no |
 | <a name="input_existing_scc_cos_kms_key_crn"></a> [existing\_scc\_cos\_kms\_key\_crn](#input\_existing\_scc\_cos\_kms\_key\_crn) | The CRN of an existing KMS key to use to encrypt the Security and Compliance Center Object Storage bucket. If no value is set for this variable, specify a value for either the `existing_kms_instance_crn` variable to create a key ring and key, or for the `existing_scc_cos_bucket_name` variable to use an existing bucket. | `string` | `null` | no |
 | <a name="input_ibmcloud_api_key"></a> [ibmcloud\_api\_key](#input\_ibmcloud\_api\_key) | The IBM Cloud API key to deploy resources. | `string` | n/a | yes |
-| <a name="input_ibmcloud_kms_api_key"></a> [ibmcloud\_kms\_api\_key](#input\_ibmcloud\_kms\_api\_key) | The IBM Cloud API key that can create a root key and key ring in the key management service (KMS) instance. If not specified, the 'ibmcloud\_api\_key' variable is used. Specify this key if the instance in `existing_kms_instance_crn` is in an account that's different from the Secrets Manager instance. Leave this input empty if the same account owns both instances. | `string` | `null` | no |
+| <a name="input_ibmcloud_kms_api_key"></a> [ibmcloud\_kms\_api\_key](#input\_ibmcloud\_kms\_api\_key) | The IBM Cloud API key that can create a root key and key ring in the key management service (KMS) instance. If not specified, the 'ibmcloud\_api\_key' variable is used. Specify this key if the instance in `existing_kms_instance_crn` is in an account that's different from the ecurity and Compliance Centre instance. Leave this input empty if the same account owns both instances. | `string` | `null` | no |
 | <a name="input_kms_endpoint_type"></a> [kms\_endpoint\_type](#input\_kms\_endpoint\_type) | The endpoint for communicating with the KMS instance. Possible values: `public`, `private.` | `string` | `"private"` | no |
 | <a name="input_management_endpoint_type_for_bucket"></a> [management\_endpoint\_type\_for\_bucket](#input\_management\_endpoint\_type\_for\_bucket) | The type of endpoint for the IBM Terraform provider to use to manage Object Storage buckets. Possible values: `public`, `private`m `direct`. If you specify `private`, enable virtual routing and forwarding in your account, and the Terraform runtime must have access to the the IBM Cloud private network. | `string` | `"private"` | no |
 | <a name="input_prefix"></a> [prefix](#input\_prefix) | The prefix to add to all resources created by this solution. | `string` | `null` | no |

@@ -49,8 +49,7 @@ locals {
 
 # Create IAM Authorization Policy to allow COS to access KMS for the encryption key, if cross account KMS is passed in
 resource "ibm_iam_authorization_policy" "cos_kms_policy" {
-  count = local.create_cross_account_auth_policy ? 1 : 0
-  # Conditionals with providers aren't possible, using ibm.kms as provider incase cross account is enabled
+  count                       = local.create_cross_account_auth_policy ? 1 : 0
   provider                    = ibm.kms
   source_service_account      = data.ibm_iam_account_settings.iam_account_settings.account_id
   source_service_name         = "cloud-object-storage"
@@ -59,12 +58,6 @@ resource "ibm_iam_authorization_policy" "cos_kms_policy" {
   target_resource_instance_id = local.existing_kms_guid
   roles                       = ["Reader"]
   description                 = "Allow COS instance in the account ${data.ibm_iam_account_settings.iam_account_settings.account_id} to read from the ${local.kms_service_name} instance GUID ${local.existing_kms_guid}"
-}
-
-# workaround for https://github.com/IBM-Cloud/terraform-provider-ibm/issues/4478
-resource "time_sleep" "wait_for_authorization_policy" {
-  depends_on      = [ibm_iam_authorization_policy.cos_kms_policy]
-  create_duration = "30s"
 }
 
 # KMS root key for SCC COS bucket
