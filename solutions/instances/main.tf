@@ -151,6 +151,10 @@ module "scc" {
 # SCC Attachment
 #######################################################################################################################
 
+locals {
+  resource_groups_scope = length(var.resource_groups_scope) == 1 ? var.resource_groups_scope[0] : module.resource_group.resource_group_id
+}
+
 # Data source to account settings
 data "ibm_iam_account_settings" "iam_account_settings" {}
 
@@ -180,7 +184,20 @@ module "create_profile_attachment" {
           value = data.ibm_iam_account_settings.iam_account_settings.account_id
         },
       ]
-    }
+    },
+    {
+      environment = "ibm-cloud"
+      properties = [
+        {
+          name  = "scope_type"
+          value = "account.resource_group"
+        },
+        {
+          name  = "scope_id"
+          value = local.resource_groups_scope
+        },
+      ]
+    },
   ]
 }
 

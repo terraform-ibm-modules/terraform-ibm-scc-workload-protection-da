@@ -220,6 +220,12 @@ variable "profile_attachments" {
   default     = ["IBM Cloud Framework for Financial Services"]
 }
 
+variable "resource_groups_scope" {
+  type        = list(string)
+  description = "The resource group to scope the Security and Compliance Center profile attachments to. If left empty, the default scoped resource group will be set to the existing or new resource group passed to this module. Currently has a limitation of accepting only one resource group, but with support to add multiple resource groups coming in the future."
+  default     = []
+}
+
 ########################################################################################################################
 # SCC Workload Protection variables
 ########################################################################################################################
