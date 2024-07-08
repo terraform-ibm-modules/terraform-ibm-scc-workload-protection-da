@@ -152,7 +152,12 @@ module "scc" {
 #######################################################################################################################
 
 locals {
-  resource_groups_scope = length(var.resource_groups_scope) == 1 ? var.resource_groups_scope[0] : module.resource_group.resource_group_id
+  resource_groups_scope = length(var.resource_groups_scope) == 1 ? var.resource_groups_scope[0] : null
+
+  rg_scope = local.resource_groups_scope != null ? {
+    name  = "scope_id"
+    value = local.resource_groups_scope
+  } : null
 }
 
 # Data source to account settings
@@ -192,10 +197,7 @@ module "create_profile_attachment" {
           name  = "scope_type"
           value = "account.resource_group"
         },
-        {
-          name  = "scope_id"
-          value = local.resource_groups_scope
-        },
+        local.rg_scope,
       ]
     },
   ]
