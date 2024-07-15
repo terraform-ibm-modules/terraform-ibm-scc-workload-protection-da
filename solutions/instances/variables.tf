@@ -23,7 +23,7 @@ variable "existing_monitoring_crn" {
   type        = string
   nullable    = true
   default     = null
-  description = "The CRN of an existing IBM Cloud Monitoring instance. Used to send all Object Storage bucket request and usage metrics to, as well as Workload Protection data. Ignored if using existing Object Storage bucket and not provisioning Workload Protection."
+  description = "The CRN of an IBM Cloud Monitoring instance to to send Security and Compliance Object Storage bucket metrics to, as well as Workload Protection data. If no value passed, metrics are sent to the instance associated to the container's location unless otherwise specified in the Metrics Router service configuration. Ignored if using existing Object Storage bucket and not provisioning Workload Protection."
 }
 
 variable "prefix" {
@@ -167,7 +167,7 @@ variable "existing_activity_tracker_crn" {
   type        = string
   nullable    = true
   default     = null
-  description = "The CRN of an existing Activity Tracker instance. Used to send Security and Compliance Center Object Storage bucket log data and all object write events to Activity Tracker. Only used if not supplying an existing Object Storage bucket."
+  description = "The CRN of an Activity Tracker instance to send Security and Compliance Object Storage bucket events to. If no value passed, events are sent to the instance associated to the container's location unless otherwise specified in the Activity Tracker Event Routing service configuration. Ignored if using existing Object Storage bucket."
 }
 
 ########################################################################################################################
