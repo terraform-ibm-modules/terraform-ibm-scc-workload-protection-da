@@ -1,4 +1,4 @@
-module github.com/terraform-ibm-modules/terraform-ibm-scc-da
+module github.com/terraform-ibm-modules/terraform-ibm-scc-workload-protection-da
 
 go 1.21
 
