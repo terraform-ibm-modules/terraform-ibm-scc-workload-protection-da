@@ -7,4 +7,4 @@ This solution supports installing and configuring [IBM Cloud Security and Compli
 
 This solution will deploy and configure the Workload Protections components in an existing cluster to an existing IBM Cloud Security and Compliance Center Workload Protection instance.
 
-![scc-wp](https://github.com/terraform-ibm-modules/terraform-ibm-scc-da/blob/main/reference-architecture/scc-wp-agent.svg)
+![scc-wp-agent](../../reference-architecture/scc-wp-agent.svg)
