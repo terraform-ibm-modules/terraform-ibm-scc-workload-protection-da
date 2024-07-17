@@ -14,17 +14,17 @@ output "resource_group_id" {
 
 output "scc_id" {
   description = "SCC instance ID"
-  value       = var.existing_scc_instance_crn == null ? module.scc[0].id : null
+  value       = var.existing_scc_instance_crn == null ? module.scc[0].id : var.existing_scc_instance_crn
 }
 
 output "scc_guid" {
   description = "SCC instance guid"
-  value       = var.existing_scc_instance_crn == null ? module.scc[0].guid : null
+  value       = var.existing_scc_instance_crn == null ? module.scc[0].guid : local.existing_scc_instance_guid
 }
 
 output "scc_crn" {
   description = "SCC instance CRN"
-  value       = var.existing_scc_instance_crn == null ? module.scc[0].crn : null
+  value       = var.existing_scc_instance_crn == null ? module.scc[0].crn : var.existing_scc_instance_crn
 }
 
 output "scc_name" {
