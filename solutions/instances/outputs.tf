@@ -29,7 +29,7 @@ output "scc_crn" {
 
 output "scc_name" {
   description = "SCC instance name"
-  value       = var.existing_scc_instance_crn == null ? module.scc[0].name : null
+  value       = var.existing_scc_instance_crn == null ? module.scc[0].name : data.ibm_resource_instance.scc_instance[0].name
 }
 
 output "scc_workload_protection_id" {

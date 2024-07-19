@@ -144,6 +144,11 @@ moved {
   to   = module.scc[0]
 }
 
+data "ibm_resource_instance" "scc_instance" {
+  count      = var.existing_scc_instance_crn == null ? 0 : 1
+  identifier = local.scc_instance_guid
+}
+
 module "scc" {
   count                             = var.existing_scc_instance_crn == null ? 1 : 0
   source                            = "terraform-ibm-modules/scc/ibm"
