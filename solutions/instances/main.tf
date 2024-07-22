@@ -172,9 +172,30 @@ module "scc" {
 #######################################################################################################################
 
 locals {
-  resource_groups_scope = length(var.resource_groups_scope) == 1 ? var.resource_groups_scope[0] : null
+  resource_group_supplied = length(var.resource_groups_scope) == 1
+}
 
-  rg_scope = local.resource_groups_scope != null ? {
+data "ibm_resource_group" "group" {
+  count = local.resource_group_supplied ? 1 : 0
+  name  = var.resource_groups_scope[0]
+}
+
+locals {
+  account_scope = {
+    environment = "ibm-cloud"
+    properties = [
+      {
+        name  = "scope_type"
+        value = "account"
+      },
+      {
+        name  = "scope_id"
+        value = data.ibm_iam_account_settings.iam_account_settings.account_id
+      },
+    ]
+  }
+
+  resource_group_scope = {
     environment = "ibm-cloud"
     properties = [
       {
@@ -183,10 +204,12 @@ locals {
       },
       {
         name  = "scope_id"
-        value = local.resource_groups_scope
+        value = local.resource_group_supplied ? data.ibm_resource_group.group[0].id : null
       },
     ]
-  } : null
+  }
+
+  scope = local.resource_group_supplied ? [local.account_scope, local.resource_group_scope] : [local.account_scope]
 }
 
 # Data source to account settings
@@ -205,22 +228,7 @@ module "create_profile_attachment" {
   attachment_name        = "${each.value + 1} daily full account attachment"
   attachment_description = "SCC profile attachment scoped to your specific IBM Cloud account id ${data.ibm_iam_account_settings.iam_account_settings.account_id} with a daily attachment schedule."
   attachment_schedule    = var.attachment_schedule
-  scope = [
-    {
-      environment = "ibm-cloud"
-      properties = [
-        {
-          name  = "scope_type"
-          value = "account"
-        },
-        {
-          name  = "scope_id"
-          value = data.ibm_iam_account_settings.iam_account_settings.account_id
-        },
-      ]
-    },
-    local.rg_scope,
-  ]
+  scope                  = local.scope
 }
 
 #######################################################################################################################
