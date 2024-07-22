@@ -228,8 +228,23 @@ variable "profile_attachments" {
 
 variable "resource_groups_scope" {
   type        = list(string)
-  description = "The resource group to scope the Security and Compliance Center profile attachments to. If left empty, the default scoped resource group will be set to the existing or new resource group passed to this module. Currently has a limitation of accepting only one resource group, but with support to add multiple resource groups coming in the future."
+  description = "The resource group to scope the Security and Compliance Center profile attachments to. If left empty, the default scoped resource group will be set to the existing or new resource group passed to this module. Currently has a limitation of accepting a max number of one resource groups."
   default     = []
+  validation {
+    condition     = length(var.resource_groups_scope) <= 1
+    error_message = "Currently has a limitation of accepting a max number of one resource groups."
+  }
+}
+
+variable "attachment_schedule" {
+  type        = string
+  description = "The schedule of an attachment. Allowable values are: daily, every_7_days, every_30_days, none."
+  default     = "daily"
+
+  validation {
+    condition     = contains(["daily", "every_7_days", "every_30_days", "none"], var.attachment_schedule)
+    error_message = "Allowed schedule can be - daily, every_7_days, every_30_days, none."
+  }
 }
 
 ########################################################################################################################

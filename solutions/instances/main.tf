@@ -175,8 +175,17 @@ locals {
   resource_groups_scope = length(var.resource_groups_scope) == 1 ? var.resource_groups_scope[0] : null
 
   rg_scope = local.resource_groups_scope != null ? {
-    name  = "scope_id"
-    value = local.resource_groups_scope
+    environment = "ibm-cloud"
+    properties = [
+      {
+        name  = "scope_type"
+        value = "account.resource_group"
+      },
+      {
+        name  = "scope_id"
+        value = local.resource_groups_scope
+      },
+    ]
   } : null
 }
 
@@ -195,7 +204,7 @@ module "create_profile_attachment" {
   scc_instance_id        = local.scc_instance_guid
   attachment_name        = "${each.value + 1} daily full account attachment"
   attachment_description = "SCC profile attachment scoped to your specific IBM Cloud account id ${data.ibm_iam_account_settings.iam_account_settings.account_id} with a daily attachment schedule."
-  attachment_schedule    = "daily"
+  attachment_schedule    = var.attachment_schedule
   scope = [
     {
       environment = "ibm-cloud"
@@ -210,16 +219,7 @@ module "create_profile_attachment" {
         },
       ]
     },
-    {
-      environment = "ibm-cloud"
-      properties = [
-        {
-          name  = "scope_type"
-          value = "account.resource_group"
-        },
-        local.rg_scope,
-      ]
-    },
+    local.rg_scope,
   ]
 }
 
