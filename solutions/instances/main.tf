@@ -80,17 +80,6 @@ locals {
   cos_instance_crn    = var.existing_cos_instance_crn != null ? var.existing_cos_instance_crn : module.cos[0].cos_instance_crn
   cos_bucket_name     = var.existing_scc_cos_bucket_name != null ? var.existing_scc_cos_bucket_name : module.cos[0].buckets[local.scc_cos_bucket_name].bucket_name
 
-  activity_tracking = var.existing_activity_tracker_crn != null ? {
-    read_data_events     = true
-    write_data_events    = true
-    activity_tracker_crn = var.existing_activity_tracker_crn
-  } : null
-
-  metrics_monitoring = var.existing_monitoring_crn != null ? {
-    usage_metrics_enabled   = true
-    request_metrics_enabled = true
-    metrics_monitoring_crn  = var.existing_monitoring_crn
-  } : null
 }
 
 module "cos" {
@@ -99,7 +88,7 @@ module "cos" {
   }
   count                    = var.existing_scc_cos_bucket_name == null ? 1 : 0 # no need to call COS module if consumer is passing existing COS bucket
   source                   = "terraform-ibm-modules/cos/ibm//modules/fscloud"
-  version                  = "8.5.3"
+  version                  = "8.6.2"
   resource_group_id        = module.resource_group.resource_group_id
   create_cos_instance      = var.existing_cos_instance_crn == null ? true : false # don't create instance if existing one passed in
   cos_instance_name        = local.cos_instance_name
@@ -120,8 +109,17 @@ module "cos" {
     resource_instance_id          = local.cos_instance_crn
     region_location               = var.cos_region
     force_delete                  = true
-    activity_tracking             = local.activity_tracking
-    metrics_monitoring            = local.metrics_monitoring
+    activity_tracking = {
+      read_data_events     = true
+      write_data_events    = true
+      management_events    = true
+      activity_tracker_crn = var.existing_activity_tracker_crn
+    }
+    metrics_monitoring = {
+      usage_metrics_enabled   = true
+      request_metrics_enabled = true
+      metrics_monitoring_crn  = var.existing_monitoring_crn
+    }
   }]
 
 }
