@@ -228,7 +228,7 @@ variable "profile_attachments" {
 
 variable "resource_groups_scope" {
   type        = list(string)
-  description = "The resource group to scope the Security and Compliance Center profile attachments to. If left empty, the default scoped resource group will be set to the existing or new resource group passed to this module. Currently has a limitation of accepting a max number of one resource groups."
+  description = "The resource group to scope the Security and Compliance Center profile attachments to. If left empty, it will default to being scoped to the current account id. This currently has a limitation of accepting a max number of one resource groups."
   default     = []
   validation {
     condition     = length(var.resource_groups_scope) <= 1
