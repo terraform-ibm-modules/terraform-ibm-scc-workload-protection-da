@@ -93,6 +93,27 @@
                           ]
                         },
                         {
+                          "key": "attachment_schedule",
+                          "options": [
+                            {
+                              "displayname": "Daily",
+                              "value": "daily"
+                            },
+                            {
+                              "displayname": "Weekly",
+                              "value": "every_7_days"
+                            },
+                            {
+                              "displayname": "Monthly",
+                              "value": "every_30_days"
+                            },
+                            {
+                              "displayname": "Never",
+                              "value": "none"
+                            }
+                          ]
+                        },
+                        {
                           "key": "scc_cos_key_ring_name"
                         },
                         {
