@@ -226,6 +226,27 @@ variable "profile_attachments" {
   default     = ["IBM Cloud Framework for Financial Services"]
 }
 
+variable "resource_groups_scope" {
+  type        = list(string)
+  description = "The resource group to associate with the Security and Compliance Center profile attachments. If not specified, the attachments are scoped to the current account ID. Only one resource group is allowed."
+  default     = []
+  validation {
+    condition     = length(var.resource_groups_scope) <= 1
+    error_message = "Only one resource group is allowed."
+  }
+}
+
+variable "attachment_schedule" {
+  type        = string
+  description = "The scanning schedule. Possible values: `daily`, `every_7_days`, `every_30_days`, `none`."
+  default     = "daily"
+
+  validation {
+    condition     = contains(["daily", "every_7_days", "every_30_days", "none"], var.attachment_schedule)
+    error_message = "You can set the schedule only to `daily`, `every_7_days`, `every_30_days`, or `none`."
+  }
+}
+
 ########################################################################################################################
 # SCC Workload Protection variables
 ########################################################################################################################
