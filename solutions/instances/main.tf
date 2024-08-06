@@ -124,7 +124,7 @@ module "cos" {
     kms_encryption_enabled        = true
     kms_guid                      = local.existing_kms_guid
     kms_key_crn                   = local.scc_cos_kms_key_crn
-    skip_iam_authorization_policy = local.create_cross_account_auth_policy || var.skip_cos_kms_auth_policy
+    skip_iam_authorization_policy = nonsensitive(local.create_cross_account_auth_policy || var.skip_cos_kms_auth_policy)
     management_endpoint_type      = var.management_endpoint_type_for_bucket
     storage_class                 = var.scc_cos_bucket_class
     resource_instance_id          = local.cos_instance_crn
