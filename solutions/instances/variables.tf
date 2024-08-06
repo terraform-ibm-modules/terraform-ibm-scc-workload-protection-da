@@ -188,12 +188,12 @@ variable "scc_region" {
 variable "skip_scc_cos_auth_policy" {
   type        = bool
   default     = false
-  description = "Set to `true` to skip creation of an IAM authorization policy that permits the Security and Compliance Center to write to the Object Storage instance created by this solution. Applies only if `provision_scc_instance` is true."
+  description = "Set to `true` to skip creation of an IAM authorization policy that permits the Security and Compliance Center to write to the Object Storage instance created by this solution. Applies only if `existing_scc_instance_crn` is not provided."
 }
 
 variable "scc_service_plan" {
   type        = string
-  description = "The pricing plan to use when creating a new Security Compliance Center instance. Possible values: `security-compliance-center-standard-plan`, `security-compliance-center-trial-plan`. Applies only if `provision_scc_instance` is true."
+  description = "The pricing plan to use when creating a new Security Compliance Center instance. Possible values: `security-compliance-center-standard-plan`, `security-compliance-center-trial-plan`. Applies only if `existing_scc_instance_crn` is not provided."
   default     = "security-compliance-center-standard-plan"
   validation {
     condition     = contains(["security-compliance-center-standard-plan", "security-compliance-center-trial-plan"], var.scc_service_plan)
