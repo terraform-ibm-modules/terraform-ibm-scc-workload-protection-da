@@ -18,7 +18,7 @@ This solution supports provisioning and configuring the following infrastructure
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.0 |
-| <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | 1.67.1 |
+| <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | 1.68.0 |
 
 ### Modules
 
@@ -35,16 +35,19 @@ This solution supports provisioning and configuring the following infrastructure
 
 | Name | Type |
 |------|------|
-| [ibm_en_subscription_email.email_subscription](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.67.1/docs/resources/en_subscription_email) | resource |
-| [ibm_en_topic.en_topic](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.67.1/docs/resources/en_topic) | resource |
-| [ibm_en_destinations.en_destinations](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.67.1/docs/data-sources/en_destinations) | data source |
-| [ibm_iam_account_settings.iam_account_settings](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.67.1/docs/data-sources/iam_account_settings) | data source |
+| [ibm_en_subscription_email.email_subscription](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.68.0/docs/resources/en_subscription_email) | resource |
+| [ibm_en_topic.en_topic](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.68.0/docs/resources/en_topic) | resource |
+| [ibm_en_destinations.en_destinations](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.68.0/docs/data-sources/en_destinations) | data source |
+| [ibm_iam_account_settings.iam_account_settings](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.68.0/docs/data-sources/iam_account_settings) | data source |
+| [ibm_resource_group.group](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.68.0/docs/data-sources/resource_group) | data source |
+| [ibm_resource_instance.scc_instance](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.68.0/docs/data-sources/resource_instance) | data source |
 
 ### Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_add_bucket_name_suffix"></a> [add\_bucket\_name\_suffix](#input\_add\_bucket\_name\_suffix) | Whether to add a generated 4-character suffix to the created Security and Compliance Center Object Storage bucket name. Applies only if not specifying an existing bucket. Set to `false` not to add the suffix to the bucket name in the `scc_cos_bucket_name` variable. | `bool` | `true` | no |
+| <a name="input_attachment_schedule"></a> [attachment\_schedule](#input\_attachment\_schedule) | The scanning schedule. Possible values: `daily`, `every_7_days`, `every_30_days`, `none`. | `string` | `"daily"` | no |
 | <a name="input_cos_instance_access_tags"></a> [cos\_instance\_access\_tags](#input\_cos\_instance\_access\_tags) | A list of access tags to apply to the Object Storage instance. Applies only if not specifying an existing instance. | `list(string)` | `[]` | no |
 | <a name="input_cos_instance_name"></a> [cos\_instance\_name](#input\_cos\_instance\_name) | The name for the Object Storage instance. If a prefix input variable is specified, the prefix is added to the name in the `<prefix>-<name>` format. | `string` | `"base-security-services-cos"` | no |
 | <a name="input_cos_instance_tags"></a> [cos\_instance\_tags](#input\_cos\_instance\_tags) | The list of tags to add to the Object Storage instance. Applies only if not specifying an existing instance. | `list(string)` | `[]` | no |
@@ -56,6 +59,7 @@ This solution supports provisioning and configuring the following infrastructure
 | <a name="input_existing_monitoring_crn"></a> [existing\_monitoring\_crn](#input\_existing\_monitoring\_crn) | The CRN of an IBM Cloud Monitoring instance to to send Security and Compliance Object Storage bucket metrics to, as well as Workload Protection data. If no value passed, metrics are sent to the instance associated to the container's location unless otherwise specified in the Metrics Router service configuration. Ignored if using existing Object Storage bucket and not provisioning Workload Protection. | `string` | `null` | no |
 | <a name="input_existing_scc_cos_bucket_name"></a> [existing\_scc\_cos\_bucket\_name](#input\_existing\_scc\_cos\_bucket\_name) | The name of an existing bucket inside the existing Object Storage instance to use for Security and Compliance Center. If not specified, a bucket is created. | `string` | `null` | no |
 | <a name="input_existing_scc_cos_kms_key_crn"></a> [existing\_scc\_cos\_kms\_key\_crn](#input\_existing\_scc\_cos\_kms\_key\_crn) | The CRN of an existing KMS key to use to encrypt the Security and Compliance Center Object Storage bucket. If no value is set for this variable, specify a value for either the `existing_kms_instance_crn` variable to create a key ring and key, or for the `existing_scc_cos_bucket_name` variable to use an existing bucket. | `string` | `null` | no |
+| <a name="input_existing_scc_instance_crn"></a> [existing\_scc\_instance\_crn](#input\_existing\_scc\_instance\_crn) | The CRN of an existing Security and Compliance Center instance. If not supplied, a new instance will be created. | `string` | `null` | no |
 | <a name="input_ibmcloud_api_key"></a> [ibmcloud\_api\_key](#input\_ibmcloud\_api\_key) | The IBM Cloud API key to deploy resources. | `string` | n/a | yes |
 | <a name="input_kms_endpoint_type"></a> [kms\_endpoint\_type](#input\_kms\_endpoint\_type) | The endpoint for communicating with the KMS instance. Possible values: `public`, `private.` | `string` | `"private"` | no |
 | <a name="input_management_endpoint_type_for_bucket"></a> [management\_endpoint\_type\_for\_bucket](#input\_management\_endpoint\_type\_for\_bucket) | The type of endpoint for the IBM Terraform provider to use to manage Object Storage buckets. Possible values: `public`, `private`m `direct`. If you specify `private`, enable virtual routing and forwarding in your account, and the Terraform runtime must have access to the the IBM Cloud private network. | `string` | `"private"` | no |
@@ -63,6 +67,7 @@ This solution supports provisioning and configuring the following infrastructure
 | <a name="input_profile_attachments"></a> [profile\_attachments](#input\_profile\_attachments) | The list of Security and Compliance Center profile attachments to create that are scoped to your IBM Cloud account. The attachment schedule runs daily and defaults to the latest version of the specified profile attachments. | `list(string)` | <pre>[<br>  "IBM Cloud Framework for Financial Services"<br>]</pre> | no |
 | <a name="input_provision_scc_workload_protection"></a> [provision\_scc\_workload\_protection](#input\_provision\_scc\_workload\_protection) | Whether to provision a Workload Protection instance. | `bool` | `true` | no |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | The name of a new or an existing resource group in which to provision resources to. If a prefix input variable is specified, the prefix is added to the name in the `<prefix>-<name>` format. | `string` | n/a | yes |
+| <a name="input_resource_groups_scope"></a> [resource\_groups\_scope](#input\_resource\_groups\_scope) | The resource group to associate with the Security and Compliance Center profile attachments. If not specified, the attachments are scoped to the current account ID. Only one resource group is allowed. | `list(string)` | `[]` | no |
 | <a name="input_scc_cos_bucket_access_tags"></a> [scc\_cos\_bucket\_access\_tags](#input\_scc\_cos\_bucket\_access\_tags) | The list of access tags to add to the Security and Compliance Center Object Storage bucket. | `list(string)` | `[]` | no |
 | <a name="input_scc_cos_bucket_class"></a> [scc\_cos\_bucket\_class](#input\_scc\_cos\_bucket\_class) | The storage class of the newly provisioned Security and Compliance Center Object Storage bucket. Possible values: `standard`, `vault`, `cold`, `smart`, `onerate_active`. [Learn more](https://cloud.ibm.com/docs/cloud-object-storage?topic=cloud-object-storage-classes). | `string` | `"smart"` | no |
 | <a name="input_scc_cos_bucket_name"></a> [scc\_cos\_bucket\_name](#input\_scc\_cos\_bucket\_name) | The name for the Security and Compliance Center Object Storage bucket. Bucket names must globally unique. If `add_bucket_name_suffix` is true, a 4-character string is added to this name to  ensure it's globally unique. If a prefix input variable is specified, the prefix is added to the name in the `<prefix>-<name>` format. | `string` | `"base-security-services-bucket"` | no |

@@ -167,6 +167,12 @@ variable "existing_activity_tracker_crn" {
 # SCC variables
 ########################################################################################################################
 
+variable "existing_scc_instance_crn" {
+  type        = string
+  default     = null
+  description = "The CRN of an existing Security and Compliance Center instance. If not supplied, a new instance will be created."
+}
+
 variable "scc_instance_name" {
   type        = string
   default     = "base-security-services-scc"
@@ -218,6 +224,27 @@ variable "profile_attachments" {
   type        = list(string)
   description = "The list of Security and Compliance Center profile attachments to create that are scoped to your IBM Cloud account. The attachment schedule runs daily and defaults to the latest version of the specified profile attachments."
   default     = ["IBM Cloud Framework for Financial Services"]
+}
+
+variable "resource_groups_scope" {
+  type        = list(string)
+  description = "The resource group to associate with the Security and Compliance Center profile attachments. If not specified, the attachments are scoped to the current account ID. Only one resource group is allowed."
+  default     = []
+  validation {
+    condition     = length(var.resource_groups_scope) <= 1
+    error_message = "Only one resource group is allowed."
+  }
+}
+
+variable "attachment_schedule" {
+  type        = string
+  description = "The scanning schedule. Possible values: `daily`, `every_7_days`, `every_30_days`, `none`."
+  default     = "daily"
+
+  validation {
+    condition     = contains(["daily", "every_7_days", "every_30_days", "none"], var.attachment_schedule)
+    error_message = "You can set the schedule only to `daily`, `every_7_days`, `every_30_days`, or `none`."
+  }
 }
 
 ########################################################################################################################
