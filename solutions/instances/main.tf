@@ -267,7 +267,7 @@ data "ibm_en_destinations" "en_destinations" {
 resource "ibm_en_topic" "en_topic" {
   count         = var.existing_en_crn != null ? 1 : 0
   instance_guid = local.existing_en_guid
-  name          = "SCC Topic"
+  name          = "${var.prefix} - SCC Topic"
   description   = "Topic for SCC events routing"
   sources {
     id = local.scc_instance_crn
@@ -281,7 +281,7 @@ resource "ibm_en_topic" "en_topic" {
 resource "ibm_en_subscription_email" "email_subscription" {
   count          = var.existing_en_crn != null && length(var.scc_en_email_list) > 0 ? 1 : 0
   instance_guid  = local.existing_en_guid
-  name           = "Email for Security and Compliance Center Subscription"
+  name           = "${var.prefix} - Email for Security and Compliance Center Subscription"
   description    = "Subscription for Security and Compliance Center Events"
   destination_id = [for s in toset(data.ibm_en_destinations.en_destinations[count.index].destinations) : s.id if s.type == "smtp_ibm"][0]
   topic_id       = ibm_en_topic.en_topic[count.index].topic_id
