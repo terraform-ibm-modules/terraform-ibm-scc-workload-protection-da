@@ -128,33 +128,17 @@ module "cos" {
 # SCC Instance
 #######################################################################################################################
 
-locals {
-  parsed_existing_scc_instance_crn = var.existing_scc_instance_crn != null ? split(":", var.existing_scc_instance_crn) : []
-  existing_scc_instance_guid       = length(local.parsed_existing_scc_instance_crn) > 0 ? local.parsed_existing_scc_instance_crn[7] : null
-  existing_scc_instance_region     = length(local.parsed_existing_scc_instance_crn) > 0 ? local.parsed_existing_scc_instance_crn[5] : null
-
-  scc_instance_crn    = var.existing_scc_instance_crn == null ? module.scc[0].crn : var.existing_scc_instance_crn
-  scc_instance_guid   = var.existing_scc_instance_crn == null ? module.scc[0].guid : local.existing_scc_instance_guid
-  scc_instance_region = var.existing_scc_instance_crn == null ? var.scc_region : local.existing_scc_instance_region
-
-}
-
 moved {
-  from = module.scc
-  to   = module.scc[0]
-}
-
-data "ibm_resource_instance" "scc_instance" {
-  count      = var.existing_scc_instance_crn == null ? 0 : 1
-  identifier = local.scc_instance_guid
+  from = module.scc[0]
+  to   = module.scc
 }
 
 module "scc" {
-  count                             = var.existing_scc_instance_crn == null ? 1 : 0
   source                            = "terraform-ibm-modules/scc/ibm"
-  version                           = "1.6.3"
+  version                           = "1.8.0"
+  existing_scc_instance_crn         = var.existing_scc_instance_crn
   resource_group_id                 = module.resource_group.resource_group_id
-  region                            = local.scc_instance_region
+  region                            = var.scc_region
   instance_name                     = local.scc_instance_name
   plan                              = var.scc_service_plan
   cos_bucket                        = local.cos_bucket_name
@@ -162,8 +146,8 @@ module "scc" {
   en_instance_crn                   = var.existing_en_crn
   skip_cos_iam_authorization_policy = var.skip_scc_cos_auth_policy
   resource_tags                     = var.scc_instance_tags
-  attach_wp_to_scc_instance         = var.provision_scc_workload_protection
-  wp_instance_crn                   = var.provision_scc_workload_protection ? module.scc_wp[0].crn : null
+  attach_wp_to_scc_instance         = var.provision_scc_workload_protection && var.existing_scc_instance_crn == null
+  wp_instance_crn                   = var.provision_scc_workload_protection && var.existing_scc_instance_crn == null ? module.scc_wp[0].crn : null
   skip_scc_wp_auth_policy           = var.skip_scc_workload_protection_auth_policy
 }
 
@@ -224,7 +208,7 @@ module "create_profile_attachment" {
   }
   profile_name           = each.key
   profile_version        = "latest"
-  scc_instance_id        = local.scc_instance_guid
+  scc_instance_id        = module.scc.guid
   attachment_name        = "${each.value + 1} daily full account attachment"
   attachment_description = "SCC profile attachment scoped to your specific IBM Cloud account id ${data.ibm_iam_account_settings.iam_account_settings.account_id} with a daily attachment schedule."
   attachment_schedule    = var.attachment_schedule
@@ -236,7 +220,7 @@ module "create_profile_attachment" {
 #######################################################################################################################
 
 module "scc_wp" {
-  count                         = var.provision_scc_workload_protection ? 1 : 0
+  count                         = var.provision_scc_workload_protection && var.existing_scc_instance_crn == null ? 1 : 0
   source                        = "terraform-ibm-modules/scc-workload-protection/ibm"
   version                       = "1.3.1"
   name                          = local.scc_workload_protection_instance_name
@@ -265,12 +249,12 @@ data "ibm_en_destinations" "en_destinations" {
 }
 
 resource "ibm_en_topic" "en_topic" {
-  count         = var.existing_en_crn != null ? 1 : 0
+  count         = var.existing_en_crn != null && var.existing_scc_instance_crn == null ? 1 : 0
   instance_guid = local.existing_en_guid
   name          = "SCC Topic"
   description   = "Topic for SCC events routing"
   sources {
-    id = local.scc_instance_crn
+    id = module.scc.crn
     rules {
       enabled           = true
       event_type_filter = "$.*"
@@ -279,7 +263,7 @@ resource "ibm_en_topic" "en_topic" {
 }
 
 resource "ibm_en_subscription_email" "email_subscription" {
-  count          = var.existing_en_crn != null && length(var.scc_en_email_list) > 0 ? 1 : 0
+  count          = var.existing_en_crn != null && var.existing_scc_instance_crn == null && length(var.scc_en_email_list) > 0 ? 1 : 0
   instance_guid  = local.existing_en_guid
   name           = "Email for Security and Compliance Center Subscription"
   description    = "Subscription for Security and Compliance Center Events"
