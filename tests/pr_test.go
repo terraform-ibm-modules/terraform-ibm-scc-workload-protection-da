@@ -177,6 +177,7 @@ func TestRunUpgradeInstances(t *testing.T) {
 	})
 
 	options.TerraformVars = map[string]interface{}{
+		"prefix":                              options.Prefix,
 		"resource_group_name":                 options.Prefix,
 		"existing_kms_instance_crn":           permanentResources["hpcs_south_crn"],
 		"kms_endpoint_type":                   "public",
