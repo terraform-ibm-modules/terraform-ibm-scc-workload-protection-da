@@ -40,7 +40,6 @@ This solution supports provisioning and configuring the following infrastructure
 | [ibm_en_destinations.en_destinations](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.68.1/docs/data-sources/en_destinations) | data source |
 | [ibm_iam_account_settings.iam_account_settings](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.68.1/docs/data-sources/iam_account_settings) | data source |
 | [ibm_resource_group.group](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.68.1/docs/data-sources/resource_group) | data source |
-| [ibm_resource_instance.scc_instance](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.68.1/docs/data-sources/resource_instance) | data source |
 
 ### Inputs
 

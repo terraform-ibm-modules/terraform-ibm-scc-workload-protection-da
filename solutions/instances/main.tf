@@ -45,7 +45,7 @@ module "kms" {
   providers = {
     ibm = ibm.kms
   }
-  count                       = var.existing_scc_cos_kms_key_crn != null || var.existing_scc_cos_bucket_name != null ? 0 : 1 # no need to create any KMS resources if passing an existing key, or bucket
+  count                       = (var.existing_scc_cos_kms_key_crn != null || var.existing_scc_cos_bucket_name != null) && var.existing_scc_instance_crn == null ? 0 : 1 # no need to create any KMS resources if passing an existing key, or bucket
   source                      = "terraform-ibm-modules/kms-all-inclusive/ibm"
   version                     = "4.13.4"
   create_key_protect_instance = false
@@ -86,7 +86,7 @@ module "cos" {
   providers = {
     ibm = ibm.cos
   }
-  count                    = var.existing_scc_cos_bucket_name == null ? 1 : 0 # no need to call COS module if consumer is passing existing COS bucket
+  count                    = var.existing_scc_cos_bucket_name == null && var.existing_scc_instance_crn == null ? 1 : 0 # no need to call COS module if consumer is passing existing COS bucket
   source                   = "terraform-ibm-modules/cos/ibm//modules/fscloud"
   version                  = "8.6.2"
   resource_group_id        = module.resource_group.resource_group_id
