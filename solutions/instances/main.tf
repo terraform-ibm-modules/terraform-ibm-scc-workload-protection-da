@@ -257,8 +257,8 @@ module "scc_wp" {
 locals {
   parsed_existing_en_instance_crn = var.existing_en_crn != null ? split(":", var.existing_en_crn) : []
   existing_en_guid                = length(local.parsed_existing_en_instance_crn) > 0 ? local.parsed_existing_en_instance_crn[7] : null
-  en_topic = var.prefix != null ? "${var.prefix} - SCC Topic" : "SCC Topic"
-  en_subscription_email = var.prefix != null ? "${var.prefix} - Email for Security and Compliance Center Subscription" : "Email for Security and Compliance Center Subscription"
+  en_topic                        = var.prefix != null ? "${var.prefix} - SCC Topic" : "SCC Topic"
+  en_subscription_email           = var.prefix != null ? "${var.prefix} - Email for Security and Compliance Center Subscription" : "Email for Security and Compliance Center Subscription"
 }
 
 data "ibm_en_destinations" "en_destinations" {
