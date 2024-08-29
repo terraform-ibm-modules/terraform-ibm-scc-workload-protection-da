@@ -161,6 +161,8 @@ func TestInstancesInSchematics(t *testing.T) {
 		{Name: "scc_workload_protection_access_tags", Value: permanentResources["accessTags"], DataType: "list(string)"},
 		{Name: "cos_instance_access_tags", Value: permanentResources["accessTags"], DataType: "list(string)"},
 		{Name: "prefix", Value: options.Prefix, DataType: "string"},
+		// Temp workaround for https://github.com/IBM-Cloud/terraform-provider-ibm/issues/5586
+		{Name: "profile_attachments", Value: []string{"SOC 2"}, DataType: "list(string)"},
 	}
 
 	err := options.RunSchematicTest()
