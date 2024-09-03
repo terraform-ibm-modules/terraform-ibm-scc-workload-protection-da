@@ -254,7 +254,7 @@ func TestRunExistingResourcesInstances(t *testing.T) {
 				"management_endpoint_type_for_bucket": "public",
 				"existing_en_crn":                     terraform.Output(t, existingTerraformOptions, "en_crn"),
 				// Temp workaround for https://github.com/IBM-Cloud/terraform-provider-ibm/issues/5586
-		                "profile_attachments": []string{"SOC 2"},
+				"profile_attachments": []string{"SOC 2"},
 			},
 		})
 
