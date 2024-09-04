@@ -281,6 +281,8 @@ func TestRunExistingResourcesInstances(t *testing.T) {
 				"kms_endpoint_type":                   "public",
 				"existing_cos_instance_crn":           terraform.Output(t, existingTerraformOptions, "cos_crn"),
 				"management_endpoint_type_for_bucket": "public",
+				// Temp workaround for https://github.com/IBM-Cloud/terraform-provider-ibm/issues/5586
+				"profile_attachments": []string{"SOC 2"},
 			},
 		})
 
