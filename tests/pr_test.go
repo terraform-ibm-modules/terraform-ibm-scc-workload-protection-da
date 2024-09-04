@@ -161,8 +161,6 @@ func TestInstancesInSchematics(t *testing.T) {
 		{Name: "scc_workload_protection_access_tags", Value: permanentResources["accessTags"], DataType: "list(string)"},
 		{Name: "cos_instance_access_tags", Value: permanentResources["accessTags"], DataType: "list(string)"},
 		{Name: "prefix", Value: options.Prefix, DataType: "string"},
-		// Temp workaround for https://github.com/IBM-Cloud/terraform-provider-ibm/issues/5586
-		{Name: "profile_attachments", Value: []string{"SOC 2"}, DataType: "list(string)"},
 	}
 
 	err := options.RunSchematicTest()
@@ -183,8 +181,6 @@ func TestRunUpgradeInstances(t *testing.T) {
 		"existing_kms_instance_crn":           permanentResources["hpcs_south_crn"],
 		"kms_endpoint_type":                   "public",
 		"management_endpoint_type_for_bucket": "public",
-		// Temp workaround for https://github.com/IBM-Cloud/terraform-provider-ibm/issues/5586
-		"profile_attachments": []string{"SOC 2"},
 	}
 
 	output, err := options.RunTestUpgrade()
@@ -253,8 +249,6 @@ func TestRunExistingResourcesInstances(t *testing.T) {
 				"existing_cos_instance_crn":           terraform.Output(t, existingTerraformOptions, "cos_crn"),
 				"management_endpoint_type_for_bucket": "public",
 				"existing_en_crn":                     terraform.Output(t, existingTerraformOptions, "en_crn"),
-				// Temp workaround for https://github.com/IBM-Cloud/terraform-provider-ibm/issues/5586
-				"profile_attachments": []string{"SOC 2"},
 			},
 		})
 
@@ -281,8 +275,6 @@ func TestRunExistingResourcesInstances(t *testing.T) {
 				"kms_endpoint_type":                   "public",
 				"existing_cos_instance_crn":           terraform.Output(t, existingTerraformOptions, "cos_crn"),
 				"management_endpoint_type_for_bucket": "public",
-				// Temp workaround for https://github.com/IBM-Cloud/terraform-provider-ibm/issues/5586
-				"profile_attachments": []string{"SOC 2"},
 			},
 		})
 
