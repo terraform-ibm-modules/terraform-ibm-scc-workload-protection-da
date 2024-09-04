@@ -45,7 +45,7 @@ module "kms" {
   providers = {
     ibm = ibm.kms
   }
-  count                       = (var.existing_scc_cos_kms_key_crn != null || var.existing_scc_cos_bucket_name != null) && var.existing_scc_instance_crn == null ? 0 : 1 # no need to create any KMS resources if passing an existing key, or bucket
+  count                       = (var.existing_scc_cos_kms_key_crn != null || var.existing_scc_cos_bucket_name != null) && var.existing_scc_instance_crn == null ? 0 : 1 # no need to create any KMS resources if passing an existing key or bucket, or SCC instance
   source                      = "terraform-ibm-modules/kms-all-inclusive/ibm"
   version                     = "4.13.4"
   create_key_protect_instance = false
@@ -86,7 +86,7 @@ module "cos" {
   providers = {
     ibm = ibm.cos
   }
-  count                    = var.existing_scc_cos_bucket_name == null && var.existing_scc_instance_crn == null ? 1 : 0 # no need to call COS module if consumer is passing existing COS bucket
+  count                    = var.existing_scc_cos_bucket_name == null && var.existing_scc_instance_crn == null ? 1 : 0 # no need to call COS module if consumer is passing existing SCC instance or COS bucket
   source                   = "terraform-ibm-modules/cos/ibm//modules/fscloud"
   version                  = "8.6.2"
   resource_group_id        = module.resource_group.resource_group_id
@@ -127,6 +127,11 @@ module "cos" {
 #######################################################################################################################
 # SCC Instance
 #######################################################################################################################
+locals {
+  parsed_existing_scc_instance_crn = var.existing_scc_instance_crn != null ? split(":", var.existing_scc_instance_crn) : []
+  existing_scc_instance_region     = length(local.parsed_existing_scc_instance_crn) > 0 ? local.parsed_existing_scc_instance_crn[5] : null
+  scc_instance_region              = var.existing_scc_instance_crn == null ? var.scc_region : local.existing_scc_instance_region
+}
 
 moved {
   from = module.scc[0]
@@ -138,7 +143,7 @@ module "scc" {
   version                           = "1.8.0"
   existing_scc_instance_crn         = var.existing_scc_instance_crn
   resource_group_id                 = module.resource_group.resource_group_id
-  region                            = var.scc_region
+  region                            = local.scc_instance_region
   instance_name                     = local.scc_instance_name
   plan                              = var.scc_service_plan
   cos_bucket                        = local.cos_bucket_name
