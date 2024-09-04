@@ -177,6 +177,7 @@ func TestRunUpgradeInstances(t *testing.T) {
 	})
 
 	options.TerraformVars = map[string]interface{}{
+		"prefix":                              options.Prefix,
 		"resource_group_name":                 options.Prefix,
 		"existing_kms_instance_crn":           permanentResources["hpcs_south_crn"],
 		"kms_endpoint_type":                   "public",
@@ -240,6 +241,7 @@ func TestRunExistingResourcesInstances(t *testing.T) {
 			ImplicitRequired: false,
 			Region:           region,
 			TerraformVars: map[string]interface{}{
+				"prefix":                              prefix,
 				"cos_region":                          region,
 				"scc_region":                          region,
 				"resource_group_name":                 terraform.Output(t, existingTerraformOptions, "resource_group_name"),
@@ -266,6 +268,7 @@ func TestRunExistingResourcesInstances(t *testing.T) {
 			// Do not hard fail the test if the implicit destroy steps fail to allow a full destroy of resource to occur
 			ImplicitRequired: false,
 			TerraformVars: map[string]interface{}{
+				"prefix":                              prefix,
 				"cos_region":                          region,
 				"scc_region":                          region,
 				"resource_group_name":                 terraform.Output(t, existingTerraformOptions, "resource_group_name"),
