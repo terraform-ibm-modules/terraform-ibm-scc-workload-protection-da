@@ -287,8 +287,16 @@ data "ibm_en_destinations" "en_destinations" {
   instance_guid = local.existing_en_guid
 }
 
+# workaround for https://github.com/IBM-Cloud/terraform-provider-ibm/issues/5533
+resource "time_sleep" "wait_for_scc" {
+  depends_on = [module.scc]
+
+  create_duration = "30s"
+}
+
 resource "ibm_en_topic" "en_topic" {
   count         = var.existing_en_crn != null ? 1 : 0
+  depends_on    = [time_sleep.wait_for_scc]
   instance_guid = local.existing_en_guid
   name          = local.en_topic
   description   = "Topic for SCC events routing"
