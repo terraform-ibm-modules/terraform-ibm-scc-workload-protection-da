@@ -25,11 +25,11 @@ This solution supports provisioning and configuring the following infrastructure
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_cos"></a> [cos](#module\_cos) | terraform-ibm-modules/cos/ibm//modules/fscloud | 8.10.7 |
-| <a name="module_create_profile_attachment"></a> [create\_profile\_attachment](#module\_create\_profile\_attachment) | terraform-ibm-modules/scc/ibm//modules/attachment | 1.8.2 |
-| <a name="module_kms"></a> [kms](#module\_kms) | terraform-ibm-modules/kms-all-inclusive/ibm | 4.15.9 |
+| <a name="module_cos"></a> [cos](#module\_cos) | terraform-ibm-modules/cos/ibm//modules/fscloud | 8.11.7 |
+| <a name="module_create_profile_attachment"></a> [create\_profile\_attachment](#module\_create\_profile\_attachment) | terraform-ibm-modules/scc/ibm//modules/attachment | 1.8.7 |
+| <a name="module_kms"></a> [kms](#module\_kms) | terraform-ibm-modules/kms-all-inclusive/ibm | 4.15.11 |
 | <a name="module_resource_group"></a> [resource\_group](#module\_resource\_group) | terraform-ibm-modules/resource-group/ibm | 1.1.6 |
-| <a name="module_scc"></a> [scc](#module\_scc) | terraform-ibm-modules/scc/ibm | 1.8.2 |
+| <a name="module_scc"></a> [scc](#module\_scc) | terraform-ibm-modules/scc/ibm | 1.8.7 |
 | <a name="module_scc_wp"></a> [scc\_wp](#module\_scc\_wp) | terraform-ibm-modules/scc-workload-protection/ibm | 1.3.1 |
 
 ### Resources
