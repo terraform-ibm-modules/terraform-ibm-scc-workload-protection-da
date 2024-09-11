@@ -47,7 +47,7 @@ module "kms" {
   }
   count                       = var.existing_scc_cos_kms_key_crn != null || var.existing_scc_cos_bucket_name != null ? 0 : 1 # no need to create any KMS resources if passing an existing key, or bucket
   source                      = "terraform-ibm-modules/kms-all-inclusive/ibm"
-  version                     = "4.15.9"
+  version                     = "4.15.11"
   create_key_protect_instance = false
   region                      = local.kms_region
   existing_kms_instance_crn   = var.existing_kms_instance_crn
@@ -88,7 +88,7 @@ module "cos" {
   }
   count                    = var.existing_scc_cos_bucket_name == null ? 1 : 0 # no need to call COS module if consumer is passing existing COS bucket
   source                   = "terraform-ibm-modules/cos/ibm//modules/fscloud"
-  version                  = "8.10.7"
+  version                  = "8.11.7"
   resource_group_id        = module.resource_group.resource_group_id
   create_cos_instance      = var.existing_cos_instance_crn == null ? true : false # don't create instance if existing one passed in
   cos_instance_name        = local.cos_instance_name
@@ -152,7 +152,7 @@ data "ibm_resource_instance" "scc_instance" {
 module "scc" {
   count                             = var.existing_scc_instance_crn == null ? 1 : 0
   source                            = "terraform-ibm-modules/scc/ibm"
-  version                           = "1.8.2"
+  version                           = "1.8.7"
   resource_group_id                 = module.resource_group.resource_group_id
   region                            = local.scc_instance_region
   instance_name                     = local.scc_instance_name
@@ -217,7 +217,7 @@ data "ibm_iam_account_settings" "iam_account_settings" {}
 
 module "create_profile_attachment" {
   source  = "terraform-ibm-modules/scc/ibm//modules/attachment"
-  version = "1.8.2"
+  version = "1.8.7"
   for_each = {
     for idx, profile_attachment in var.profile_attachments :
     profile_attachment => idx
@@ -257,6 +257,8 @@ module "scc_wp" {
 locals {
   parsed_existing_en_instance_crn = var.existing_en_crn != null ? split(":", var.existing_en_crn) : []
   existing_en_guid                = length(local.parsed_existing_en_instance_crn) > 0 ? local.parsed_existing_en_instance_crn[7] : null
+  en_topic                        = var.prefix != null ? "${var.prefix} - SCC Topic" : "SCC Topic"
+  en_subscription_email           = var.prefix != null ? "${var.prefix} - Email for Security and Compliance Center Subscription" : "Email for Security and Compliance Center Subscription"
 }
 
 data "ibm_en_destinations" "en_destinations" {
@@ -264,10 +266,18 @@ data "ibm_en_destinations" "en_destinations" {
   instance_guid = local.existing_en_guid
 }
 
+# workaround for https://github.com/IBM-Cloud/terraform-provider-ibm/issues/5533
+resource "time_sleep" "wait_for_scc" {
+  depends_on = [module.scc]
+
+  create_duration = "30s"
+}
+
 resource "ibm_en_topic" "en_topic" {
   count         = var.existing_en_crn != null ? 1 : 0
+  depends_on    = [time_sleep.wait_for_scc]
   instance_guid = local.existing_en_guid
-  name          = "SCC Topic"
+  name          = local.en_topic
   description   = "Topic for SCC events routing"
   sources {
     id = local.scc_instance_crn
@@ -281,7 +291,7 @@ resource "ibm_en_topic" "en_topic" {
 resource "ibm_en_subscription_email" "email_subscription" {
   count          = var.existing_en_crn != null && length(var.scc_en_email_list) > 0 ? 1 : 0
   instance_guid  = local.existing_en_guid
-  name           = "Email for Security and Compliance Center Subscription"
+  name           = local.en_subscription_email
   description    = "Subscription for Security and Compliance Center Events"
   destination_id = [for s in toset(data.ibm_en_destinations.en_destinations[count.index].destinations) : s.id if s.type == "smtp_ibm"][0]
   topic_id       = ibm_en_topic.en_topic[count.index].topic_id
