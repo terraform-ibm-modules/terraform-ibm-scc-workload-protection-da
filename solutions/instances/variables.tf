@@ -246,7 +246,7 @@ variable "resource_groups_scope" {
 variable "attachment_schedule" {
   type        = string
   description = "The scanning schedule. Possible values: `daily`, `every_7_days`, `every_30_days`, `none`."
-  default     = "daily"
+  default     = "every_30_days"
 
   validation {
     condition     = contains(["daily", "every_7_days", "every_30_days", "none"], var.attachment_schedule)
