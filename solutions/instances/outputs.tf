@@ -64,8 +64,8 @@ output "scc_workload_protection_access_key" {
   sensitive   = true
 }
 
-output "scc_profile_info" {
-  description = "SCC profile information"
+output "scc_attachment_info" {
+  description = "A list of objects containing attachment id, profile name and profile version for every SCC attachment that is created. [Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-scc-da/tree/main/solutions/instances/instances.md)."
   value = [
     for attachment in module.create_profile_attachment : {
       attachment_id = attachment.id

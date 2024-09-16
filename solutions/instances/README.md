@@ -98,6 +98,7 @@ This solution supports provisioning and configuring the following infrastructure
 |------|-------------|
 | <a name="output_resource_group_id"></a> [resource\_group\_id](#output\_resource\_group\_id) | Resource group ID |
 | <a name="output_resource_group_name"></a> [resource\_group\_name](#output\_resource\_group\_name) | Resource group name |
+| <a name="output_scc_attachment_info"></a> [scc\_attachment\_info](#output\_scc\_attachment\_info) | A list of objects containing attachment id, profile name and profile version for every SCC attachment that is created. [Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-scc-da/tree/main/solutions/instances/instances.md). |
 | <a name="output_scc_cos_bucket_config"></a> [scc\_cos\_bucket\_config](#output\_scc\_cos\_bucket\_config) | List of buckets created |
 | <a name="output_scc_cos_bucket_name"></a> [scc\_cos\_bucket\_name](#output\_scc\_cos\_bucket\_name) | SCC COS bucket name |
 | <a name="output_scc_cos_instance_crn"></a> [scc\_cos\_instance\_crn](#output\_scc\_cos\_instance\_crn) | SCC COS instance crn |
@@ -110,7 +111,6 @@ This solution supports provisioning and configuring the following infrastructure
 | <a name="output_scc_guid"></a> [scc\_guid](#output\_scc\_guid) | SCC instance guid |
 | <a name="output_scc_id"></a> [scc\_id](#output\_scc\_id) | SCC instance ID |
 | <a name="output_scc_name"></a> [scc\_name](#output\_scc\_name) | SCC instance name |
-| <a name="output_scc_profile_info"></a> [scc\_profile\_info](#output\_scc\_profile\_info) | SCC profile information |
 | <a name="output_scc_workload_protection_access_key"></a> [scc\_workload\_protection\_access\_key](#output\_scc\_workload\_protection\_access\_key) | SCC Workload Protection access key |
 | <a name="output_scc_workload_protection_api_endpoint"></a> [scc\_workload\_protection\_api\_endpoint](#output\_scc\_workload\_protection\_api\_endpoint) | SCC Workload Protection API endpoint |
 | <a name="output_scc_workload_protection_crn"></a> [scc\_workload\_protection\_crn](#output\_scc\_workload\_protection\_crn) | SCC Workload Protection instance CRN |
