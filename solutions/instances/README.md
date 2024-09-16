@@ -110,6 +110,8 @@ This solution supports provisioning and configuring the following infrastructure
 | <a name="output_scc_guid"></a> [scc\_guid](#output\_scc\_guid) | SCC instance guid |
 | <a name="output_scc_id"></a> [scc\_id](#output\_scc\_id) | SCC instance ID |
 | <a name="output_scc_name"></a> [scc\_name](#output\_scc\_name) | SCC instance name |
+| <a name="output_scc_profile_attachment_id"></a> [scc\_profile\_attachment\_id](#output\_scc\_profile\_attachment\_id) | List of SCC profile attachment ID |
+| <a name="output_scc_profile_info"></a> [scc\_profile\_info](#output\_scc\_profile\_info) | SCC profile information |
 | <a name="output_scc_workload_protection_access_key"></a> [scc\_workload\_protection\_access\_key](#output\_scc\_workload\_protection\_access\_key) | SCC Workload Protection access key |
 | <a name="output_scc_workload_protection_api_endpoint"></a> [scc\_workload\_protection\_api\_endpoint](#output\_scc\_workload\_protection\_api\_endpoint) | SCC Workload Protection API endpoint |
 | <a name="output_scc_workload_protection_crn"></a> [scc\_workload\_protection\_crn](#output\_scc\_workload\_protection\_crn) | SCC Workload Protection instance CRN |

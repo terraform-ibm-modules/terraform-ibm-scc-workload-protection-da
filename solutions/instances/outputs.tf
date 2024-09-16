@@ -64,6 +64,21 @@ output "scc_workload_protection_access_key" {
   sensitive   = true
 }
 
+output "scc_profile_attachment_id" {
+  description = "List of SCC profile attachment ID"
+  value       = [for attachment in module.create_profile_attachment : attachment.id]
+}
+
+output "scc_profile_info" {
+  description = "SCC profile information"
+  value = [
+    for attachment in module.create_profile_attachment : {
+      name    = attachment.profile.profile_name
+      version = attachment.profile.profile_version
+    }
+  ]
+}
+
 ########################################################################################################################
 # SCC COS
 ########################################################################################################################
