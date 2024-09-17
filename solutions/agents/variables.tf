@@ -260,3 +260,9 @@ variable "cluster_scanner_imagesbomextractor_limits_memory" {
   description = "Specifies the memory limit for the image SBOM Extractor that runs on the cluster scanner."
   default     = "350Mi"
 }
+
+variable "is_vpc_cluster" {
+  type        = bool
+  description = "Specify true if the target cluster for the DA is a VPC cluster, false if it is classic cluster."
+  default     = true
+}
