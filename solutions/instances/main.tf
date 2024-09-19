@@ -45,7 +45,7 @@ module "kms" {
   providers = {
     ibm = ibm.kms
   }
-  count                       = var.existing_scc_cos_kms_key_crn != null || var.existing_scc_cos_bucket_name != null ? 0 : 1 # no need to create any KMS resources if passing an existing key, or bucket
+  count                       = (var.existing_scc_cos_kms_key_crn != null || var.existing_scc_cos_bucket_name != null) && var.existing_scc_instance_crn == null ? 0 : 1 # no need to create any KMS resources if passing an existing key or bucket, or SCC instance
   source                      = "terraform-ibm-modules/kms-all-inclusive/ibm"
   version                     = "4.15.13"
   create_key_protect_instance = false
@@ -86,7 +86,7 @@ module "cos" {
   providers = {
     ibm = ibm.cos
   }
-  count                    = var.existing_scc_cos_bucket_name == null ? 1 : 0 # no need to call COS module if consumer is passing existing COS bucket
+  count                    = var.existing_scc_cos_bucket_name == null && var.existing_scc_instance_crn == null ? 1 : 0 # no need to call COS module if consumer is passing existing SCC instance or COS bucket
   source                   = "terraform-ibm-modules/cos/ibm//modules/fscloud"
   version                  = "8.11.11"
   resource_group_id        = module.resource_group.resource_group_id
@@ -127,31 +127,20 @@ module "cos" {
 #######################################################################################################################
 # SCC Instance
 #######################################################################################################################
-
 locals {
   parsed_existing_scc_instance_crn = var.existing_scc_instance_crn != null ? split(":", var.existing_scc_instance_crn) : []
-  existing_scc_instance_guid       = length(local.parsed_existing_scc_instance_crn) > 0 ? local.parsed_existing_scc_instance_crn[7] : null
   existing_scc_instance_region     = length(local.parsed_existing_scc_instance_crn) > 0 ? local.parsed_existing_scc_instance_crn[5] : null
-
-  scc_instance_crn    = var.existing_scc_instance_crn == null ? module.scc[0].crn : var.existing_scc_instance_crn
-  scc_instance_guid   = var.existing_scc_instance_crn == null ? module.scc[0].guid : local.existing_scc_instance_guid
-  scc_instance_region = var.existing_scc_instance_crn == null ? var.scc_region : local.existing_scc_instance_region
-
+  scc_instance_region              = var.existing_scc_instance_crn == null ? var.scc_region : local.existing_scc_instance_region
 }
 
 moved {
-  from = module.scc
-  to   = module.scc[0]
-}
-
-data "ibm_resource_instance" "scc_instance" {
-  count      = var.existing_scc_instance_crn == null ? 0 : 1
-  identifier = local.scc_instance_guid
+  from = module.scc[0]
+  to   = module.scc
 }
 
 module "scc" {
-  count                             = var.existing_scc_instance_crn == null ? 1 : 0
   source                            = "terraform-ibm-modules/scc/ibm"
+  existing_scc_instance_crn         = var.existing_scc_instance_crn
   version                           = "1.8.9"
   resource_group_id                 = module.resource_group.resource_group_id
   region                            = local.scc_instance_region
@@ -162,8 +151,8 @@ module "scc" {
   en_instance_crn                   = var.existing_en_crn
   skip_cos_iam_authorization_policy = var.skip_scc_cos_auth_policy
   resource_tags                     = var.scc_instance_tags
-  attach_wp_to_scc_instance         = var.provision_scc_workload_protection
-  wp_instance_crn                   = var.provision_scc_workload_protection ? module.scc_wp[0].crn : null
+  attach_wp_to_scc_instance         = var.provision_scc_workload_protection && var.existing_scc_instance_crn == null
+  wp_instance_crn                   = var.provision_scc_workload_protection && var.existing_scc_instance_crn == null ? module.scc_wp[0].crn : null
   skip_scc_wp_auth_policy           = var.skip_scc_workload_protection_auth_policy
 }
 
@@ -224,7 +213,7 @@ module "create_profile_attachment" {
   }
   profile_name           = each.key
   profile_version        = "latest"
-  scc_instance_id        = local.scc_instance_guid
+  scc_instance_id        = module.scc.guid
   attachment_name        = "${each.value + 1} daily full account attachment"
   attachment_description = "SCC profile attachment scoped to your specific IBM Cloud account id ${data.ibm_iam_account_settings.iam_account_settings.account_id} with a daily attachment schedule."
   attachment_schedule    = var.attachment_schedule
@@ -236,7 +225,7 @@ module "create_profile_attachment" {
 #######################################################################################################################
 
 module "scc_wp" {
-  count                         = var.provision_scc_workload_protection ? 1 : 0
+  count                         = var.provision_scc_workload_protection && var.existing_scc_instance_crn == null ? 1 : 0
   source                        = "terraform-ibm-modules/scc-workload-protection/ibm"
   version                       = "1.3.1"
   name                          = local.scc_workload_protection_instance_name
@@ -274,13 +263,13 @@ resource "time_sleep" "wait_for_scc" {
 }
 
 resource "ibm_en_topic" "en_topic" {
-  count         = var.existing_en_crn != null ? 1 : 0
+  count         = var.existing_en_crn != null && var.existing_scc_instance_crn == null ? 1 : 0
   depends_on    = [time_sleep.wait_for_scc]
   instance_guid = local.existing_en_guid
   name          = local.en_topic
   description   = "Topic for SCC events routing"
   sources {
-    id = local.scc_instance_crn
+    id = module.scc.crn
     rules {
       enabled           = true
       event_type_filter = "$.*"
@@ -289,7 +278,7 @@ resource "ibm_en_topic" "en_topic" {
 }
 
 resource "ibm_en_subscription_email" "email_subscription" {
-  count          = var.existing_en_crn != null && length(var.scc_en_email_list) > 0 ? 1 : 0
+  count          = var.existing_en_crn != null && var.existing_scc_instance_crn == null && length(var.scc_en_email_list) > 0 ? 1 : 0
   instance_guid  = local.existing_en_guid
   name           = local.en_subscription_email
   description    = "Subscription for Security and Compliance Center Events"
