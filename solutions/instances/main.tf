@@ -227,7 +227,7 @@ module "create_profile_attachment" {
 module "scc_wp" {
   count                         = var.provision_scc_workload_protection && var.existing_scc_instance_crn == null ? 1 : 0
   source                        = "terraform-ibm-modules/scc-workload-protection/ibm"
-  version                       = "1.3.1"
+  version                       = "1.4.0"
   name                          = local.scc_workload_protection_instance_name
   region                        = var.scc_region
   resource_group_id             = module.resource_group.resource_group_id
