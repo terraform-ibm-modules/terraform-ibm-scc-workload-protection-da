@@ -166,12 +166,8 @@ module "existing_scc_crn_parser" {
 }
 
 locals {
-  existing_scc_instance_guid   = var.existing_scc_instance_crn != null ? module.existing_scc_crn_parser[0].service_instance : null
   existing_scc_instance_region = var.existing_scc_instance_crn != null ? module.existing_scc_crn_parser[0].region : null
-
-  scc_instance_crn    = var.existing_scc_instance_crn == null ? module.scc[0].crn : var.existing_scc_instance_crn
-  scc_instance_guid   = var.existing_scc_instance_crn == null ? module.scc[0].guid : local.existing_scc_instance_guid
-  scc_instance_region = var.existing_scc_instance_crn == null ? var.scc_region : local.existing_scc_instance_region
+  scc_instance_region          = var.existing_scc_instance_crn == null ? var.scc_region : local.existing_scc_instance_region
 }
 
 moved {
