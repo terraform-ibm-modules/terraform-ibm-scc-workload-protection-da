@@ -15,7 +15,7 @@ module "resource_group" {
 ##############################################################################
 
 module "landing_zone" {
-  source                 = "git::https://github.com/terraform-ibm-modules/terraform-ibm-landing-zone//patterns//roks//module?ref=v5.31.1"
+  source                 = "git::https://github.com/terraform-ibm-modules/terraform-ibm-landing-zone//patterns//roks//module?ref=v5.33.0"
   region                 = var.region
   prefix                 = var.prefix
   tags                   = var.resource_tags
@@ -29,7 +29,7 @@ module "landing_zone" {
 
 module "scc_wp_instance" {
   source            = "terraform-ibm-modules/scc-workload-protection/ibm"
-  version           = "1.3.1"
+  version           = "1.4.0"
   name              = "${var.prefix}-scc-wp-instance"
   region            = var.region
   resource_group_id = module.resource_group.resource_group_id
