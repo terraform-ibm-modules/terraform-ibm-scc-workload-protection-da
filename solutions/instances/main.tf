@@ -78,7 +78,7 @@ module "kms" {
 locals {
   scc_cos_kms_key_crn = var.existing_scc_cos_bucket_name != null ? null : var.existing_scc_cos_kms_key_crn != null ? var.existing_scc_cos_kms_key_crn : module.kms[0].keys[format("%s.%s", local.scc_cos_key_ring_name, local.scc_cos_key_name)].crn
   cos_instance_crn    = var.existing_cos_instance_crn != null ? var.existing_cos_instance_crn : var.existing_scc_instance_crn == null ? module.cos[0].cos_instance_crn : null
-  cos_bucket_name     = var.existing_scc_cos_bucket_name != null ? var.existing_scc_cos_bucket_name : module.cos[0].buckets[local.scc_cos_bucket_name].bucket_name
+  cos_bucket_name     = var.existing_scc_cos_bucket_name != null ? var.existing_scc_cos_bucket_name : var.existing_scc_instance_crn != null ? null : module.cos[0].buckets[local.scc_cos_bucket_name].bucket_name
 
 }
 

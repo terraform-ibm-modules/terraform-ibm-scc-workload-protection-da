@@ -82,7 +82,7 @@ output "scc_attachment_info" {
 output "scc_cos_kms_key_crn" {
   description = "SCC COS KMS Key CRN"
   # if passing an existing bucket, then no KMS key is in play here, so output will be null
-  value = var.existing_scc_cos_bucket_name != null && var.existing_scc_instance_crn != null ? null : local.scc_cos_kms_key_crn
+  value = var.existing_scc_cos_bucket_name != null || var.existing_scc_instance_crn != null ? null : local.scc_cos_kms_key_crn
 }
 
 output "scc_cos_bucket_name" {
@@ -92,31 +92,31 @@ output "scc_cos_bucket_name" {
 
 output "scc_cos_bucket_config" {
   description = "List of buckets created"
-  value       = var.existing_scc_cos_bucket_name != null && var.existing_scc_instance_crn != null ? null : module.cos[0].buckets[local.scc_cos_bucket_name]
+  value       = var.existing_scc_cos_bucket_name != null || var.existing_scc_instance_crn != null ? null : module.cos[0].buckets[local.scc_cos_bucket_name]
 }
 
 output "scc_cos_instance_id" {
   description = "SCC COS instance id"
-  value       = var.existing_scc_cos_bucket_name != null && var.existing_scc_instance_crn != null ? null : module.cos[0].cos_instance_id
+  value       = var.existing_scc_cos_bucket_name != null || var.existing_scc_instance_crn != null ? null : module.cos[0].cos_instance_id
 }
 
 output "scc_cos_instance_guid" {
   description = "SCC COS instance guid"
-  value       = var.existing_scc_cos_bucket_name != null && var.existing_scc_instance_crn != null ? null : module.cos[0].cos_instance_guid
+  value       = var.existing_scc_cos_bucket_name != null || var.existing_scc_instance_crn != null ? null : module.cos[0].cos_instance_guid
 }
 
 output "scc_cos_instance_name" {
   description = "SCC COS instance name"
-  value       = var.existing_scc_cos_bucket_name != null && var.existing_scc_instance_crn != null ? null : local.cos_instance_name
+  value       = var.existing_scc_cos_bucket_name != null || var.existing_scc_instance_crn != null ? null : local.cos_instance_name
 }
 
 output "scc_cos_instance_crn" {
   description = "SCC COS instance crn"
-  value       = var.existing_scc_cos_bucket_name != null && var.existing_scc_instance_crn != null ? null : module.cos[0].cos_instance_crn
+  value       = var.existing_scc_cos_bucket_name != null || var.existing_scc_instance_crn != null ? null : module.cos[0].cos_instance_crn
 }
 
 output "scc_cos_resource_keys" {
   description = "List of resource keys"
-  value       = var.existing_scc_cos_bucket_name != null && var.existing_scc_instance_crn != null ? null : module.cos[0].resource_keys
+  value       = var.existing_scc_cos_bucket_name != null || var.existing_scc_instance_crn != null ? null : module.cos[0].resource_keys
   sensitive   = true
 }
