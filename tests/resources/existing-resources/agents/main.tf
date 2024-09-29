@@ -21,6 +21,9 @@ module "landing_zone" {
   tags                   = var.resource_tags
   add_atracker_route     = false
   enable_transit_gateway = false
+  # GHA runtime has no access to private
+  verify_cluster_network_readiness    = false
+  use_ibm_cloud_private_api_endpoints = false
 }
 
 ##############################################################################
