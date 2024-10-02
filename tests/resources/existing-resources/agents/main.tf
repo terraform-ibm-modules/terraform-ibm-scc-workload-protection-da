@@ -15,12 +15,15 @@ module "resource_group" {
 ##############################################################################
 
 module "landing_zone" {
-  source                 = "git::https://github.com/terraform-ibm-modules/terraform-ibm-landing-zone//patterns//roks//module?ref=v5.33.0"
+  source                 = "git::https://github.com/terraform-ibm-modules/terraform-ibm-landing-zone//patterns//roks//module?ref=v6.0.3"
   region                 = var.region
   prefix                 = var.prefix
   tags                   = var.resource_tags
   add_atracker_route     = false
   enable_transit_gateway = false
+  # GHA runtime has no access to private
+  verify_cluster_network_readiness    = false
+  use_ibm_cloud_private_api_endpoints = false
 }
 
 ##############################################################################
