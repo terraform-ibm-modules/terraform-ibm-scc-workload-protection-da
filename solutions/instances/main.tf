@@ -259,7 +259,7 @@ data "ibm_en_destinations" "en_destinations" {
 resource "time_sleep" "wait_for_scc" {
   depends_on = [module.scc]
 
-  create_duration = "30s"
+  create_duration = "60s"
 }
 
 resource "ibm_en_topic" "en_topic" {
