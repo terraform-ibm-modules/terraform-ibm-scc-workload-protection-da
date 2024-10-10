@@ -298,11 +298,11 @@ data "ibm_en_destinations" "en_destinations" {
   instance_guid = local.existing_en_guid
 }
 
-# workaround for https://github.com/IBM-Cloud/terraform-provider-ibm/issues/5533
+# workaround for https://github.com/IBM-Cloud/terraform-provider-ibm/issues/5533.
 resource "time_sleep" "wait_for_scc" {
   depends_on = [module.scc]
 
-  create_duration = "30s"
+  create_duration = "60s"
 }
 
 resource "ibm_en_topic" "en_topic" {
