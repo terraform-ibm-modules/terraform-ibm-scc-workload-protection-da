@@ -112,9 +112,24 @@ locals {
 
 }
 
+# moved {
+#  from = module.cos[0].module.buckets.module.buckets[local.scc_cos_bucket_name].ibm_cos_bucket.cos_bucket[0]
+#  to   = module.buckets.module.buckets[local.scc_cos_bucket_name].ibm_cos_bucket.cos_bucket[0]
+# }
+
 moved {
-  from = module.cos[0].module.buckets
-  to   = module.buckets
+  from = module.cos[0].module.buckets.ibm_iam_authorization_policy.policy[0]
+  to   = module.buckets.ibm_iam_authorization_policy.policy[0]
+}
+
+moved {
+  from = module.cos[0].module.buckets.time_sleep.wait_for_authorization_policy[0]
+  to   = module.buckets.time_sleep.wait_for_authorization_policy[0]
+}
+
+moved {
+  from = module.cos[0].module.buckets.module.buckets[0].random_string.bucket_name_suffix[0]
+  to   = module.buckets.module.buckets[0].random_string.bucket_name_suffix[0]
 }
 
 module "cos" {
