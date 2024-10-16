@@ -107,9 +107,14 @@ module "existing_cos_crn_parser" {
 locals {
   scc_cos_kms_key_crn = var.existing_scc_cos_bucket_name != null ? null : var.existing_scc_cos_kms_key_crn != null ? var.existing_scc_cos_kms_key_crn : module.kms[0].keys[format("%s.%s", local.scc_cos_key_ring_name, local.scc_cos_key_name)].crn
   cos_instance_crn    = var.existing_cos_instance_crn != null ? var.existing_cos_instance_crn : module.cos[0].cos_instance_crn
-  cos_bucket_name     = var.existing_scc_cos_bucket_name != null ? var.existing_scc_cos_bucket_name : module.cos[0].buckets[local.scc_cos_bucket_name].bucket_name
+  cos_bucket_name     = var.existing_scc_cos_bucket_name != null ? var.existing_scc_cos_bucket_name : module.buckets.buckets[local.scc_cos_bucket_name].bucket_name
   cos_instance_guid   = var.existing_cos_instance_crn != null ? module.existing_cos_crn_parser[0].service_instance : module.cos[0].cos_instance_guid
 
+}
+
+moved {
+  from = module.cos[0].module.buckets
+  to   = module.buckets
 }
 
 module "cos" {
@@ -126,6 +131,14 @@ module "cos" {
   existing_cos_instance_id = var.existing_cos_instance_crn
   access_tags              = var.cos_instance_access_tags
   cos_plan                 = "standard"
+}
+
+module "buckets" {
+  providers = {
+    ibm = ibm.cos
+  }
+  source  = "terraform-ibm-modules/cos/ibm//modules/buckets"
+  version = "8.11.14"
   bucket_configs = [{
     access_tags                   = var.scc_cos_bucket_access_tags
     add_bucket_name_suffix        = var.add_bucket_name_suffix
@@ -151,7 +164,6 @@ module "cos" {
       metrics_monitoring_crn  = var.existing_monitoring_crn
     }
   }]
-
 }
 
 #######################################################################################################################
