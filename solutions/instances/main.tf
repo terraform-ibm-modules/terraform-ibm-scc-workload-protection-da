@@ -64,6 +64,7 @@ resource "ibm_iam_authorization_policy" "cos_kms_policy" {
 
 resource "time_sleep" "wait_for_authorization_policy" {
   depends_on = [ibm_iam_authorization_policy.cos_kms_policy]
+  count      = local.create_cross_account_auth_policy ? 1 : 0
 
   create_duration = "30s"
 }
@@ -164,7 +165,7 @@ module "buckets" {
     ibm = ibm.cos
   }
   count          = local.create_cross_account_auth_policy ? 1 : 0
-  depends_on     = [time_sleep.wait_for_authorization_policy]
+  depends_on     = [time_sleep.wait_for_authorization_policy[0]]
   source         = "terraform-ibm-modules/cos/ibm//modules/buckets"
   version        = "8.11.14"
   bucket_configs = local.bucket_config
