@@ -44,7 +44,7 @@ locals {
   scc_workload_protection_instance_name     = var.prefix != null ? "${var.prefix}-${var.scc_workload_protection_instance_name}" : var.scc_workload_protection_instance_name
   scc_workload_protection_resource_key_name = var.prefix != null ? "${var.prefix}-${var.scc_workload_protection_instance_name}-key" : "${var.scc_workload_protection_instance_name}-key"
   scc_cos_bucket_name                       = var.prefix != null ? "${var.prefix}-${var.scc_cos_bucket_name}" : var.scc_cos_bucket_name
-  create_cross_account_auth_policy          = !var.skip_cos_kms_auth_policy && (data.ibm_iam_account_settings.iam_account_settings.account_id != module.existing_kms_crn_parser[0].account_id)
+  create_cross_account_auth_policy          = !var.skip_cos_kms_auth_policy && var.ibmcloud_kms_api_key == null ? false : (data.ibm_iam_account_settings.iam_account_settings.account_id != module.existing_kms_crn_parser[0].account_id)
 
   kms_service_name = var.existing_kms_instance_crn != null ? module.existing_kms_crn_parser[0].service_name : null
 }
