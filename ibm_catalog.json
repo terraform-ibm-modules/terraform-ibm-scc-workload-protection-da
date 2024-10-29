@@ -1,8 +1,8 @@
 {
   "products": [
     {
-      "name": "deploy-arch-ibm-scc",
-      "label": "Security and Compliance Center",
+      "name": "testing-deploy-arch-ibm-scc",
+      "label": "Testing - Security and Compliance Center",
       "product_kind": "solution",
       "tags": [
         "ibm_created",
