@@ -2,7 +2,7 @@
   "products": [
     {
       "name": "deploy-arch-ibm-scc",
-      "label": "Security and Compliance Center",
+      "label": "Cloud automation for Security and Compliance Center",
       "product_kind": "solution",
       "tags": [
         "ibm_created",
