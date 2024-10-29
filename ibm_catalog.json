@@ -336,7 +336,58 @@
                 "description": "This architecture supports creating and configuring IBM Security and Compliance Center resources"
               }
             ]
-          }
+          },
+          "dependencies": [
+            {
+              "name": "testing-deploy-arch-ibm-kms",
+              "id": "85fdbd7a-8c77-4abd-b716-653a31f3aba9",
+              "version": "^1.0.1",
+              "flavors": [
+                "standard"
+              ],
+              "catalog_id": "f64499c8-eb50-4985-bf91-29f9e605a433",
+              "optional": true,
+              "input_mapping": [
+                {
+                  "dependency_output": "kms_instance_crn",
+                  "version_input": "existing_kms_instance_crn"
+                }
+              ]
+            },
+            {
+              "catalog_id": "7a4d68b4-cf8b-40cd-a3d1-f49aff526eb3",
+              "flavors": [
+                "standard"
+              ],
+              "id": "63641cec-6093-4b4f-b7b0-98d2f4185cd6-global",
+              "input_mapping": [
+                {
+                  "dependency_input": "prefix",
+                  "version_input": "prefix"
+                }
+              ],
+              "name": "deploy-arch-ibm-account-infra-base",
+              "optional": true,
+              "version": "^1.11.6"
+            },
+            {
+              "catalog_id": "f64499c8-eb50-4985-bf91-29f9e605a433",
+              "flavors": [
+                "standard"
+              ],
+              "id": "1f6f1af5-185e-4ae7-9b42-4c64e42728f6",
+              "input_mapping": [
+                {
+                  "dependency_output": "crn",
+                  "version_input": "existing_en_crn"
+                }
+              ],
+              "name": "testing-deploy-arch-ibm-event-notifications",
+              "optional": true,
+              "version": "^1.0.1"
+            }
+          ],
+          "dependency_version_2": true
         },
         {
           "label": "Agents",
