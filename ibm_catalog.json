@@ -2,7 +2,7 @@
   "products": [
     {
       "name": "testing-deploy-arch-ibm-scc",
-      "label": "Testing - Security and Compliance Center",
+      "label": "Testing - Cloud automation for Security and Compliance Center",
       "product_kind": "solution",
       "tags": [
         "ibm_created",
