@@ -4,7 +4,7 @@
 
 locals {
   # tflint-ignore: terraform_unused_declarations
-  validate_inputs = var.existing_scc_cos_bucket_name == null && var.existing_scc_cos_kms_key_crn == null && var.existing_kms_instance_crn == null ? tobool("A value must be passed for 'existing_kms_instance_crn' if not supplying any value for 'existing_scc_cos_kms_key_crn' or 'existing_scc_cos_bucket_name'.") : true
+  validate_inputs = var.existing_scc_instance_crn == null && var.existing_scc_cos_bucket_name == null && var.existing_scc_cos_kms_key_crn == null && var.existing_kms_instance_crn == null ? tobool("A value must be passed for 'existing_kms_instance_crn' if not supplying any value for 'existing_scc_instance_crn', 'existing_scc_cos_kms_key_crn' or 'existing_scc_cos_bucket_name'.") : true
   # tflint-ignore: terraform_unused_declarations
   validate_cos_inputs = var.existing_scc_cos_bucket_name != null && var.existing_scc_cos_kms_key_crn != null ? tobool("A value should not be passed for 'existing_scc_cos_kms_key_crn' when passing a value for 'existing_scc_cos_bucket_name'. A key is only needed when creating a new COS bucket.") : true
   # tflint-ignore: terraform_unused_declarations
@@ -33,9 +33,19 @@ module "existing_kms_crn_parser" {
   crn     = var.existing_kms_instance_crn
 }
 
+module "existing_kms_key_crn_parser" {
+  count   = var.existing_scc_cos_kms_key_crn != null ? 1 : 0
+  source  = "terraform-ibm-modules/common-utilities/ibm//modules/crn-parser"
+  version = "1.1.0"
+  crn     = var.existing_scc_cos_kms_key_crn
+}
+
 locals {
-  kms_region        = var.existing_kms_instance_crn != null ? module.existing_kms_crn_parser[0].region : null
+  kms_region        = var.existing_kms_instance_crn != null ? module.existing_kms_crn_parser[0].region : var.scc_region
   existing_kms_guid = var.existing_kms_instance_crn != null ? module.existing_kms_crn_parser[0].service_instance : null
+  kms_service_name  = var.existing_kms_instance_crn != null ? module.existing_kms_crn_parser[0].service_name : null
+  kms_account_id    = var.existing_kms_instance_crn != null ? module.existing_kms_crn_parser[0].account_id : null
+  kms_key_id        = var.existing_scc_cos_kms_key_crn != null ? module.existing_kms_key_crn_parser[0].resource : module.kms.keys[0].key_id
 
   scc_cos_key_ring_name                     = var.prefix != null ? "${var.prefix}-${var.scc_cos_key_ring_name}" : var.scc_cos_key_ring_name
   scc_cos_key_name                          = var.prefix != null ? "${var.prefix}-${var.scc_cos_key_name}" : var.scc_cos_key_name
@@ -44,9 +54,8 @@ locals {
   scc_workload_protection_instance_name     = var.prefix != null ? "${var.prefix}-${var.scc_workload_protection_instance_name}" : var.scc_workload_protection_instance_name
   scc_workload_protection_resource_key_name = var.prefix != null ? "${var.prefix}-${var.scc_workload_protection_instance_name}-key" : "${var.scc_workload_protection_instance_name}-key"
   scc_cos_bucket_name                       = var.prefix != null ? "${var.prefix}-${var.scc_cos_bucket_name}" : var.scc_cos_bucket_name
-  create_cross_account_auth_policy          = !var.skip_cos_kms_auth_policy && var.ibmcloud_kms_api_key == null ? false : (data.ibm_iam_account_settings.iam_account_settings.account_id != module.existing_kms_crn_parser[0].account_id)
 
-  kms_service_name = var.existing_kms_instance_crn != null ? module.existing_kms_crn_parser[0].service_name : null
+  create_cross_account_auth_policy = !var.skip_cos_kms_auth_policy && var.ibmcloud_kms_api_key == null ? false : (data.ibm_iam_account_settings.iam_account_settings.account_id != module.existing_kms_crn_parser[0].account_id)
 }
 
 # Create IAM Authorization Policy to allow COS to access KMS for the encryption key, if cross account KMS is passed in
@@ -56,10 +65,38 @@ resource "ibm_iam_authorization_policy" "cos_kms_policy" {
   source_service_account      = data.ibm_iam_account_settings.iam_account_settings.account_id
   source_service_name         = "cloud-object-storage"
   source_resource_instance_id = local.cos_instance_guid
-  target_service_name         = local.kms_service_name
-  target_resource_instance_id = local.existing_kms_guid
   roles                       = ["Reader"]
-  description                 = "Allow COS instance in the account ${data.ibm_iam_account_settings.iam_account_settings.account_id} to read from the ${local.kms_service_name} instance GUID ${local.existing_kms_guid}"
+  description                 = "Allow the COS instance ${local.cos_instance_guid} to read the ${local.kms_service_name} key ${local.kms_key_id} from the instance ${local.existing_kms_guid}"
+  resource_attributes {
+    name     = "serviceName"
+    operator = "stringEquals"
+    value    = local.kms_service_name
+  }
+  resource_attributes {
+    name     = "accountId"
+    operator = "stringEquals"
+    value    = local.kms_account_id
+  }
+  resource_attributes {
+    name     = "serviceInstance"
+    operator = "stringEquals"
+    value    = local.existing_kms_guid
+  }
+  resource_attributes {
+    name     = "resourceType"
+    operator = "stringEquals"
+    value    = "key"
+  }
+  resource_attributes {
+    name     = "resource"
+    operator = "stringEquals"
+    value    = local.kms_key_id
+  }
+  # Scope of policy now includes the key, so ensure to create new policy before
+  # destroying old one to prevent any disruption to every day services.
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "time_sleep" "wait_for_authorization_policy" {
