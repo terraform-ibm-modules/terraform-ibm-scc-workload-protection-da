@@ -34,10 +34,10 @@ module "existing_kms_crn_parser" {
 }
 
 module "existing_kms_key_crn_parser" {
-  count   = var.existing_scc_cos_kms_key_crn != null ? 1 : 0
+  count   = var.existing_scc_cos_kms_key_crn != null || var.existing_kms_instance_crn != null ? 1 : 0
   source  = "terraform-ibm-modules/common-utilities/ibm//modules/crn-parser"
   version = "1.1.0"
-  crn     = var.existing_scc_instance_crn != null ? null : var.existing_scc_cos_kms_key_crn != null ? var.existing_scc_cos_kms_key_crn : module.kms[0].keys[format("%s.%s", local.scc_cos_key_ring_name, local.scc_cos_key_name)].crn
+  crn     = var.existing_scc_cos_kms_key_crn != null ? var.existing_scc_cos_kms_key_crn : module.kms[0].keys[format("%s.%s", local.scc_cos_key_ring_name, local.scc_cos_key_name)].crn
 }
 
 locals {
