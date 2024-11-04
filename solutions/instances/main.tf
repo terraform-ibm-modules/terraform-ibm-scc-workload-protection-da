@@ -37,7 +37,7 @@ module "existing_kms_key_crn_parser" {
   count   = var.existing_scc_cos_kms_key_crn != null ? 1 : 0
   source  = "terraform-ibm-modules/common-utilities/ibm//modules/crn-parser"
   version = "1.1.0"
-  crn     = var.existing_scc_cos_kms_key_crn
+  crn     = var.existing_scc_instance_crn != null ? null : var.existing_scc_cos_kms_key_crn != null ? var.existing_scc_cos_kms_key_crn : module.kms[0].keys[format("%s.%s", local.scc_cos_key_ring_name, local.scc_cos_key_name)].crn
 }
 
 locals {
@@ -45,7 +45,7 @@ locals {
   existing_kms_guid = var.existing_kms_instance_crn != null ? module.existing_kms_crn_parser[0].service_instance : null
   kms_service_name  = var.existing_kms_instance_crn != null ? module.existing_kms_crn_parser[0].service_name : null
   kms_account_id    = var.existing_kms_instance_crn != null ? module.existing_kms_crn_parser[0].account_id : null
-  kms_key_id        = var.existing_scc_instance_crn == null ? var.existing_scc_cos_kms_key_crn != null ? module.existing_kms_key_crn_parser[0].resource : module.kms[0].keys : null
+  kms_key_id        = var.existing_scc_instance_crn == null ? module.existing_kms_key_crn_parser[0].resource : null
 
   scc_cos_key_ring_name                     = var.prefix != null ? "${var.prefix}-${var.scc_cos_key_ring_name}" : var.scc_cos_key_ring_name
   scc_cos_key_name                          = var.prefix != null ? "${var.prefix}-${var.scc_cos_key_name}" : var.scc_cos_key_name
