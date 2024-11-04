@@ -45,7 +45,7 @@ locals {
   existing_kms_guid = var.existing_kms_instance_crn != null ? module.existing_kms_crn_parser[0].service_instance : null
   kms_service_name  = var.existing_kms_instance_crn != null ? module.existing_kms_crn_parser[0].service_name : null
   kms_account_id    = var.existing_kms_instance_crn != null ? module.existing_kms_crn_parser[0].account_id : null
-  kms_key_id        = var.existing_scc_cos_kms_key_crn != null ? module.existing_kms_key_crn_parser[0].resource : module.kms.keys[0].key_id
+  kms_key_id        = var.existing_kms_instance_crn != null ? var.existing_scc_cos_kms_key_crn != null ? module.existing_kms_key_crn_parser[0].resource : module.kms.keys[0].key_id : null
 
   scc_cos_key_ring_name                     = var.prefix != null ? "${var.prefix}-${var.scc_cos_key_ring_name}" : var.scc_cos_key_ring_name
   scc_cos_key_name                          = var.prefix != null ? "${var.prefix}-${var.scc_cos_key_name}" : var.scc_cos_key_name
@@ -111,7 +111,7 @@ module "kms" {
   providers = {
     ibm = ibm.kms
   }
-  count                       = (var.existing_scc_cos_kms_key_crn != null || var.existing_scc_cos_bucket_name != null) && var.existing_scc_instance_crn == null ? 0 : 1 # no need to create any KMS resources if passing an existing key or bucket, or SCC instance
+  count                       = var.existing_scc_cos_kms_key_crn != null || var.existing_scc_cos_bucket_name != null || var.existing_scc_instance_crn != null ? 0 : 1 # no need to create any KMS resources if passing an existing key or bucket, or SCC instance
   source                      = "terraform-ibm-modules/kms-all-inclusive/ibm"
   version                     = "4.15.13"
   create_key_protect_instance = false
@@ -151,7 +151,7 @@ module "existing_cos_crn_parser" {
 locals {
   scc_cos_kms_key_crn = var.existing_scc_instance_crn == null ? var.existing_scc_cos_bucket_name != null ? null : var.existing_scc_cos_kms_key_crn != null ? var.existing_scc_cos_kms_key_crn : module.kms[0].keys[format("%s.%s", local.scc_cos_key_ring_name, local.scc_cos_key_name)].crn : null
   cos_instance_crn    = var.existing_scc_instance_crn == null ? var.existing_cos_instance_crn != null ? var.existing_cos_instance_crn : module.cos[0].cos_instance_crn : null
-  cos_bucket_name     = var.existing_scc_cos_bucket_name != null ? var.existing_scc_cos_bucket_name : local.create_cross_account_auth_policy ? module.buckets[0].buckets[local.scc_cos_bucket_name].bucket_name : module.cos[0].buckets[local.scc_cos_bucket_name].bucket_name
+  cos_bucket_name     = var.existing_scc_instance_crn == null ? var.existing_scc_cos_bucket_name != null ? var.existing_scc_cos_bucket_name : local.create_cross_account_auth_policy ? module.buckets[0].buckets[local.scc_cos_bucket_name].bucket_name : module.cos[0].buckets[local.scc_cos_bucket_name].bucket_name : null
   cos_instance_guid   = var.existing_scc_instance_crn == null ? var.existing_cos_instance_crn != null ? module.existing_cos_crn_parser[0].service_instance : module.cos[0].cos_instance_guid : null
   bucket_config = [{
     access_tags                   = var.scc_cos_bucket_access_tags
