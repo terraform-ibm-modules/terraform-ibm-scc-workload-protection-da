@@ -87,22 +87,22 @@ output "scc_cos_kms_key_crn" {
 
 output "scc_cos_bucket_name" {
   description = "SCC COS bucket name"
-  value       = var.existing_scc_cos_bucket_name != null ? var.existing_scc_cos_bucket_name : local.create_cross_account_auth_policy ? module.buckets[0].buckets[local.scc_cos_bucket_name].bucket_name : module.cos[0].buckets[local.scc_cos_bucket_name].bucket_name
+  value       = var.existing_scc_instance_crn == null ? var.existing_scc_cos_bucket_name != null ? var.existing_scc_cos_bucket_name : local.create_cross_account_auth_policy ? module.buckets[0].buckets[local.scc_cos_bucket_name].bucket_name : module.cos[0].buckets[local.scc_cos_bucket_name].bucket_name : null
 }
 
 output "scc_cos_bucket_config" {
   description = "List of buckets created"
-  value       = var.existing_scc_cos_bucket_name != null ? null : local.create_cross_account_auth_policy ? module.buckets[0].buckets[local.scc_cos_bucket_name] : module.cos[0].buckets[local.scc_cos_bucket_name]
+  value       = var.existing_scc_instance_crn == null ? var.existing_scc_cos_bucket_name != null ? null : local.create_cross_account_auth_policy ? module.buckets[0].buckets[local.scc_cos_bucket_name] : module.cos[0].buckets[local.scc_cos_bucket_name] : null
 }
 
 output "scc_cos_instance_id" {
   description = "SCC COS instance id"
-  value       = var.existing_scc_cos_bucket_name != null ? null : module.cos[0].cos_instance_id
+  value       = var.existing_scc_instance_crn == null ? var.existing_scc_cos_bucket_name != null ? null : module.cos[0].cos_instance_id : null
 }
 
 output "scc_cos_instance_guid" {
   description = "SCC COS instance guid"
-  value       = var.existing_scc_cos_bucket_name != null ? null : module.cos[0].cos_instance_guid
+  value       = var.existing_scc_instance_crn == null ? var.existing_scc_cos_bucket_name != null ? null : module.cos[0].cos_instance_guid : null
 }
 
 output "scc_cos_instance_name" {
@@ -112,11 +112,11 @@ output "scc_cos_instance_name" {
 
 output "scc_cos_instance_crn" {
   description = "SCC COS instance crn"
-  value       = var.existing_scc_cos_bucket_name != null ? null : module.cos[0].cos_instance_crn
+  value       = var.existing_scc_instance_crn == null ? var.existing_scc_cos_bucket_name != null ? null : module.cos[0].cos_instance_crn : null
 }
 
 output "scc_cos_resource_keys" {
   description = "List of resource keys"
-  value       = var.existing_scc_cos_bucket_name != null ? null : module.cos[0].resource_keys
+  value       = var.existing_scc_instance_crn == null ? var.existing_scc_cos_bucket_name != null ? null : module.cos[0].resource_keys : null
   sensitive   = true
 }
