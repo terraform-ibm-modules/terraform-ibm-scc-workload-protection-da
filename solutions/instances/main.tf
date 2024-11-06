@@ -197,6 +197,7 @@ module "cos" {
   bucket_configs           = local.create_cross_account_auth_policy ? [] : local.bucket_config
 }
 
+# If doing cross-account kms, the COS instance needs to exist before the policy, and the policy needs to exist before the buckets can be created so the buckets are created separately
 module "buckets" {
   providers = {
     ibm = ibm.cos
