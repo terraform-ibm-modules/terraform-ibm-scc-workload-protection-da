@@ -4,7 +4,7 @@
 
 module "scc_wp_agent" {
   source                 = "terraform-ibm-modules/scc-workload-protection-agent/ibm"
-  version                = "1.3.12"
+  version                = "1.3.14"
   access_key             = var.access_key
   cluster_name           = var.cluster_name
   region                 = var.region
