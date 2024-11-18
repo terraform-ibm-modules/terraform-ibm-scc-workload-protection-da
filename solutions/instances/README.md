@@ -18,38 +18,38 @@ This solution supports provisioning and configuring the following infrastructure
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.0 |
-| <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | 1.71.1 |
+| <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | 1.71.2 |
 | <a name="requirement_time"></a> [time](#requirement\_time) | 0.12.1 |
 
 ### Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_buckets"></a> [buckets](#module\_buckets) | terraform-ibm-modules/cos/ibm//modules/buckets | 8.14.1 |
-| <a name="module_cos"></a> [cos](#module\_cos) | terraform-ibm-modules/cos/ibm//modules/fscloud | 8.14.2 |
-| <a name="module_create_profile_attachment"></a> [create\_profile\_attachment](#module\_create\_profile\_attachment) | terraform-ibm-modules/scc/ibm//modules/attachment | 1.8.18 |
+| <a name="module_buckets"></a> [buckets](#module\_buckets) | terraform-ibm-modules/cos/ibm//modules/buckets | 8.14.5 |
+| <a name="module_cos"></a> [cos](#module\_cos) | terraform-ibm-modules/cos/ibm//modules/fscloud | 8.14.5 |
+| <a name="module_create_profile_attachment"></a> [create\_profile\_attachment](#module\_create\_profile\_attachment) | terraform-ibm-modules/scc/ibm//modules/attachment | 1.8.19 |
 | <a name="module_existing_cos_crn_parser"></a> [existing\_cos\_crn\_parser](#module\_existing\_cos\_crn\_parser) | terraform-ibm-modules/common-utilities/ibm//modules/crn-parser | 1.1.0 |
-| <a name="module_existing_en_crn_parser"></a> [existing\_en\_crn\_parser](#module\_existing\_en\_crn\_parser) | terraform-ibm-modules/common-utilities/ibm//modules/crn-parser | 1.0.0 |
+| <a name="module_existing_en_crn_parser"></a> [existing\_en\_crn\_parser](#module\_existing\_en\_crn\_parser) | terraform-ibm-modules/common-utilities/ibm//modules/crn-parser | 1.1.0 |
 | <a name="module_existing_kms_crn_parser"></a> [existing\_kms\_crn\_parser](#module\_existing\_kms\_crn\_parser) | terraform-ibm-modules/common-utilities/ibm//modules/crn-parser | 1.1.0 |
 | <a name="module_existing_kms_key_crn_parser"></a> [existing\_kms\_key\_crn\_parser](#module\_existing\_kms\_key\_crn\_parser) | terraform-ibm-modules/common-utilities/ibm//modules/crn-parser | 1.1.0 |
-| <a name="module_existing_scc_crn_parser"></a> [existing\_scc\_crn\_parser](#module\_existing\_scc\_crn\_parser) | terraform-ibm-modules/common-utilities/ibm//modules/crn-parser | 1.0.0 |
-| <a name="module_kms"></a> [kms](#module\_kms) | terraform-ibm-modules/kms-all-inclusive/ibm | 4.16.7 |
+| <a name="module_existing_scc_crn_parser"></a> [existing\_scc\_crn\_parser](#module\_existing\_scc\_crn\_parser) | terraform-ibm-modules/common-utilities/ibm//modules/crn-parser | 1.1.0 |
+| <a name="module_kms"></a> [kms](#module\_kms) | terraform-ibm-modules/kms-all-inclusive/ibm | 4.16.9 |
 | <a name="module_resource_group"></a> [resource\_group](#module\_resource\_group) | terraform-ibm-modules/resource-group/ibm | 1.1.6 |
-| <a name="module_scc"></a> [scc](#module\_scc) | terraform-ibm-modules/scc/ibm | 1.8.18 |
+| <a name="module_scc"></a> [scc](#module\_scc) | terraform-ibm-modules/scc/ibm | 1.8.19 |
 | <a name="module_scc_wp"></a> [scc\_wp](#module\_scc\_wp) | terraform-ibm-modules/scc-workload-protection/ibm | 1.4.0 |
 
 ### Resources
 
 | Name | Type |
 |------|------|
-| [ibm_en_subscription_email.email_subscription](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.71.1/docs/resources/en_subscription_email) | resource |
-| [ibm_en_topic.en_topic](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.71.1/docs/resources/en_topic) | resource |
-| [ibm_iam_authorization_policy.cos_kms_policy](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.71.1/docs/resources/iam_authorization_policy) | resource |
+| [ibm_en_subscription_email.email_subscription](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.71.2/docs/resources/en_subscription_email) | resource |
+| [ibm_en_topic.en_topic](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.71.2/docs/resources/en_topic) | resource |
+| [ibm_iam_authorization_policy.cos_kms_policy](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.71.2/docs/resources/iam_authorization_policy) | resource |
 | [time_sleep.wait_for_authorization_policy](https://registry.terraform.io/providers/hashicorp/time/0.12.1/docs/resources/sleep) | resource |
 | [time_sleep.wait_for_scc](https://registry.terraform.io/providers/hashicorp/time/0.12.1/docs/resources/sleep) | resource |
-| [ibm_en_destinations.en_destinations](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.71.1/docs/data-sources/en_destinations) | data source |
-| [ibm_iam_account_settings.iam_account_settings](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.71.1/docs/data-sources/iam_account_settings) | data source |
-| [ibm_resource_group.group](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.71.1/docs/data-sources/resource_group) | data source |
+| [ibm_en_destinations.en_destinations](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.71.2/docs/data-sources/en_destinations) | data source |
+| [ibm_iam_account_settings.iam_account_settings](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.71.2/docs/data-sources/iam_account_settings) | data source |
+| [ibm_resource_group.group](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.71.2/docs/data-sources/resource_group) | data source |
 
 ### Inputs
 
