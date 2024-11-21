@@ -181,6 +181,7 @@ func TestRunUpgradeInstances(t *testing.T) {
 		"resource_group_name":                 options.Prefix,
 		"existing_kms_instance_crn":           permanentResources["hpcs_south_crn"],
 		"kms_endpoint_type":                   "public",
+		"provider_visibility":                 "public",
 		"management_endpoint_type_for_bucket": "public",
 	}
 
@@ -250,6 +251,7 @@ func TestRunExistingResourcesInstances(t *testing.T) {
 				"existing_scc_cos_bucket_name":        terraform.Output(t, existingTerraformOptions, "bucket_name"),
 				"existing_cos_instance_crn":           terraform.Output(t, existingTerraformOptions, "cos_crn"),
 				"management_endpoint_type_for_bucket": "public",
+				"provider_visibility":                 "public",
 				"existing_en_crn":                     terraform.Output(t, existingTerraformOptions, "en_crn"),
 			},
 		})
@@ -276,6 +278,7 @@ func TestRunExistingResourcesInstances(t *testing.T) {
 				"existing_monitoring_crn":             terraform.Output(t, existingTerraformOptions, "monitoring_crn"),
 				"existing_kms_instance_crn":           permanentResources["hpcs_south_crn"],
 				"kms_endpoint_type":                   "public",
+				"provider_visibility":                 "public",
 				"existing_cos_instance_crn":           terraform.Output(t, existingTerraformOptions, "cos_crn"),
 				"management_endpoint_type_for_bucket": "public",
 			},
