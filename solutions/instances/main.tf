@@ -113,7 +113,7 @@ module "kms" {
   }
   count                       = var.existing_scc_cos_kms_key_crn != null || var.existing_scc_cos_bucket_name != null || var.existing_scc_instance_crn != null ? 0 : 1 # no need to create any KMS resources if passing an existing key or bucket, or SCC instance
   source                      = "terraform-ibm-modules/kms-all-inclusive/ibm"
-  version                     = "4.16.10"
+  version                     = "4.16.11"
   create_key_protect_instance = false
   region                      = local.kms_region
   existing_kms_instance_crn   = var.existing_kms_instance_crn
@@ -232,7 +232,7 @@ moved {
 module "scc" {
   source                            = "terraform-ibm-modules/scc/ibm"
   existing_scc_instance_crn         = var.existing_scc_instance_crn
-  version                           = "1.8.20"
+  version                           = "1.8.21"
   resource_group_id                 = module.resource_group.resource_group_id
   region                            = local.scc_instance_region
   instance_name                     = local.scc_instance_name
@@ -297,7 +297,7 @@ data "ibm_iam_account_settings" "iam_account_settings" {}
 
 module "create_profile_attachment" {
   source  = "terraform-ibm-modules/scc/ibm//modules/attachment"
-  version = "1.8.20"
+  version = "1.8.21"
   for_each = {
     for idx, profile_attachment in var.profile_attachments :
     profile_attachment => idx
