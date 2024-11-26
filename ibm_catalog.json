@@ -90,14 +90,14 @@
               "key": "existing_monitoring_crn"
             },
             {
-              "key": "existing_kms_instance_crn"
+              "key": "existing_kms_instance_crn",
+              "required": true
             },
             {
               "key": "existing_scc_instance_crn"
             },
             {
-              "key": "existing_scc_cos_kms_key_crn",
-              "required": true
+              "key": "existing_scc_cos_kms_key_crn"
             },
             {
               "key": "kms_endpoint_type",
