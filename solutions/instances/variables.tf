@@ -215,6 +215,18 @@ variable "existing_en_crn" {
   description = "The CRN of an Event Notification instance. Used to integrate with Security and Compliance Center."
 }
 
+variable "en_source_name" {
+  type        = string
+  default     = null
+  description = "The source name to use for the Event Notifications integration. Required if a value is passed for `en_instance_crn`."
+}
+
+variable "en_source_description" {
+  type        = string
+  default     = null
+  description = "Optional description to give for the Event Notifications integration source. Only used if a value is passed for `en_instance_crn`."
+}
+
 variable "scc_instance_tags" {
   type        = list(string)
   description = "The list of tags to add to the Security and Compliance Center instance."

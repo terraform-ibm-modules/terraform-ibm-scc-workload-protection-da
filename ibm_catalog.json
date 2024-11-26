@@ -227,6 +227,12 @@
               "key": "existing_en_crn"
             },
             {
+              "key": "en_source_name"
+            },
+            {
+              "key": "en_source_description"
+            },
+            {
               "key": "scc_instance_tags"
             },
             {

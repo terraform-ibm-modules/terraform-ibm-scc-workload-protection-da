@@ -251,6 +251,7 @@ func TestRunExistingResourcesInstances(t *testing.T) {
 				"existing_cos_instance_crn":           terraform.Output(t, existingTerraformOptions, "cos_crn"),
 				"management_endpoint_type_for_bucket": "public",
 				"existing_en_crn":                     terraform.Output(t, existingTerraformOptions, "en_crn"),
+				"en_source_name":                      prefix, // needs to be unique per EN instance
 			},
 		})
 
