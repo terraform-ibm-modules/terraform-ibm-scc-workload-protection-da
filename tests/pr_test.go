@@ -131,7 +131,6 @@ func TestAgentsInSchematics(t *testing.T) {
 }
 
 func TestInstancesInSchematics(t *testing.T) {
-	t.Skip()
 	t.Parallel()
 
 	var region = validRegions[rand.Intn(len(validRegions))]
