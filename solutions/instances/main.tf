@@ -9,6 +9,8 @@ locals {
   validate_cos_inputs = var.existing_scc_cos_bucket_name != null && var.existing_scc_cos_kms_key_crn != null ? tobool("A value should not be passed for 'existing_scc_cos_kms_key_crn' when passing a value for 'existing_scc_cos_bucket_name'. A key is only needed when creating a new COS bucket.") : true
   # tflint-ignore: terraform_unused_declarations
   validate_auth_inputs = !var.skip_scc_cos_auth_policy && var.existing_cos_instance_crn == null && var.existing_scc_cos_bucket_name != null ? tobool("A value must be passed for 'existing_cos_instance_crn' in order to create auth policy.") : true
+  # tflint-ignore: terraform_unused_declarations
+  validate_en_integration = var.existing_en_crn != null && var.en_source_name == null ? tobool("When passing a value for 'existing_en_crn', a value must also be passed for 'en_source_name'.") : false
 }
 
 #######################################################################################################################
@@ -232,7 +234,7 @@ moved {
 module "scc" {
   source                            = "terraform-ibm-modules/scc/ibm"
   existing_scc_instance_crn         = var.existing_scc_instance_crn
-  version                           = "1.8.21"
+  version                           = "1.8.22"
   resource_group_id                 = module.resource_group.resource_group_id
   region                            = local.scc_instance_region
   instance_name                     = local.scc_instance_name
@@ -240,6 +242,8 @@ module "scc" {
   cos_bucket                        = local.cos_bucket_name
   cos_instance_crn                  = local.cos_instance_crn
   en_instance_crn                   = var.existing_en_crn
+  en_source_name                    = var.en_source_name
+  en_source_description             = var.en_source_description
   skip_cos_iam_authorization_policy = var.skip_scc_cos_auth_policy
   resource_tags                     = var.scc_instance_tags
   attach_wp_to_scc_instance         = var.provision_scc_workload_protection && var.existing_scc_instance_crn == null
@@ -297,7 +301,7 @@ data "ibm_iam_account_settings" "iam_account_settings" {}
 
 module "create_profile_attachment" {
   source  = "terraform-ibm-modules/scc/ibm//modules/attachment"
-  version = "1.8.21"
+  version = "1.8.22"
   for_each = {
     for idx, profile_attachment in var.profile_attachments :
     profile_attachment => idx
