@@ -21,8 +21,8 @@
         "terraform",
         "solution"
       ],
-      "short_description": "Looking for the released version? Go [here](https://cloud.ibm.com/catalog/7a4d68b4-cf8b-40cd-a3d1-f49aff526eb3/architecture/deploy-arch-ibm-scc-9423f9bc-1290-4c71-a9ac-01898bfa7ccc-global). Stay here if you want to try an experimental version with upcoming features. \n\nCreates and configures IBM Security and Compliance Center resources",
-      "long_description": "This architecture supports creating and configuring IBM Security and Compliance Center resources.",
+      "short_description": "Creates and configures IBM Security and Compliance Center resources",
+      "long_description": "Looking for the released version? Go [here](https://cloud.ibm.com/catalog/7a4d68b4-cf8b-40cd-a3d1-f49aff526eb3/architecture/deploy-arch-ibm-scc-9423f9bc-1290-4c71-a9ac-01898bfa7ccc-global). Stay here if you want to try an experimental version with upcoming features. \n\nThis architecture supports creating and configuring IBM Security and Compliance Center resources.",
       "offering_docs_url": "https://github.com/terraform-ibm-modules/terraform-ibm-scc-da/blob/main/solutions/instances/README.md",
       "offering_icon_url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-scc-da/main/images/scc-icon.svg",
       "provider_name": "IBM",
