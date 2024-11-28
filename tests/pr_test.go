@@ -254,7 +254,7 @@ func TestRunExistingResourcesInstances(t *testing.T) {
 				"management_endpoint_type_for_bucket": "public",
 				"provider_visibility":                 "public",
 				"existing_en_crn":                     terraform.Output(t, existingTerraformOptions, "en_crn"),
-				"en_source_name":                      prefix, // needs to be unique per EN instance
+				"en_source_name":                      prefix, // This name must be unique per SCC instance that is integrated with the Event Notifications instance.
 			},
 		})
 

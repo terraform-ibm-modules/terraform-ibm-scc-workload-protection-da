@@ -27,7 +27,7 @@ This solution supports provisioning and configuring the following infrastructure
 |------|--------|---------|
 | <a name="module_buckets"></a> [buckets](#module\_buckets) | terraform-ibm-modules/cos/ibm//modules/buckets | 8.15.1 |
 | <a name="module_cos"></a> [cos](#module\_cos) | terraform-ibm-modules/cos/ibm//modules/fscloud | 8.15.1 |
-| <a name="module_create_profile_attachment"></a> [create\_profile\_attachment](#module\_create\_profile\_attachment) | terraform-ibm-modules/scc/ibm//modules/attachment | 1.8.22 |
+| <a name="module_create_profile_attachment"></a> [create\_profile\_attachment](#module\_create\_profile\_attachment) | terraform-ibm-modules/scc/ibm//modules/attachment | 1.8.23 |
 | <a name="module_existing_cos_crn_parser"></a> [existing\_cos\_crn\_parser](#module\_existing\_cos\_crn\_parser) | terraform-ibm-modules/common-utilities/ibm//modules/crn-parser | 1.1.0 |
 | <a name="module_existing_en_crn_parser"></a> [existing\_en\_crn\_parser](#module\_existing\_en\_crn\_parser) | terraform-ibm-modules/common-utilities/ibm//modules/crn-parser | 1.1.0 |
 | <a name="module_existing_kms_crn_parser"></a> [existing\_kms\_crn\_parser](#module\_existing\_kms\_crn\_parser) | terraform-ibm-modules/common-utilities/ibm//modules/crn-parser | 1.1.0 |
@@ -35,7 +35,7 @@ This solution supports provisioning and configuring the following infrastructure
 | <a name="module_existing_scc_crn_parser"></a> [existing\_scc\_crn\_parser](#module\_existing\_scc\_crn\_parser) | terraform-ibm-modules/common-utilities/ibm//modules/crn-parser | 1.1.0 |
 | <a name="module_kms"></a> [kms](#module\_kms) | terraform-ibm-modules/kms-all-inclusive/ibm | 4.16.11 |
 | <a name="module_resource_group"></a> [resource\_group](#module\_resource\_group) | terraform-ibm-modules/resource-group/ibm | 1.1.6 |
-| <a name="module_scc"></a> [scc](#module\_scc) | terraform-ibm-modules/scc/ibm | 1.8.22 |
+| <a name="module_scc"></a> [scc](#module\_scc) | terraform-ibm-modules/scc/ibm | 1.8.23 |
 | <a name="module_scc_wp"></a> [scc\_wp](#module\_scc\_wp) | terraform-ibm-modules/scc-workload-protection/ibm | 1.4.2 |
 
 ### Resources
@@ -62,7 +62,7 @@ This solution supports provisioning and configuring the following infrastructure
 | <a name="input_cos_instance_tags"></a> [cos\_instance\_tags](#input\_cos\_instance\_tags) | The list of tags to add to the Object Storage instance. Applies only if not specifying an existing instance. | `list(string)` | `[]` | no |
 | <a name="input_cos_region"></a> [cos\_region](#input\_cos\_region) | The region for the Object Storage instance. | `string` | `"us-south"` | no |
 | <a name="input_en_source_description"></a> [en\_source\_description](#input\_en\_source\_description) | Optional description to give for the Event Notifications integration source. Only used if a value is passed for `en_instance_crn`. | `string` | `null` | no |
-| <a name="input_en_source_name"></a> [en\_source\_name](#input\_en\_source\_name) | The source name to use for the Event Notifications integration. Required if a value is passed for `en_instance_crn`. | `string` | `null` | no |
+| <a name="input_en_source_name"></a> [en\_source\_name](#input\_en\_source\_name) | The source name to use for the Event Notifications integration. Required if a value is passed for `en_instance_crn`. This name must be unique per SCC instance that is integrated with the Event Notifications instance. | `string` | `"compliance"` | no |
 | <a name="input_existing_activity_tracker_crn"></a> [existing\_activity\_tracker\_crn](#input\_existing\_activity\_tracker\_crn) | The CRN of an Activity Tracker instance to send Security and Compliance Object Storage bucket events to. If no value passed, events are sent to the instance associated to the container's location unless otherwise specified in the Activity Tracker Event Routing service configuration. Ignored if using existing Object Storage bucket. | `string` | `null` | no |
 | <a name="input_existing_cos_instance_crn"></a> [existing\_cos\_instance\_crn](#input\_existing\_cos\_instance\_crn) | The CRN of an existing Object Storage instance. If not specified, an instance is created. | `string` | `null` | no |
 | <a name="input_existing_en_crn"></a> [existing\_en\_crn](#input\_existing\_en\_crn) | The CRN of an Event Notification instance. Used to integrate with Security and Compliance Center. | `string` | `null` | no |
