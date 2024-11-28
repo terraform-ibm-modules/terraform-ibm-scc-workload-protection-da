@@ -59,64 +59,38 @@
           "configuration": [
             {
               "key": "ibmcloud_api_key",
-              "type": "password",
-              "description": "The IBM Cloud API key to deploy resources.",
               "required": true
             },
             {
               "key": "use_existing_resource_group",
-              "type": "boolean",
-              "default_value": false,
-              "description": "Whether to use an existing resource group.",
               "required": false
             },
             {
               "key": "resource_group_name",
-              "type": "string",
-              "default_value": "__NOT_SET__",
-              "description": "The name of a new or an existing resource group in which to provision resources to. If a prefix input variable is specified, the prefix is added to the name in the `<prefix>-<name>` format.",
               "required": true
             },
             {
               "key": "prefix",
-              "type": "string",
-              "default_value": "__NULL__",
-              "description": "The prefix to add to all resources created by this solution.",
               "required": false
             },
             {
               "key": "existing_monitoring_crn",
-              "type": "string",
-              "default_value": "__NULL__",
-              "description": "The CRN of an IBM Cloud Monitoring instance to to send Security and Compliance Object Storage bucket metrics to, as well as Workload Protection data. If no value passed, metrics are sent to the instance associated to the container's location unless otherwise specified in the Metrics Router service configuration. Ignored if using existing Object Storage bucket and not provisioning Workload Protection.",
               "required": false
             },
             {
               "key": "existing_kms_instance_crn",
-              "type": "string",
-              "default_value": "__NULL__",
-              "description": "The CRN of the existing Hyper Protect Crypto Services or Key Protect instance. Applies only if not supplying an existing KMS root key and if `skip_cos_kms_auth_policy` is true.",
               "required": false
             },
             {
               "key": "existing_scc_instance_crn",
-              "type": "string",
-              "default_value": "__NULL__",
-              "description": "The CRN of an existing Security and Compliance Center instance. If not supplied, a new instance will be created.",
               "required": false
             },
             {
               "key": "existing_scc_cos_kms_key_crn",
-              "type": "string",
-              "default_value": "__NULL__",
-              "description": "The CRN of an existing KMS key to use to encrypt the Security and Compliance Center Object Storage bucket. If no value is set for this variable, specify a value for either the `existing_kms_instance_crn` variable to create a key ring and key, or for the `existing_scc_cos_bucket_name` variable to use an existing bucket.",
               "required": false
             },
             {
               "key": "kms_endpoint_type",
-              "type": "string",
-              "default_value": "private",
-              "description": "The endpoint for communicating with the KMS instance. Possible values: `public`, `private.`",
               "required": false,
               "options": [
                 {
@@ -131,23 +105,14 @@
             },
             {
               "key": "scc_cos_key_ring_name",
-              "type": "string",
-              "default_value": "scc-cos-key-ring",
-              "description": "The name for the key ring created for the Security and Compliance Center Object Storage bucket key. Applies only if not specifying an existing key. If a prefix input variable is specified, the prefix is added to the name in the `<prefix>-<name>` format.",
               "required": false
             },
             {
               "key": "scc_cos_key_name",
-              "type": "string",
-              "default_value": "scc-cos-key",
-              "description": "The name for the key created for the Security and Compliance Center Object Storage bucket. Applies only if not specifying an existing key. If a prefix input variable is specified, the prefix is added to the name in the `<prefix>-<name>` format.",
               "required": false
             },
             {
               "key": "cos_region",
-              "type": "string",
-              "default_value": "us-south",
-              "description": "The region for the Object Storage instance.",
               "required": true,
               "custom_config": {
                 "type": "region",
@@ -160,51 +125,30 @@
             },
             {
               "key": "cos_instance_name",
-              "type": "string",
-              "default_value": "base-security-services-cos",
-              "description": "The name for the Object Storage instance. If a prefix input variable is specified, the prefix is added to the name in the `<prefix>-<name>` format.",
               "required": false
             },
             {
               "key": "cos_instance_tags",
-              "type": "array",
-              "default_value": "[]",
-              "description": "The list of tags to add to the Object Storage instance. Applies only if not specifying an existing instance.",
               "required": false
             },
             {
               "key": "cos_instance_access_tags",
-              "type": "array",
-              "default_value": "[]",
-              "description": "A list of access tags to apply to the Object Storage instance. Applies only if not specifying an existing instance.",
               "required": false
             },
             {
               "key": "scc_cos_bucket_name",
-              "type": "string",
-              "default_value": "base-security-services-bucket",
-              "description": "The name for the Security and Compliance Center Object Storage bucket. Bucket names must globally unique. If `add_bucket_name_suffix` is true, a 4-character string is added to this name to  ensure it's globally unique. If a prefix input variable is specified, the prefix is added to the name in the `<prefix>-<name>` format.",
               "required": false
             },
             {
               "key": "add_bucket_name_suffix",
-              "type": "boolean",
-              "default_value": true,
-              "description": "Whether to add a generated 4-character suffix to the created Security and Compliance Center Object Storage bucket name. Applies only if not specifying an existing bucket. Set to `false` not to add the suffix to the bucket name in the `scc_cos_bucket_name` variable.",
               "required": false
             },
             {
               "key": "scc_cos_bucket_access_tags",
-              "type": "array",
-              "default_value": "[]",
-              "description": "The list of access tags to add to the Security and Compliance Center Object Storage bucket.",
               "required": false
             },
             {
               "key": "scc_cos_bucket_class",
-              "type": "string",
-              "default_value": "smart",
-              "description": "The storage class of the newly provisioned Security and Compliance Center Object Storage bucket. Possible values: `standard`, `vault`, `cold`, `smart`, `onerate_active`. [Learn more](https://cloud.ibm.com/docs/cloud-object-storage?topic=cloud-object-storage-classes).",
               "required": false,
               "options": [
                 {
@@ -231,30 +175,18 @@
             },
             {
               "key": "existing_cos_instance_crn",
-              "type": "string",
-              "default_value": "__NULL__",
-              "description": "The CRN of an existing Object Storage instance. If not specified, an instance is created.",
               "required": false
             },
             {
               "key": "existing_scc_cos_bucket_name",
-              "type": "string",
-              "default_value": "__NULL__",
-              "description": "The name of an existing bucket inside the existing Object Storage instance to use for Security and Compliance Center. If not specified, a bucket is created.",
               "required": false
             },
             {
               "key": "skip_cos_kms_auth_policy",
-              "type": "boolean",
-              "default_value": false,
-              "description": "Set to `true` to skip the creation of an IAM authorization policy that permits the Object Storage instance to read the encryption key from the KMS instance. An authorization policy must exist before an encrypted bucket can be created.",
               "required": false
             },
             {
               "key": "management_endpoint_type_for_bucket",
-              "type": "string",
-              "default_value": "private",
-              "description": "The type of endpoint for the IBM Terraform provider to use to manage Object Storage buckets. Possible values: `public`, `private`m `direct`. If you specify `private`, enable virtual routing and forwarding in your account, and the Terraform runtime must have access to the the IBM Cloud private network.",
               "required": false,
               "options": [
                 {
@@ -273,16 +205,10 @@
             },
             {
               "key": "scc_instance_name",
-              "type": "string",
-              "default_value": "base-security-services-scc",
-              "description": "The name for the Security and Compliance Center instance provisioned by this solution. If a prefix input variable is specified, the prefix is added to the name in the `<prefix>-<name>` format.",
               "required": false
             },
             {
               "key": "scc_region",
-              "type": "string",
-              "default_value": "us-south",
-              "description": "The region to provision Security and Compliance Center resources in.",
               "required": false,
               "options": [
                 {
@@ -305,16 +231,10 @@
             },
             {
               "key": "skip_scc_cos_auth_policy",
-              "type": "boolean",
-              "default_value": false,
-              "description": "Set to `true` to skip creation of an IAM authorization policy that permits the Security and Compliance Center to write to the Object Storage instance created by this solution. Applies only if `existing_scc_instance_crn` is not provided.",
               "required": false
             },
             {
               "key": "scc_service_plan",
-              "type": "string",
-              "default_value": "security-compliance-center-standard-plan",
-              "description": "The pricing plan to use when creating a new Security Compliance Center instance. Possible values: `security-compliance-center-standard-plan`, `security-compliance-center-trial-plan`. Applies only if `existing_scc_instance_crn` is not provided.",
               "required": false,
               "options": [
                 {
@@ -329,44 +249,26 @@
             },
             {
               "key": "existing_en_crn",
-              "type": "string",
-              "default_value": "__NULL__",
-              "description": "The CRN of an Event Notification instance. Used to integrate with Security and Compliance Center.",
               "required": false
             },
             {
               "key": "scc_instance_tags",
-              "type": "array",
-              "default_value": "[]",
-              "description": "The list of tags to add to the Security and Compliance Center instance.",
               "required": false
             },
             {
               "key": "skip_scc_workload_protection_auth_policy",
-              "type": "boolean",
-              "default_value": false,
-              "description": "Set to `true` to skip creating an IAM authorization policy that permits the Security and Compliance Center instance to read from the Workload Protection instance. Applies only if `provision_scc_workload_protection` is true.",
               "required": false
             },
             {
               "key": "profile_attachments",
-              "type": "array",
-              "default_value": "[\"IBM Cloud Framework for Financial Services\"]",
-              "description": "The list of Security and Compliance Center profile attachments to create that are scoped to your IBM Cloud account. The attachment schedule runs daily and defaults to the latest version of the specified profile attachments.",
               "required": false
             },
             {
               "key": "resource_groups_scope",
-              "type": "array",
-              "default_value": "[]",
-              "description": "The resource group to associate with the Security and Compliance Center profile attachments. If not specified, the attachments are scoped to the current account ID. Only one resource group is allowed.",
               "required": false
             },
             {
               "key": "attachment_schedule",
-              "type": "string",
-              "default_value": "every_30_days",
-              "description": "The scanning schedule. Possible values: `daily`, `every_7_days`, `every_30_days`, `none`.",
               "required": false,
               "options": [
                 {
@@ -389,23 +291,14 @@
             },
             {
               "key": "provision_scc_workload_protection",
-              "type": "boolean",
-              "default_value": true,
-              "description": "Whether to provision a Workload Protection instance.",
               "required": false
             },
             {
               "key": "scc_workload_protection_instance_name",
-              "type": "string",
-              "default_value": "base-security-services-scc-wp",
-              "description": "The name for the Workload Protection instance that is created by this solution. Must begin with a letter. Applies only if `provision_scc_workload_protection` is true. If a prefix input variable is specified, the prefix is added to the name in the `<prefix>-<name>` format.",
               "required": false
             },
             {
               "key": "scc_workload_protection_service_plan",
-              "type": "string",
-              "default_value": "graduated-tier",
-              "description": "The pricing plan for the Workload Protection instance service. Possible values: `free-trial`, `graduated-tier`.",
               "required": false,
               "options": [
                 {
@@ -420,51 +313,30 @@
             },
             {
               "key": "scc_workload_protection_instance_tags",
-              "type": "array",
-              "default_value": "[]",
-              "description": "The list of tags to add to the Workload Protection instance.",
               "required": false
             },
             {
               "key": "scc_workload_protection_resource_key_tags",
-              "type": "array",
-              "default_value": "[]",
-              "description": "The tags associated with the Workload Protection resource key.",
               "required": false
             },
             {
               "key": "scc_workload_protection_access_tags",
-              "type": "array",
-              "default_value": "[]",
-              "description": "A list of access tags to apply to the Workload Protection instance. Maximum length: 128 characters. Possible characters are A-Z, 0-9, spaces, underscores, hyphens, periods, and colons. [Learn more](https://cloud.ibm.com/docs/account?topic=account-tag&interface=ui#limits).",
               "required": false
             },
             {
               "key": "existing_activity_tracker_crn",
-              "type": "string",
-              "default_value": "__NULL__",
-              "description": "The CRN of an Activity Tracker instance to send Security and Compliance Object Storage bucket events to. If no value passed, events are sent to the instance associated to the container's location unless otherwise specified in the Activity Tracker Event Routing service configuration. Ignored if using existing Object Storage bucket.",
               "required": false
             },
             {
               "key": "scc_en_email_list",
-              "type": "array",
-              "default_value": "[]",
-              "description": "The list of email addresses to notify when Security and Compliance Center triggers an event.",
               "required": false
             },
             {
               "key": "scc_en_from_email",
-              "type": "string",
-              "default_value": "compliancealert@ibm.com",
-              "description": "The `from` email address used in any Security and Compliance Center events from Event Notifications.",
               "required": false
             },
             {
               "key": "scc_en_reply_to_email",
-              "type": "string",
-              "default_value": "no-reply@ibm.com",
-              "description": "The `reply_to` email address used in any Security and Compliance Center events from Event Notifications.",
               "required": false
             }
           ],
@@ -521,21 +393,22 @@
             {
               "name": "testing-deploy-arch-ibm-kms",
               "id": "85fdbd7a-8c77-4abd-b716-653a31f3aba9",
-              "version": "^1.0.1",
               "flavors": [
                 "standard"
               ],
               "catalog_id": "f64499c8-eb50-4985-bf91-29f9e605a433",
-              "optional": true,
-              "on_by_default": true,
               "input_mapping": [
                 {
                   "dependency_output": "kms_instance_crn",
                   "version_input": "existing_kms_instance_crn"
                 }
-              ]
+              ],
+              "optional": true,
+              "on_by_default": true,
+              "version": "^1.0.1"
             },
             {
+              "name": "deploy-arch-ibm-account-infra-base",
               "catalog_id": "7a4d68b4-cf8b-40cd-a3d1-f49aff526eb3",
               "flavors": [
                 "standard"
@@ -551,12 +424,12 @@
                   "value": true
                 }
               ],
-              "name": "deploy-arch-ibm-account-infra-base",
               "optional": true,
               "on_by_default": true,
               "version": "^1.11.6"
             },
             {
+              "name": "testing-deploy-arch-ibm-event-notifications",
               "catalog_id": "f64499c8-eb50-4985-bf91-29f9e605a433",
               "flavors": [
                 "standard"
@@ -568,7 +441,6 @@
                   "version_input": "existing_en_crn"
                 }
               ],
-              "name": "testing-deploy-arch-ibm-event-notifications",
               "optional": true,
               "on_by_default": true,
               "version": "^1.0.1"
@@ -584,22 +456,23 @@
           "compliance": {},
           "dependencies": [
             {
+              "name": "deploy-arch-ibm-slz-ocp",
+              "catalog_id": "1082e7d2-5e2f-0a11-a3bc-f88a8e1931fc",
+              "id": "95fccffc-ae3b-42df-b6d9-80be5914d852-global",
               "flavors": [
                 "quickstart",
                 "standard"
               ],
-              "id": "95fccffc-ae3b-42df-b6d9-80be5914d852-global",
-              "name": "deploy-arch-ibm-slz-ocp",
               "version": ">=v3.0.0",
               "optional": true
             },
             {
+              "name": "deploy-arch-ibm-scc",
+              "catalog_id": "7a4d68b4-cf8b-40cd-a3d1-f49aff526eb3",
+              "id": "9423f9bc-1290-4c71-a9ac-01898bfa7ccc-global",
               "flavors": [
                 "instances"
               ],
-              "catalog_id": "7a4d68b4-cf8b-40cd-a3d1-f49aff526eb3",
-              "id": "9423f9bc-1290-4c71-a9ac-01898bfa7ccc-global",
-              "name": "deploy-arch-ibm-scc",
               "version": ">=v1.0.0",
               "optional": true
             }
