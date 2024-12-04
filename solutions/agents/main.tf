@@ -4,9 +4,9 @@
 
 module "scc_wp_agent" {
   source                 = "terraform-ibm-modules/scc-workload-protection-agent/ibm"
-  version                = "1.3.3"
+  version                = "1.3.17"
   access_key             = var.access_key
-  cluster_name           = var.cluster_name
+  cluster_name           = var.is_vpc_cluster ? data.ibm_container_vpc_cluster.cluster[0].name : data.ibm_container_cluster.cluster[0].name
   region                 = var.region
   endpoint_type          = var.endpoint_type
   name                   = var.name
@@ -41,6 +41,4 @@ module "scc_wp_agent" {
   cluster_scanner_imagesbomextractor_requests_memory      = var.cluster_scanner_imagesbomextractor_requests_memory
   cluster_scanner_imagesbomextractor_limits_cpu           = var.cluster_scanner_imagesbomextractor_limits_cpu
   cluster_scanner_imagesbomextractor_limits_memory        = var.cluster_scanner_imagesbomextractor_limits_memory
-
-
 }

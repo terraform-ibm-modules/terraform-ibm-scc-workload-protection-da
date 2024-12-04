@@ -105,7 +105,8 @@ func TestAgentsInSchematics(t *testing.T) {
 		options.TerraformVars = []testschematic.TestSchematicTerraformVar{
 			{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
 			{Name: "access_key", Value: terraform.Output(t, existingTerraformOptions, "access_key"), DataType: "string"},
-			{Name: "cluster_name", Value: terraform.Output(t, existingTerraformOptions, "workload_cluster_name"), DataType: "string"},
+			{Name: "cluster_id", Value: terraform.Output(t, existingTerraformOptions, "workload_cluster_id"), DataType: "string"},
+			{Name: "cluster_resource_group_id", Value: terraform.Output(t, existingTerraformOptions, "cluster_resource_group_id"), DataType: "string"},
 			{Name: "region", Value: region, DataType: "string"},
 			{Name: "endpoint_type", Value: "private", DataType: "string"},
 			{Name: "name", Value: options.Prefix, DataType: "string"},
@@ -181,6 +182,7 @@ func TestRunUpgradeInstances(t *testing.T) {
 		"resource_group_name":                 options.Prefix,
 		"existing_kms_instance_crn":           permanentResources["hpcs_south_crn"],
 		"kms_endpoint_type":                   "public",
+		"provider_visibility":                 "public",
 		"management_endpoint_type_for_bucket": "public",
 	}
 
@@ -250,7 +252,9 @@ func TestRunExistingResourcesInstances(t *testing.T) {
 				"existing_scc_cos_bucket_name":        terraform.Output(t, existingTerraformOptions, "bucket_name"),
 				"existing_cos_instance_crn":           terraform.Output(t, existingTerraformOptions, "cos_crn"),
 				"management_endpoint_type_for_bucket": "public",
+				"provider_visibility":                 "public",
 				"existing_en_crn":                     terraform.Output(t, existingTerraformOptions, "en_crn"),
+				"en_source_name":                      prefix, // This name must be unique per SCC instance that is integrated with the Event Notifications instance.
 			},
 		})
 
@@ -276,6 +280,7 @@ func TestRunExistingResourcesInstances(t *testing.T) {
 				"existing_monitoring_crn":             terraform.Output(t, existingTerraformOptions, "monitoring_crn"),
 				"existing_kms_instance_crn":           permanentResources["hpcs_south_crn"],
 				"kms_endpoint_type":                   "public",
+				"provider_visibility":                 "public",
 				"existing_cos_instance_crn":           terraform.Output(t, existingTerraformOptions, "cos_crn"),
 				"management_endpoint_type_for_bucket": "public",
 			},
