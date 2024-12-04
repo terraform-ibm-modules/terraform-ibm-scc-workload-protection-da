@@ -62,6 +62,24 @@
               "required": true
             },
             {
+              "key": "provider_visibility",
+              "required": false,
+              "options": [
+                {
+                  "displayname": "private",
+                  "value": "private"
+                },
+                {
+                  "displayname": "public",
+                  "value": "public"
+                },
+                {
+                  "displayname": "public-and-private",
+                  "value": "public-and-private"
+                }
+              ]
+            },
+            {
               "key": "use_existing_resource_group",
               "required": false
             },
@@ -249,6 +267,10 @@
             },
             {
               "key": "existing_en_crn",
+              "required": false
+            },
+            {
+              "key": "en_source_name",
               "required": false
             },
             {
