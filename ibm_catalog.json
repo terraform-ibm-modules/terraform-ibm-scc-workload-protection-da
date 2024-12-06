@@ -367,7 +367,6 @@
           "install_type": "extension",
           "working_directory": "solutions/agents",
           "compliance": {},
-          "dependency_version_2": true,
           "dependencies": [
             {
               "flavors": [
