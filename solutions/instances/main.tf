@@ -9,6 +9,8 @@ locals {
   validate_cos_inputs = var.existing_scc_cos_bucket_name != null && var.existing_scc_cos_kms_key_crn != null ? tobool("A value should not be passed for 'existing_scc_cos_kms_key_crn' when passing a value for 'existing_scc_cos_bucket_name'. A key is only needed when creating a new COS bucket.") : true
   # tflint-ignore: terraform_unused_declarations
   validate_auth_inputs = !var.skip_scc_cos_auth_policy && var.existing_cos_instance_crn == null && var.existing_scc_cos_bucket_name != null ? tobool("A value must be passed for 'existing_cos_instance_crn' in order to create auth policy.") : true
+  # tflint-ignore: terraform_unused_declarations
+  validate_en_integration = var.existing_en_crn != null && var.en_source_name == null ? tobool("When passing a value for 'existing_en_crn', a value must also be passed for 'en_source_name'.") : false
 }
 
 #######################################################################################################################
@@ -113,7 +115,7 @@ module "kms" {
   }
   count                       = var.existing_scc_cos_kms_key_crn != null || var.existing_scc_cos_bucket_name != null || var.existing_scc_instance_crn != null ? 0 : 1 # no need to create any KMS resources if passing an existing key or bucket, or SCC instance
   source                      = "terraform-ibm-modules/kms-all-inclusive/ibm"
-  version                     = "4.16.9"
+  version                     = "4.16.11"
   create_key_protect_instance = false
   region                      = local.kms_region
   existing_kms_instance_crn   = var.existing_kms_instance_crn
@@ -185,7 +187,7 @@ module "cos" {
   }
   count                    = var.existing_scc_cos_bucket_name == null && var.existing_scc_instance_crn == null ? 1 : 0 # no need to call COS module if consumer is passing existing SCC instance or COS bucket
   source                   = "terraform-ibm-modules/cos/ibm//modules/fscloud"
-  version                  = "8.14.5"
+  version                  = "8.15.1"
   resource_group_id        = module.resource_group.resource_group_id
   create_cos_instance      = var.existing_cos_instance_crn == null ? true : false # don't create instance if existing one passed in
   cos_instance_name        = local.cos_instance_name
@@ -204,7 +206,7 @@ module "buckets" {
   count          = local.create_cross_account_auth_policy ? 1 : 0
   depends_on     = [time_sleep.wait_for_authorization_policy[0]]
   source         = "terraform-ibm-modules/cos/ibm//modules/buckets"
-  version        = "8.14.5"
+  version        = "8.15.1"
   bucket_configs = local.bucket_config
 }
 
@@ -232,7 +234,7 @@ moved {
 module "scc" {
   source                            = "terraform-ibm-modules/scc/ibm"
   existing_scc_instance_crn         = var.existing_scc_instance_crn
-  version                           = "1.8.19"
+  version                           = "1.8.23"
   resource_group_id                 = module.resource_group.resource_group_id
   region                            = local.scc_instance_region
   instance_name                     = local.scc_instance_name
@@ -240,6 +242,8 @@ module "scc" {
   cos_bucket                        = local.cos_bucket_name
   cos_instance_crn                  = local.cos_instance_crn
   en_instance_crn                   = var.existing_en_crn
+  en_source_name                    = var.en_source_name
+  en_source_description             = var.en_source_description
   skip_cos_iam_authorization_policy = var.skip_scc_cos_auth_policy
   resource_tags                     = var.scc_instance_tags
   attach_wp_to_scc_instance         = var.provision_scc_workload_protection && var.existing_scc_instance_crn == null
@@ -297,7 +301,7 @@ data "ibm_iam_account_settings" "iam_account_settings" {}
 
 module "create_profile_attachment" {
   source  = "terraform-ibm-modules/scc/ibm//modules/attachment"
-  version = "1.8.19"
+  version = "1.8.23"
   for_each = {
     for idx, profile_attachment in var.profile_attachments :
     profile_attachment => idx
@@ -318,7 +322,7 @@ module "create_profile_attachment" {
 module "scc_wp" {
   count                         = var.provision_scc_workload_protection && var.existing_scc_instance_crn == null ? 1 : 0
   source                        = "terraform-ibm-modules/scc-workload-protection/ibm"
-  version                       = "1.4.0"
+  version                       = "1.4.2"
   name                          = local.scc_workload_protection_instance_name
   region                        = var.scc_region
   resource_group_id             = module.resource_group.resource_group_id

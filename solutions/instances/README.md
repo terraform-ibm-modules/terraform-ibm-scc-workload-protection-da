@@ -18,38 +18,38 @@ This solution supports provisioning and configuring the following infrastructure
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.0 |
-| <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | 1.71.2 |
+| <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | 1.71.3 |
 | <a name="requirement_time"></a> [time](#requirement\_time) | 0.12.1 |
 
 ### Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_buckets"></a> [buckets](#module\_buckets) | terraform-ibm-modules/cos/ibm//modules/buckets | 8.14.5 |
-| <a name="module_cos"></a> [cos](#module\_cos) | terraform-ibm-modules/cos/ibm//modules/fscloud | 8.14.5 |
-| <a name="module_create_profile_attachment"></a> [create\_profile\_attachment](#module\_create\_profile\_attachment) | terraform-ibm-modules/scc/ibm//modules/attachment | 1.8.19 |
+| <a name="module_buckets"></a> [buckets](#module\_buckets) | terraform-ibm-modules/cos/ibm//modules/buckets | 8.15.1 |
+| <a name="module_cos"></a> [cos](#module\_cos) | terraform-ibm-modules/cos/ibm//modules/fscloud | 8.15.1 |
+| <a name="module_create_profile_attachment"></a> [create\_profile\_attachment](#module\_create\_profile\_attachment) | terraform-ibm-modules/scc/ibm//modules/attachment | 1.8.23 |
 | <a name="module_existing_cos_crn_parser"></a> [existing\_cos\_crn\_parser](#module\_existing\_cos\_crn\_parser) | terraform-ibm-modules/common-utilities/ibm//modules/crn-parser | 1.1.0 |
 | <a name="module_existing_en_crn_parser"></a> [existing\_en\_crn\_parser](#module\_existing\_en\_crn\_parser) | terraform-ibm-modules/common-utilities/ibm//modules/crn-parser | 1.1.0 |
 | <a name="module_existing_kms_crn_parser"></a> [existing\_kms\_crn\_parser](#module\_existing\_kms\_crn\_parser) | terraform-ibm-modules/common-utilities/ibm//modules/crn-parser | 1.1.0 |
 | <a name="module_existing_kms_key_crn_parser"></a> [existing\_kms\_key\_crn\_parser](#module\_existing\_kms\_key\_crn\_parser) | terraform-ibm-modules/common-utilities/ibm//modules/crn-parser | 1.1.0 |
 | <a name="module_existing_scc_crn_parser"></a> [existing\_scc\_crn\_parser](#module\_existing\_scc\_crn\_parser) | terraform-ibm-modules/common-utilities/ibm//modules/crn-parser | 1.1.0 |
-| <a name="module_kms"></a> [kms](#module\_kms) | terraform-ibm-modules/kms-all-inclusive/ibm | 4.16.9 |
+| <a name="module_kms"></a> [kms](#module\_kms) | terraform-ibm-modules/kms-all-inclusive/ibm | 4.16.11 |
 | <a name="module_resource_group"></a> [resource\_group](#module\_resource\_group) | terraform-ibm-modules/resource-group/ibm | 1.1.6 |
-| <a name="module_scc"></a> [scc](#module\_scc) | terraform-ibm-modules/scc/ibm | 1.8.19 |
-| <a name="module_scc_wp"></a> [scc\_wp](#module\_scc\_wp) | terraform-ibm-modules/scc-workload-protection/ibm | 1.4.0 |
+| <a name="module_scc"></a> [scc](#module\_scc) | terraform-ibm-modules/scc/ibm | 1.8.23 |
+| <a name="module_scc_wp"></a> [scc\_wp](#module\_scc\_wp) | terraform-ibm-modules/scc-workload-protection/ibm | 1.4.2 |
 
 ### Resources
 
 | Name | Type |
 |------|------|
-| [ibm_en_subscription_email.email_subscription](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.71.2/docs/resources/en_subscription_email) | resource |
-| [ibm_en_topic.en_topic](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.71.2/docs/resources/en_topic) | resource |
-| [ibm_iam_authorization_policy.cos_kms_policy](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.71.2/docs/resources/iam_authorization_policy) | resource |
+| [ibm_en_subscription_email.email_subscription](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.71.3/docs/resources/en_subscription_email) | resource |
+| [ibm_en_topic.en_topic](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.71.3/docs/resources/en_topic) | resource |
+| [ibm_iam_authorization_policy.cos_kms_policy](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.71.3/docs/resources/iam_authorization_policy) | resource |
 | [time_sleep.wait_for_authorization_policy](https://registry.terraform.io/providers/hashicorp/time/0.12.1/docs/resources/sleep) | resource |
 | [time_sleep.wait_for_scc](https://registry.terraform.io/providers/hashicorp/time/0.12.1/docs/resources/sleep) | resource |
-| [ibm_en_destinations.en_destinations](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.71.2/docs/data-sources/en_destinations) | data source |
-| [ibm_iam_account_settings.iam_account_settings](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.71.2/docs/data-sources/iam_account_settings) | data source |
-| [ibm_resource_group.group](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.71.2/docs/data-sources/resource_group) | data source |
+| [ibm_en_destinations.en_destinations](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.71.3/docs/data-sources/en_destinations) | data source |
+| [ibm_iam_account_settings.iam_account_settings](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.71.3/docs/data-sources/iam_account_settings) | data source |
+| [ibm_resource_group.group](https://registry.terraform.io/providers/IBM-Cloud/ibm/1.71.3/docs/data-sources/resource_group) | data source |
 
 ### Inputs
 
@@ -61,6 +61,8 @@ This solution supports provisioning and configuring the following infrastructure
 | <a name="input_cos_instance_name"></a> [cos\_instance\_name](#input\_cos\_instance\_name) | The name for the Object Storage instance. If a prefix input variable is specified, the prefix is added to the name in the `<prefix>-<name>` format. | `string` | `"base-security-services-cos"` | no |
 | <a name="input_cos_instance_tags"></a> [cos\_instance\_tags](#input\_cos\_instance\_tags) | The list of tags to add to the Object Storage instance. Applies only if not specifying an existing instance. | `list(string)` | `[]` | no |
 | <a name="input_cos_region"></a> [cos\_region](#input\_cos\_region) | The region for the Object Storage instance. | `string` | `"us-south"` | no |
+| <a name="input_en_source_description"></a> [en\_source\_description](#input\_en\_source\_description) | Optional description to give for the Event Notifications integration source. Only used if a value is passed for `en_instance_crn`. | `string` | `null` | no |
+| <a name="input_en_source_name"></a> [en\_source\_name](#input\_en\_source\_name) | The source name to use for the Event Notifications integration. Required if a value is passed for `en_instance_crn`. This name must be unique per SCC instance that is integrated with the Event Notifications instance. | `string` | `"compliance"` | no |
 | <a name="input_existing_activity_tracker_crn"></a> [existing\_activity\_tracker\_crn](#input\_existing\_activity\_tracker\_crn) | The CRN of an Activity Tracker instance to send Security and Compliance Object Storage bucket events to. If no value passed, events are sent to the instance associated to the container's location unless otherwise specified in the Activity Tracker Event Routing service configuration. Ignored if using existing Object Storage bucket. | `string` | `null` | no |
 | <a name="input_existing_cos_instance_crn"></a> [existing\_cos\_instance\_crn](#input\_existing\_cos\_instance\_crn) | The CRN of an existing Object Storage instance. If not specified, an instance is created. | `string` | `null` | no |
 | <a name="input_existing_en_crn"></a> [existing\_en\_crn](#input\_existing\_en\_crn) | The CRN of an Event Notification instance. Used to integrate with Security and Compliance Center. | `string` | `null` | no |
@@ -75,6 +77,7 @@ This solution supports provisioning and configuring the following infrastructure
 | <a name="input_management_endpoint_type_for_bucket"></a> [management\_endpoint\_type\_for\_bucket](#input\_management\_endpoint\_type\_for\_bucket) | The type of endpoint for the IBM Terraform provider to use to manage Object Storage buckets. Possible values: `public`, `private`m `direct`. If you specify `private`, enable virtual routing and forwarding in your account, and the Terraform runtime must have access to the the IBM Cloud private network. | `string` | `"private"` | no |
 | <a name="input_prefix"></a> [prefix](#input\_prefix) | The prefix to add to all resources created by this solution. | `string` | `null` | no |
 | <a name="input_profile_attachments"></a> [profile\_attachments](#input\_profile\_attachments) | The list of Security and Compliance Center profile attachments to create that are scoped to your IBM Cloud account. The attachment schedule runs daily and defaults to the latest version of the specified profile attachments. | `list(string)` | <pre>[<br/>  "IBM Cloud Framework for Financial Services"<br/>]</pre> | no |
+| <a name="input_provider_visibility"></a> [provider\_visibility](#input\_provider\_visibility) | Set the visibility value for the IBM terraform provider. Supported values are `public`, `private`, `public-and-private`. [Learn more](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/guides/custom-service-endpoints). | `string` | `"private"` | no |
 | <a name="input_provision_scc_workload_protection"></a> [provision\_scc\_workload\_protection](#input\_provision\_scc\_workload\_protection) | Whether to provision a Workload Protection instance. | `bool` | `true` | no |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | The name of a new or an existing resource group in which to provision resources to. If a prefix input variable is specified, the prefix is added to the name in the `<prefix>-<name>` format. | `string` | n/a | yes |
 | <a name="input_resource_groups_scope"></a> [resource\_groups\_scope](#input\_resource\_groups\_scope) | The resource group to associate with the Security and Compliance Center profile attachments. If not specified, the attachments are scoped to the current account ID. Only one resource group is allowed. | `list(string)` | `[]` | no |

@@ -36,6 +36,16 @@ variable "prefix" {
   }
 }
 
+variable "provider_visibility" {
+  description = "Set the visibility value for the IBM terraform provider. Supported values are `public`, `private`, `public-and-private`. [Learn more](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/guides/custom-service-endpoints)."
+  type        = string
+  default     = "private"
+
+  validation {
+    condition     = contains(["public", "private", "public-and-private"], var.provider_visibility)
+    error_message = "Invalid visibility option. Allowed values are 'public', 'private', or 'public-and-private'."
+  }
+}
 ########################################################################################################################
 # KMS variables
 ########################################################################################################################
@@ -217,6 +227,18 @@ variable "existing_en_crn" {
   nullable    = true
   default     = null
   description = "The CRN of an Event Notification instance. Used to integrate with Security and Compliance Center."
+}
+
+variable "en_source_name" {
+  type        = string
+  default     = "compliance"
+  description = "The source name to use for the Event Notifications integration. Required if a value is passed for `en_instance_crn`. This name must be unique per SCC instance that is integrated with the Event Notifications instance."
+}
+
+variable "en_source_description" {
+  type        = string
+  default     = null
+  description = "Optional description to give for the Event Notifications integration source. Only used if a value is passed for `en_instance_crn`."
 }
 
 variable "scc_instance_tags" {
