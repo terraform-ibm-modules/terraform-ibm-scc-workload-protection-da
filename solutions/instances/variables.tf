@@ -17,6 +17,7 @@ variable "use_existing_resource_group" {
 variable "resource_group_name" {
   type        = string
   description = "The name of a new or an existing resource group in which to provision resources to. If a prefix input variable is specified, the prefix is added to the name in the `<prefix>-<name>` format."
+  default     = "scc-rg"
 }
 
 variable "existing_monitoring_crn" {
@@ -29,7 +30,7 @@ variable "existing_monitoring_crn" {
 variable "prefix" {
   type        = string
   description = "The prefix to add to all resources created by this solution."
-  default     = null
+  default     = ""
 }
 
 variable "provider_visibility" {
