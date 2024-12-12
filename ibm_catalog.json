@@ -131,7 +131,7 @@
             },
             {
               "key": "cos_region",
-              "required": true,
+              "required": false,
               "custom_config": {
                 "type": "region",
                 "grouping": "deployment",
@@ -227,7 +227,7 @@
             },
             {
               "key": "scc_region",
-              "required": false,
+              "required": true,
               "options": [
                 {
                   "displayname": "Dallas (us-south)",
@@ -464,11 +464,8 @@
                 },
                 {
                   "dependency_input": "region",
-                  "version_input": "cos_region"
-                },
-                {
-                  "dependency_input": "region",
-                  "version_input": "scc_region"
+                  "version_input": "scc_region",
+                  "reference_version": true
                 }
               ],
               "optional": true,
