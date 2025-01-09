@@ -348,10 +348,12 @@ module "existing_en_crn_parser" {
 locals {
   existing_en_guid      = var.existing_en_crn != null ? module.existing_en_crn_parser[0].service_instance : null
   en_topic              = var.prefix != null ? "${var.prefix} - SCC Topic" : "SCC Topic"
+  existing_en_region    = var.existing_en_crn != null ? module.existing_en_crn_parser[0].region : null
   en_subscription_email = var.prefix != null ? "${var.prefix} - Email for Security and Compliance Center Subscription" : "Email for Security and Compliance Center Subscription"
 }
 
 data "ibm_en_destinations" "en_destinations" {
+  provider      = ibm.en
   count         = var.existing_en_crn != null ? 1 : 0
   instance_guid = local.existing_en_guid
 }
@@ -364,6 +366,7 @@ resource "time_sleep" "wait_for_scc" {
 }
 
 resource "ibm_en_topic" "en_topic" {
+  provider      = ibm.en
   count         = var.existing_en_crn != null && var.existing_scc_instance_crn == null ? 1 : 0
   depends_on    = [time_sleep.wait_for_scc]
   instance_guid = local.existing_en_guid
@@ -379,6 +382,7 @@ resource "ibm_en_topic" "en_topic" {
 }
 
 resource "ibm_en_subscription_email" "email_subscription" {
+  provider       = ibm.en
   count          = var.existing_en_crn != null && var.existing_scc_instance_crn == null && length(var.scc_en_email_list) > 0 ? 1 : 0
   instance_guid  = local.existing_en_guid
   name           = local.en_subscription_email
