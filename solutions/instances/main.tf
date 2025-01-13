@@ -226,10 +226,10 @@ locals {
   scc_instance_region          = var.existing_scc_instance_crn == null ? var.scc_region : local.existing_scc_instance_region
 }
 
-# moved {
-#   from = module.scc[0]
-#   to   = module.scc
-# }
+moved {
+  from = module.scc[0]
+  to   = module.scc
+}
 
 module "scc" {
   source                            = "terraform-ibm-modules/scc/ibm"
