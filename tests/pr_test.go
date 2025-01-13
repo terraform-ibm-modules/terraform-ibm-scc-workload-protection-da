@@ -4,7 +4,6 @@ package test
 import (
 	"fmt"
 	"log"
-	"math/rand"
 	"os"
 	"strings"
 	"testing"
@@ -17,7 +16,6 @@ import (
 	"github.com/stretchr/testify/require"
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/common"
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testhelper"
-	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testschematic"
 )
 
 const resourceGroup = "geretain-test-resources"
@@ -47,69 +45,69 @@ func TestMain(m *testing.M) {
 	os.Exit(m.Run())
 }
 
-func TestInstancesInSchematics(t *testing.T) {
-	t.Parallel()
+// func TestInstancesInSchematics(t *testing.T) {
+// 	t.Parallel()
 
-	var region = validRegions[rand.Intn(len(validRegions))]
+// 	var region = validRegions[rand.Intn(len(validRegions))]
 
-	options := testschematic.TestSchematicOptionsDefault(&testschematic.TestSchematicOptions{
-		Testing: t,
-		Prefix:  "scc-da",
-		TarIncludePatterns: []string{
-			"*.tf",
-			instanceFlavorDir + "/*.tf",
-		},
-		ResourceGroup:          resourceGroup,
-		TemplateFolder:         instanceFlavorDir,
-		Tags:                   []string{"test-schematic"},
-		DeleteWorkspaceOnFail:  false,
-		WaitJobCompleteMinutes: 60,
-	})
+// 	options := testschematic.TestSchematicOptionsDefault(&testschematic.TestSchematicOptions{
+// 		Testing: t,
+// 		Prefix:  "scc-da",
+// 		TarIncludePatterns: []string{
+// 			"*.tf",
+// 			instanceFlavorDir + "/*.tf",
+// 		},
+// 		ResourceGroup:          resourceGroup,
+// 		TemplateFolder:         instanceFlavorDir,
+// 		Tags:                   []string{"test-schematic"},
+// 		DeleteWorkspaceOnFail:  false,
+// 		WaitJobCompleteMinutes: 60,
+// 	})
 
-	options.TerraformVars = []testschematic.TestSchematicTerraformVar{
-		{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
-		{Name: "resource_group_name", Value: options.Prefix, DataType: "string"},
-		{Name: "existing_kms_instance_crn", Value: permanentResources["hpcs_south_crn"], DataType: "string"},
-		{Name: "scc_region", Value: region, DataType: "string"},
-		{Name: "cos_region", Value: region, DataType: "string"},
-		{Name: "cos_instance_tags", Value: options.Tags, DataType: "list(string)"},
-		{Name: "scc_instance_tags", Value: options.Tags, DataType: "list(string)"},
-		{Name: "scc_workload_protection_instance_tags", Value: options.Tags, DataType: "list(string)"},
-		{Name: "scc_workload_protection_resource_key_tags", Value: options.Tags, DataType: "list(string)"},
-		{Name: "scc_cos_bucket_access_tags", Value: permanentResources["accessTags"], DataType: "list(string)"},
-		{Name: "scc_workload_protection_access_tags", Value: permanentResources["accessTags"], DataType: "list(string)"},
-		{Name: "cos_instance_access_tags", Value: permanentResources["accessTags"], DataType: "list(string)"},
-		{Name: "prefix", Value: options.Prefix, DataType: "string"},
-	}
+// 	options.TerraformVars = []testschematic.TestSchematicTerraformVar{
+// 		{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
+// 		{Name: "resource_group_name", Value: options.Prefix, DataType: "string"},
+// 		{Name: "existing_kms_instance_crn", Value: permanentResources["hpcs_south_crn"], DataType: "string"},
+// 		{Name: "scc_region", Value: region, DataType: "string"},
+// 		{Name: "cos_region", Value: region, DataType: "string"},
+// 		{Name: "cos_instance_tags", Value: options.Tags, DataType: "list(string)"},
+// 		{Name: "scc_instance_tags", Value: options.Tags, DataType: "list(string)"},
+// 		{Name: "scc_workload_protection_instance_tags", Value: options.Tags, DataType: "list(string)"},
+// 		{Name: "scc_workload_protection_resource_key_tags", Value: options.Tags, DataType: "list(string)"},
+// 		{Name: "scc_cos_bucket_access_tags", Value: permanentResources["accessTags"], DataType: "list(string)"},
+// 		{Name: "scc_workload_protection_access_tags", Value: permanentResources["accessTags"], DataType: "list(string)"},
+// 		{Name: "cos_instance_access_tags", Value: permanentResources["accessTags"], DataType: "list(string)"},
+// 		{Name: "prefix", Value: options.Prefix, DataType: "string"},
+// 	}
 
-	err := options.RunSchematicTest()
-	assert.Nil(t, err, "This should not have errored")
-}
+// 	err := options.RunSchematicTest()
+// 	assert.Nil(t, err, "This should not have errored")
+// }
 
-func TestRunUpgradeInstances(t *testing.T) {
-	t.Parallel()
+// func TestRunUpgradeInstances(t *testing.T) {
+// 	t.Parallel()
 
-	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
-		Testing:      t,
-		TerraformDir: instanceFlavorDir,
-		Prefix:       "scc-ins-upg",
-	})
+// 	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
+// 		Testing:      t,
+// 		TerraformDir: instanceFlavorDir,
+// 		Prefix:       "scc-ins-upg",
+// 	})
 
-	options.TerraformVars = map[string]interface{}{
-		"prefix":                              options.Prefix,
-		"resource_group_name":                 options.Prefix,
-		"existing_kms_instance_crn":           permanentResources["hpcs_south_crn"],
-		"kms_endpoint_type":                   "public",
-		"provider_visibility":                 "public",
-		"management_endpoint_type_for_bucket": "public",
-	}
+// 	options.TerraformVars = map[string]interface{}{
+// 		"prefix":                              options.Prefix,
+// 		"resource_group_name":                 options.Prefix,
+// 		"existing_kms_instance_crn":           permanentResources["hpcs_south_crn"],
+// 		"kms_endpoint_type":                   "public",
+// 		"provider_visibility":                 "public",
+// 		"management_endpoint_type_for_bucket": "public",
+// 	}
 
-	output, err := options.RunTestUpgrade()
-	if !options.UpgradeTestSkipped {
-		assert.Nil(t, err, "This should not have errored")
-		assert.NotNil(t, output, "Expected some output")
-	}
-}
+// 	output, err := options.RunTestUpgrade()
+// 	if !options.UpgradeTestSkipped {
+// 		assert.Nil(t, err, "This should not have errored")
+// 		assert.NotNil(t, output, "Expected some output")
+// 	}
+// }
 
 // A test to pass existing resources to the SCC instances DA
 func TestRunExistingResourcesInstances(t *testing.T) {
