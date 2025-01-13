@@ -18,19 +18,19 @@ import (
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testhelper"
 )
 
-const resourceGroup = "geretain-test-resources"
+// const resourceGroup = "geretain-test-resources"
 const instanceFlavorDir = "solutions/instances"
 
 // Define a struct with fields that match the structure of the YAML data
 const yamlLocation = "../common-dev-assets/common-go-assets/common-permanent-resources.yaml"
 
 // Current supported SCC region
-var validRegions = []string{
-	"us-south",
-	"eu-de",
-	"ca-tor",
-	"eu-es",
-}
+// var validRegions = []string{
+// 	"us-south",
+// 	"eu-de",
+// 	"ca-tor",
+// 	"eu-es",
+// }
 
 var permanentResources map[string]interface{}
 
