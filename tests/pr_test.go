@@ -113,7 +113,7 @@ func TestRunUpgradeInstances(t *testing.T) {
 
 // A test to pass existing resources to the SCC instances DA
 func TestRunExistingResourcesInstances(t *testing.T) {
-
+	t.Parallel()
 	// ------------------------------------------------------------------------------------
 	// Provision COS, Sysdig and EN first
 	// ------------------------------------------------------------------------------------
